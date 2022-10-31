@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:fashionshop/view/login_register_view.dart';
+import 'package:fashionshop/screens/home/home_view.dart';
+import 'package:fashionshop/screens/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: LoginView(),
+      home: const WelcomeView(),
     );
   }
 }
