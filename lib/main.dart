@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
 
