@@ -2,6 +2,8 @@ import 'package:fashionshop/screens/home/components/current_state.dart';
 import 'package:fashionshop/screens/home/components/search_bar_click.dart';
 import 'package:flutter/material.dart';
 
+import 'account_tab.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -25,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       const NavigationDestination(
         icon: Icon(Icons.favorite),
-        label: 'Your Cart',
+        label: 'Wishlist',
       ),
       const NavigationDestination(
         icon: Icon(Icons.chat),
@@ -45,19 +47,19 @@ class _HomeViewState extends State<HomeView> {
         title: SizedBox(
           height: 60,
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(10.0),
             child: SearchBarClick(
               placeholderText: "Search a product",
               onClick: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Search bar clicked!"),
-                ));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Search bar clicked!")),
+                );
               },
             ),
           ),
         ),
       ),
-      body: const Center(), // TODO: View here!
+      body: const AccountTab(), // TODO: View here!
       bottomNavigationBar: NavigationBarTheme(
         data: Theme.of(context).navigationBarTheme,
         child: NavigationBar(

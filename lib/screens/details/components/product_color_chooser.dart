@@ -44,7 +44,6 @@ class ProductColorChooser extends StatelessWidget {
 
 class _ColorDot extends StatelessWidget {
   const _ColorDot({
-    super.key,
     required this.color,
     required this.isSelected,
     required this.onClick,

@@ -18,7 +18,7 @@ class ProductBasicInterface extends StatelessWidget {
 }
 
 class _ImagePreview extends StatelessWidget {
-  const _ImagePreview({super.key, required this.previewList});
+  const _ImagePreview({required this.previewList});
 
   final List<String> previewList;
 
