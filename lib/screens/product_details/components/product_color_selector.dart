@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ProductColorChooser extends StatelessWidget {
-  const ProductColorChooser({
+class ProductColorSelector extends StatelessWidget {
+  const ProductColorSelector({
     super.key,
     required this.availableColors,
     required this.selectedColor,
     required this.onClick,
-    this.dotSize = 32,
+    this.dotSize = 40,
   });
   final List<int> availableColors;
   final int? selectedColor;
@@ -29,15 +29,29 @@ class ProductColorChooser extends StatelessWidget {
       );
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(right: 10.0),
-          child: Text("Colors"),
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: Text(
+                  "Product Colors",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: listColor,
+              ),
+            ],
+          ),
         ),
-        Row(children: listColor),
-      ],
+      ),
     );
   }
 }
@@ -47,7 +61,7 @@ class _ColorDot extends StatelessWidget {
     required this.color,
     required this.isSelected,
     required this.onClick,
-    this.dotSize = 32,
+    this.dotSize = 40,
   });
 
   final bool isSelected;

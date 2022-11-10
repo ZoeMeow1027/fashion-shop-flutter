@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 //https://www.fluttercampus.com/guide/81/how-to-style-textfield-widget-border-flutter/
 OutlineInputBorder _outlineInputBorder() {
   return const OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10)),
-    borderSide: BorderSide(width: 2),
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    borderSide: BorderSide(width: 2, color: Colors.blueAccent),
   );
 }
 

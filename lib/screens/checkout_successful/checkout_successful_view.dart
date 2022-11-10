@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../home/home_view.dart';
 
-class OrderSuccessfulView extends StatelessWidget {
-  const OrderSuccessfulView({super.key});
+class CheckoutSuccessfulView extends StatelessWidget {
+  const CheckoutSuccessfulView({super.key, required this.orderId});
+
+  final String orderId;
+  // final Function() returnHomeClicked;
+  // final Function() deliveryStatusClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +22,32 @@ class OrderSuccessfulView extends StatelessWidget {
               Icons.check_circle_outline_rounded,
               size: 90.0,
             ),
-            const Text("Order Completed"),
-            const Text("Your order F348GF843FD2J was placed successfully."),
-            const Text(
-                "For more details, check Delivery Status under Profile tab."),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: Column(children: [
+                const Text(
+                  "Order Completed",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                Text(
+                  "Your order $orderId was placed successfully.",
+                  style: const TextStyle(fontSize: 15.0),
+                ),
+                const Text(
+                  "For more details, check Delivery Status under Profile tab.",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: ElevatedButton(
                 onPressed: () {},
                 child: const Text("Delivery Status"),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(

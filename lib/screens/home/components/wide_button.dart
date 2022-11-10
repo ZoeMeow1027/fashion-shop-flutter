@@ -7,16 +7,18 @@ Widget wideButton({
 }) {
   return Padding(
     padding: padding,
-    child: TextButton(
+    child: OutlinedButton(
       onPressed: onClick,
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(50),
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size.fromHeight(55.0),
+        backgroundColor: Colors.blue,
       ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Text(text),
+          child: Text(text,
+              style: const TextStyle(fontSize: 16.0, color: Colors.white)),
         ),
       ),
     ),

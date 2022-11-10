@@ -27,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(100, 10);
   Win32Window::Size size(540, 960);
-  if (!window.CreateAndShow(L"fashionshop", origin, size)) {
+  if (!window.CreateAndShow(L"Fashion Shop [Flutter]", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);

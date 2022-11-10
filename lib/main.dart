@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:fashionshop/screens/account_login/login_view.dart';
+import 'package:fashionshop/screens/checkout_successful/checkout_successful_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/product_details/product_details_view.dart';
 
 void main() {
   runApp(const MainApplication());
@@ -18,7 +22,8 @@ class _MainApplicationState extends State<MainApplication> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Fashion Shop',
       scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -28,6 +33,8 @@ class _MainApplicationState extends State<MainApplication> {
     );
   }
 }
+
+// CheckoutSuccessfulView(orderId: 'F348GF843FD22');
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices

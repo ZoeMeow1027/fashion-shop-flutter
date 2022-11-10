@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 AppBar appBar({
   required BuildContext context,
@@ -8,12 +7,12 @@ AppBar appBar({
   required void Function()? onCartClicked,
 }) {
   return AppBar(
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.white,
     elevation: 0,
     leading: IconButton(
-      icon: SvgPicture.asset(
-        'assets/icons/back.svg',
-        color: Colors.white,
+      icon: const Icon(
+        Icons.arrow_back,
+        color: Colors.black,
       ),
       onPressed: () {
         if (onBackClicked != null) onBackClicked();
@@ -21,13 +20,19 @@ AppBar appBar({
     ),
     actions: <Widget>[
       IconButton(
-        icon: const Icon(Icons.search),
+        icon: const Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
         onPressed: () {
           if (onSearchClicked != null) onSearchClicked();
         },
       ),
       IconButton(
-        icon: const Icon(Icons.shopping_cart),
+        icon: const Icon(
+          Icons.shopping_cart,
+          color: Colors.black,
+        ),
         onPressed: () {
           if (onCartClicked != null) onCartClicked();
         },
