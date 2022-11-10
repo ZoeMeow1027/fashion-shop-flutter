@@ -1,8 +1,8 @@
 import 'package:fashionshop/screens/home/components/current_state.dart';
-import 'package:fashionshop/screens/home/components/search_bar_click.dart';
+import 'package:fashionshop/screens/home/views/account_tab.dart';
+import 'package:fashionshop/screens/home/views/home_tab.dart';
+import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
 import 'package:flutter/material.dart';
-
-import 'account_tab.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -14,6 +14,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   late CurrentState _currentState;
   late List<NavigationDestination> navBtnList;
+  late List<Widget> stateWidgetList;
 
   @override
   void initState() {
@@ -30,36 +31,22 @@ class _HomeViewState extends State<HomeView> {
         label: 'Wishlist',
       ),
       const NavigationDestination(
-        icon: Icon(Icons.chat),
-        label: 'Chat',
-      ),
-      const NavigationDestination(
         icon: Icon(Icons.account_circle),
         label: 'Account',
       ),
+    ];
+
+    stateWidgetList = [
+      const HomeTab(),
+      const WishlistTab(),
+      const AccountTab(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: SizedBox(
-          height: 60,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SearchBarClick(
-              placeholderText: "Search a product",
-              onClick: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Search bar clicked!")),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-      body: const AccountTab(), // TODO: View here!
+      body: stateWidgetList[_currentState.currentPage],
       bottomNavigationBar: NavigationBarTheme(
         data: Theme.of(context).navigationBarTheme,
         child: NavigationBar(
