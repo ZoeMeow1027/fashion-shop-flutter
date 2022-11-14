@@ -7,9 +7,9 @@ Widget wideButton({
 }) {
   return Padding(
     padding: padding,
-    child: OutlinedButton(
+    child: TextButton(
       onPressed: onClick,
-      style: OutlinedButton.styleFrom(
+      style: TextButton.styleFrom(
         minimumSize: const Size.fromHeight(55.0),
         backgroundColor: Colors.blue,
       ),
