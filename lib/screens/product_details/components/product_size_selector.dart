@@ -19,58 +19,40 @@ class ProductSizeSelector extends StatelessWidget {
       allSizeList.add(
         Padding(
           padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          child: _SizeSelectorButton(
+          child: _sizeSelectorButton(
             text: sizeList[i],
-            isSelected: i == selectedIndex,
             onClick: () {
               onClickedSize(i);
             },
+            isSelected: i == selectedIndex,
           ),
         ),
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(bottom: 5.0),
-                child: Text(
-                  "Product Sizes",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: allSizeList,
-              )
-            ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Padding(
+          padding: EdgeInsets.only(bottom: 5.0),
+          child: Text(
+            "Product Sizes",
+            style: TextStyle(fontSize: 20),
           ),
         ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: allSizeList,
+        )
+      ],
     );
   }
-}
 
-class _SizeSelectorButton extends StatelessWidget {
-  const _SizeSelectorButton({
-    super.key,
-    required this.text,
-    this.isSelected = false,
-    required this.onClick,
-  });
-
-  final String text;
-  final bool isSelected;
-  final Function() onClick;
-
-  @override
-  Widget build(BuildContext context) {
+  OutlinedButton _sizeSelectorButton({
+    required String text,
+    required Function() onClick,
+    bool isSelected = false,
+  }) {
     return OutlinedButton(
       onPressed: onClick,
       style: OutlinedButton.styleFrom(

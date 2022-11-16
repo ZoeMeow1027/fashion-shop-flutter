@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProductColorSelector extends StatelessWidget {
-  const ProductColorSelector({
+class ColorSelector extends StatelessWidget {
+  const ColorSelector({
     super.key,
     required this.availableColors,
     required this.selectedColor,
@@ -18,7 +18,7 @@ class ProductColorSelector extends StatelessWidget {
     List<Widget> listColor = [];
     for (var element in availableColors) {
       listColor.add(
-        _ColorDot(
+        _colorDot(
           color: element,
           isSelected: selectedColor == null ? false : selectedColor! == element,
           onClick: (color) {
@@ -29,48 +29,30 @@ class ProductColorSelector extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 5.0),
-                child: Text(
-                  "Product Colors",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: listColor,
-              ),
-            ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(bottom: 5.0),
+          child: Text(
+            "Product Colors",
+            style: TextStyle(fontSize: 20),
           ),
         ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: listColor,
+        ),
+      ],
     );
   }
-}
 
-class _ColorDot extends StatelessWidget {
-  const _ColorDot({
-    required this.color,
-    required this.isSelected,
-    required this.onClick,
-    this.dotSize = 40,
-  });
-
-  final bool isSelected;
-  final int color;
-  final Function(int) onClick;
-  final int dotSize;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _colorDot({
+    required int color,
+    required bool isSelected,
+    required Function(int) onClick,
+    int dotSize = 40,
+  }) {
     return InkWell(
       child: Container(
         padding: const EdgeInsets.all(2.5),

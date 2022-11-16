@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProductOptionsBar extends StatelessWidget {
-  const ProductOptionsBar(
+class OrderActionsBar extends StatelessWidget {
+  const OrderActionsBar(
     BuildContext context, {
     super.key,
     this.isFavorited = false,
