@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:fashionshop/screens/account_login/login_view.dart';
-import 'package:fashionshop/screens/checkout_successful/checkout_successful_view.dart';
+import 'package:fashionshop/screens/checkout/checkout_view.dart';
+import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
 
@@ -29,12 +30,22 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const LoginView(),
+      home: const WelcomeView(),
     );
   }
 }
 
-// CheckoutSuccessfulView(orderId: 'F348GF843FD22');
+// CheckoutView(
+//         orderId: 'F348GF843FD22',
+//         orderStatus: 1,
+//         returnHomeClicked: () {
+//           Navigator.pushAndRemoveUntil(
+//             context,
+//             MaterialPageRoute(builder: (context) => const HomeView()),
+//             (Route<dynamic> route) => false,
+//           );
+//         },
+//       )
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices
