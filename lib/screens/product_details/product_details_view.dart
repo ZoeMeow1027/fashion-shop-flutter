@@ -1,12 +1,10 @@
-import 'package:fashionshop/screens/product_details/components/app_bar.dart';
-import 'package:fashionshop/screens/product_details/components/product_options_bar.dart';
+import 'package:fashionshop/screens/product_details/components/order_actions_bar.dart';
 import 'package:fashionshop/screens/product_details/components/current_state.dart';
-import 'package:fashionshop/screens/product_details/components/product_basic_information.dart';
-import 'package:fashionshop/screens/product_details/components/product_color_selector.dart';
-import 'package:fashionshop/screens/product_details/components/product_count_selector.dart';
-import 'package:fashionshop/screens/product_details/components/product_size_selector.dart';
+import 'package:fashionshop/screens/product_details/components/basic_information.dart';
 import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
+
+import 'components/order_options.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({super.key});
@@ -31,11 +29,11 @@ class _ProductDetailsView extends State<ProductDetailsView> {
 
   final List<String> previewLink = [
     'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
+    'https://www.transparentpng.com/thumb/clothes-png/RB9gy1-clothes-simple.png',
+    'https://www.freepnglogos.com/uploads/garments-png/plain-powder-blue-women-polo-shirt-cutton-garments-40.png',
+    'http://clipart-library.com/newimages/clothes-clip-art-11.png',
+    'http://clipart-library.com/images/E6TpBqGiE.png',
+    'http://clipart-library.com/img/1781833.png',
   ];
 
   final List<String> availableSize = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -65,7 +63,7 @@ Attribution required, copy the following link on the web where you will be using
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
+      appBar: _appBar(
         context: context,
         onBackClicked: () {
           Navigator.pop(context);
@@ -82,7 +80,7 @@ Attribution required, copy the following link on the web where you will be using
       ),
       body: SingleChildScrollView(child: _appBody(context)),
       bottomNavigationBar: BottomAppBar(
-        child: ProductOptionsBar(
+        child: OrderActionsBar(
           context,
           isFavorited: isFavorited,
           addToCartBtnClicked: () {
@@ -99,65 +97,89 @@ Attribution required, copy the following link on the web where you will be using
     );
   }
 
-  Widget _appBody(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ProductBasicInformation(
-          productName: productName,
-          productPrice: productPrice,
-          previewLink: previewLink,
-          ratingValue: ratingValue,
+  AppBar _appBar({
+    required BuildContext context,
+    required void Function()? onBackClicked,
+    required void Function()? onSearchClicked,
+    required void Function()? onCartClicked,
+  }) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
         ),
-        ProductSizeSelector(
-          sizeList: availableSize,
-          selectedIndex: currentState.selectedSizeIndex,
-          onClickedSize: (sizeSelected) {
-            setState(() {
-              currentState.selectedSizeIndex = sizeSelected;
-            });
-          },
-        ),
-        ProductColorSelector(
-          availableColors: availableColors,
-          selectedColor: currentState.selectedColor,
-          dotSize: 40,
-          onClick: (color) {
-            var data = currentState;
-            data.selectedColor = color;
-            setState(() {
-              currentState = data;
-            });
-          },
-        ),
-        ProductCountSelector(
-          count: currentState.selectedCount,
-          onChanged: (newCount) {
-            var data = currentState;
-            data.selectedCount = newCount;
-            setState(() {
-              currentState = data;
-            });
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0),
-          child: Text(
-            productDescription,
-            style: const TextStyle(fontSize: 16.0),
+        onPressed: () {
+          if (onBackClicked != null) onBackClicked();
+        },
+      ),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(
+            Icons.search,
+            color: Colors.black,
           ),
+          onPressed: () {
+            if (onSearchClicked != null) onSearchClicked();
+          },
         ),
-        Center(
-          child: const Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: Text(
-              "Related Products",
-              style: TextStyle(fontSize: 20.0),
-            ),
+        IconButton(
+          icon: const Icon(
+            Icons.shopping_cart,
+            color: Colors.black,
           ),
+          onPressed: () {
+            if (onCartClicked != null) onCartClicked();
+          },
         ),
       ],
+    );
+  }
+
+  Widget _appBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BasicInformation(
+            productName: productName,
+            productPrice: productPrice,
+            previewLink: previewLink,
+            ratingValue: ratingValue,
+          ),
+          OrderOptions(
+            availableColors: availableColors,
+            availableSize: availableSize,
+            inventoryMax: 15,
+            currentState: currentState,
+            onStateChanged: (state) {
+              setState(() {
+                currentState = state;
+              });
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0),
+            child: Text(
+              productDescription,
+              style: const TextStyle(fontSize: 16.0),
+            ),
+          ),
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
+              child: Text(
+                "Related Products",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
