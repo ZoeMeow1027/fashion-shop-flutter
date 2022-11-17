@@ -30,7 +30,7 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const WelcomeView(),
+      home: const HomeView(),
     );
   }
 }

@@ -49,14 +49,12 @@ class _HomeViewState extends State<HomeView> {
       body: stateWidgetList[_currentState.currentPage],
       bottomNavigationBar: NavigationBarTheme(
         data: Theme.of(context).navigationBarTheme,
-        child: NavigationBar(
-          destinations: navBtnList,
-          selectedIndex: _currentState.currentPage,
-          onDestinationSelected: (value) {
-            setState(() {
-              _currentState.currentPage = value;
-            });
-          },
+        child: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [],
+          ),
         ),
       ),
     );
