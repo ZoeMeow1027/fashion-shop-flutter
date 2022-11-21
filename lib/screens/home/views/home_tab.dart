@@ -1,6 +1,5 @@
+import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
-
-import '../../product_search/product_search_view.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});

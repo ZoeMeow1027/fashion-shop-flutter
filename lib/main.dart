@@ -4,6 +4,7 @@ import 'package:fashionshop/screens/account_login/login_view.dart';
 import 'package:fashionshop/screens/checkout/checkout_view.dart';
 import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
+import 'package:fashionshop/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,11 +23,12 @@ void main() {
 }
 
 class MainApplication extends StatefulWidget {
-  const MainApplication({
+  MainApplication({
     super.key,
     required this.welcomePassed,
   });
   final bool welcomePassed;
+  final ViewModel viewModel = ViewModel();
 
   @override
   State<MainApplication> createState() => _MainApplicationState();
@@ -43,7 +45,9 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: widget.welcomePassed ? const HomeView() : const WelcomeView(),
+      home: widget.welcomePassed
+          ? HomeView(viewModel: widget.viewModel)
+          : WelcomeView(viewModel: widget.viewModel),
     );
   }
 }
