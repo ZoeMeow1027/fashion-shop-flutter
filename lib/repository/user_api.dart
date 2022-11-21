@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:fashionshop/model/dto/login_dto.dart';
+import 'package:fashionshop/model/dto/register_dto.dart';
 import 'package:fashionshop/model/user_profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,15 +21,14 @@ class UserAPI {
     return (response.statusCode ~/ 100).round() == 2;
   }
 
-  static Future<bool> login(String user, String pass) async {
+  static Future<bool> login(LoginDTO loginDTO) async {
     try {
+      if (!loginDTO.isValidate()) throw Exception("Missing data for login!");
+
       final response = await http.post(
         Uri.parse('$_baseUrl/api/users/login/'),
         // Send authorization headers to the backend.
-        body: {
-          "username": user,
-          "password": pass,
-        },
+        body: loginDTO.toJson(),
       );
 
       // If status code is successful
@@ -68,6 +68,36 @@ class UserAPI {
       }
     } catch (ex) {
       return null;
+    }
+  }
+
+  static Future<bool> register(RegisterDTO registerDTO) async {
+    try {
+      if (!registerDTO.isValidate()) throw Exception("Missing data for login!");
+
+      final response = await http.post(
+        Uri.parse('$_baseUrl/api/users/register/'),
+        // Send authorization headers to the backend.
+        body: registerDTO.toJson(),
+      );
+
+      // If status code is successful
+      if ((response.statusCode ~/ 100).round() == 2) {
+        // Write token to local storage
+        SharedPreferences.getInstance().then(
+          (value) => {
+            value.setString(
+                "tokenKey", "Bearer ${jsonDecode(response.body)["token"]}"),
+          },
+        );
+        // Return true to UI
+        return true;
+      } else {
+        // Return false
+        return false;
+      }
+    } catch (ex) {
+      return false;
     }
   }
 }

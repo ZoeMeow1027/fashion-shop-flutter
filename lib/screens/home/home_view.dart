@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:fashionshop/screens/account_login/login_view.dart';
+import 'package:fashionshop/screens/account_login/account_authorization_view.dart';
 import 'package:fashionshop/screens/home/views/account_tab.dart';
 import 'package:fashionshop/screens/home/views/home_tab.dart';
 import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
@@ -27,7 +27,8 @@ class _HomeViewState extends State<HomeView> {
           loginRequested: () async {
             await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const LoginView()),
+              MaterialPageRoute(
+                  builder: (context) => const AccountAuthorizationView()),
             );
             log("triggered");
             await widget.viewModel.checkLoggedIn();

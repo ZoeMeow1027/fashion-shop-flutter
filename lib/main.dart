@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:fashionshop/screens/account_login/login_view.dart';
+import 'package:fashionshop/screens/account_login/account_authorization_view.dart';
 import 'package:fashionshop/screens/checkout/checkout_view.dart';
 import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
