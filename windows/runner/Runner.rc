@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "fashionshop" "\0"
+            VALUE "CompanyName", "com.pbl6" "\0"
+            VALUE "FileDescription", "Fashion Shop [Powered by Flutter]" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "fashionshop" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
+            VALUE "InternalName", "Fashion Shop" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 PBL6. All rights reserved." "\0"
             VALUE "OriginalFilename", "fashionshop.exe" "\0"
-            VALUE "ProductName", "fashionshop" "\0"
+            VALUE "ProductName", "Fashion Shop [Powered by Flutter]" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

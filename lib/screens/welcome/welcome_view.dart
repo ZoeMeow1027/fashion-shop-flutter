@@ -1,5 +1,6 @@
 import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -24,6 +25,12 @@ class WelcomeView extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: ElevatedButton(
               onPressed: () {
+                SharedPreferences.getInstance().then(
+                  (value) => {
+                    value.setBool("welcomePassed", true),
+                  },
+                );
+
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const HomeView()),

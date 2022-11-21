@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../product_search/product_search_view.dart';
-import '../components/search_bar_click.dart';
 
 class WishlistTab extends StatelessWidget {
   const WishlistTab({super.key});
