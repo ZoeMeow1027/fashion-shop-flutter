@@ -10,10 +10,12 @@ OutlineInputBorder _outlineInputBorder() {
 
 TextField customOutlinedTextField({
   required String text,
+  bool enabled = true,
   required TextEditingController controller,
 }) {
   return TextField(
     controller: controller,
+    enabled: enabled,
     decoration: InputDecoration(
       labelText: text,
       enabledBorder: _outlineInputBorder(),
