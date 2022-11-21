@@ -6,6 +6,7 @@ import 'package:fashionshop/screens/home/views/home_tab.dart';
 import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
 import 'package:fashionshop/view_model/view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.viewModel});
@@ -30,9 +31,17 @@ class _HomeViewState extends State<HomeView> {
               MaterialPageRoute(
                   builder: (context) => const AccountAuthorizationView()),
             );
-            log("triggered");
             await widget.viewModel.checkLoggedIn();
             setState(() {
+              objKey = Object();
+            });
+          },
+          logoutRequested: () async {
+            var prefs = await SharedPreferences.getInstance();
+            await prefs.remove("tokenKey");
+            setState(() {
+              widget.viewModel.tokenKey = null;
+              widget.viewModel.userProfile = null;
               objKey = Object();
             });
           },
