@@ -11,11 +11,15 @@ OutlineInputBorder _outlineInputBorder() {
 TextField customOutlinedTextField({
   required String text,
   bool enabled = true,
+  bool isPassword = false,
   required TextEditingController controller,
 }) {
   return TextField(
     controller: controller,
     enabled: enabled,
+    obscureText: isPassword,
+    enableSuggestions: false,
+    autocorrect: false,
     decoration: InputDecoration(
       labelText: text,
       enabledBorder: _outlineInputBorder(),
