@@ -5,15 +5,28 @@ import 'package:fashionshop/screens/checkout/checkout_view.dart';
 import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/product_details/product_details_view.dart';
 
 void main() {
-  runApp(const MainApplication());
+  bool welcomePassed;
+  SharedPreferences.getInstance().then(
+    (value) => {
+      welcomePassed = value.getBool("welcomePassed") ?? false,
+      runApp(MainApplication(
+        welcomePassed: welcomePassed,
+      )),
+    },
+  );
 }
 
 class MainApplication extends StatefulWidget {
-  const MainApplication({super.key});
+  const MainApplication({
+    super.key,
+    required this.welcomePassed,
+  });
+  final bool welcomePassed;
 
   @override
   State<MainApplication> createState() => _MainApplicationState();
@@ -30,7 +43,7 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const HomeView(),
+      home: widget.welcomePassed ? const HomeView() : const WelcomeView(),
     );
   }
 }
