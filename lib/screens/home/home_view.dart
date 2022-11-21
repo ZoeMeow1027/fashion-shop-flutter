@@ -1,8 +1,10 @@
+import 'package:fashionshop/repository/user_api.dart';
 import 'package:fashionshop/screens/home/components/current_state.dart';
 import 'package:fashionshop/screens/home/views/account_tab.dart';
 import 'package:fashionshop/screens/home/views/home_tab.dart';
 import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,34 +15,32 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late CurrentState _currentState;
-  late List<NavigationDestination> navBtnList;
   late List<Widget> stateWidgetList;
+
+  String? tokenKey;
 
   @override
   void initState() {
     super.initState();
     _currentState = CurrentState();
 
-    navBtnList = <NavigationDestination>[
-      const NavigationDestination(
-        icon: Icon(Icons.home),
-        label: 'Home',
-      ),
-      const NavigationDestination(
-        icon: Icon(Icons.favorite),
-        label: 'Wishlist',
-      ),
-      const NavigationDestination(
-        icon: Icon(Icons.account_circle),
-        label: 'Account',
-      ),
-    ];
-
     stateWidgetList = [
       const HomeTab(),
       const WishlistTab(),
       const AccountTab(),
     ];
+
+    SharedPreferences.getInstance().then(
+      (value) => {
+        tokenKey = value.getString("tokenKey"),
+        () async {
+          final isLoggedIn = await UserAPI.isLoggedIn(tokenKey!);
+          if (isLoggedIn) {
+            value.remove("tokenKey");
+          }
+        },
+      },
+    );
   }
 
   @override
@@ -49,14 +49,28 @@ class _HomeViewState extends State<HomeView> {
       body: stateWidgetList[_currentState.currentPage],
       bottomNavigationBar: NavigationBarTheme(
         data: Theme.of(context).navigationBarTheme,
-        child: NavigationBar(
-          destinations: navBtnList,
-          selectedIndex: _currentState.currentPage,
-          onDestinationSelected: (value) {
-            setState(() {
-              _currentState.currentPage = value;
-            });
-          },
+        child: NavigationBarTheme(
+          data: Theme.of(context).navigationBarTheme,
+          child: NavigationBar(
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.favorite),
+                label: 'Wishlist',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.account_circle),
+                label: 'Account',
+              ),
+            ],
+            selectedIndex: _currentState.currentPage,
+            onDestinationSelected: (index) => {
+              setState(() => {_currentState.currentPage = index})
+            },
+          ),
         ),
       ),
     );
