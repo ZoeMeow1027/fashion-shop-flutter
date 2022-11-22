@@ -1,3 +1,4 @@
+import 'package:fashionshop/model/product_item.dart';
 import 'package:fashionshop/screens/product_details/components/order_actions_bar.dart';
 import 'package:fashionshop/screens/product_details/components/current_state.dart';
 import 'package:fashionshop/screens/product_details/components/basic_information.dart';
@@ -7,7 +8,12 @@ import 'package:flutter/material.dart';
 import 'components/order_options.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({super.key});
+  const ProductDetailsView({
+    super.key,
+    required this.productItem,
+  });
+
+  final ProductItem productItem;
 
   @override
   State<StatefulWidget> createState() => _ProductDetailsView();

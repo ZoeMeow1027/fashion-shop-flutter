@@ -1,14 +1,10 @@
 import 'dart:ui';
 
-import 'package:fashionshop/screens/account_login/account_authorization_view.dart';
-import 'package:fashionshop/screens/checkout/checkout_view.dart';
 import 'package:fashionshop/screens/home/home_view.dart';
 import 'package:fashionshop/screens/welcome/welcome_view.dart';
-import 'package:fashionshop/view_model/view_model.dart';
+import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'screens/product_details/product_details_view.dart';
 
 void main() {
   bool welcomePassed;
@@ -28,7 +24,7 @@ class MainApplication extends StatefulWidget {
     required this.welcomePassed,
   });
   final bool welcomePassed;
-  final ViewModel viewModel = ViewModel();
+  final HomeViewModel viewModel = HomeViewModel();
 
   @override
   State<MainApplication> createState() => _MainApplicationState();

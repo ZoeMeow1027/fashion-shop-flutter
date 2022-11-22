@@ -56,8 +56,8 @@ class AccountTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("You are not logged in"),
-          Text("Login to use this application"),
+          const Text("You are not logged in"),
+          const Text("Login to use this application"),
           ElevatedButton(
             onPressed: loginRequested,
             child: const Text("Login", style: TextStyle(fontSize: 14)),
