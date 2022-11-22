@@ -1,12 +1,12 @@
 import 'package:fashionshop/screens/home/home_view.dart';
-import 'package:fashionshop/view_model/view_model.dart';
+import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key, required this.viewModel});
 
-  final ViewModel viewModel;
+  final HomeViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {

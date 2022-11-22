@@ -8,9 +8,11 @@ class AccountTab extends StatelessWidget {
     super.key,
     this.userProfile,
     this.loginRequested,
+    this.logoutRequested,
   });
   final UserProfile? userProfile;
   final Function()? loginRequested;
+  final Function()? logoutRequested;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class AccountTab extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
         child: userProfile == null
             ? _notLoggedIn(
                 context: context,
@@ -54,8 +56,8 @@ class AccountTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("You are not logged in"),
-          Text("Login to use this application"),
+          const Text("You are not logged in"),
+          const Text("Login to use this application"),
           ElevatedButton(
             onPressed: loginRequested,
             child: const Text("Login", style: TextStyle(fontSize: 14)),
@@ -87,35 +89,59 @@ class AccountTab extends StatelessWidget {
           ),
         ),
         wideButton(
+          text: "Account Profile",
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
+          onClick: () {},
+        ),
+        wideButton(
           // TODO: Add more item like In progress, deliveried,...)
           text: "Devilery Status",
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
         wideButton(
           text: "Vouchers",
-          padding: const EdgeInsets.all(3.0),
-          onClick: () {},
-        ),
-        wideButton(
-          text: "Account Settings",
-          padding: const EdgeInsets.all(3.0),
-          onClick: () {},
-        ),
-        wideButton(
-          text: "Points",
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
         wideButton(
           text: "Help Center",
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
         wideButton(
           text: "App Settings",
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
+        ),
+        wideButton(
+          text: "Logout",
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
+          onClick: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Logout'),
+              content: const Text(
+                'Are you sure you want to logout?',
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('No'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    if (logoutRequested != null) {
+                      logoutRequested!();
+                    }
+                  },
+                  child: const Text('Yes'),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
