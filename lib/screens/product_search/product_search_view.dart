@@ -12,7 +12,7 @@ class _ProductSearchViewState extends State<ProductSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
+        title: const TextField(
           decoration: InputDecoration(
             hintText: "Search a product",
           ),
