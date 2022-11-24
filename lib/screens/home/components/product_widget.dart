@@ -18,53 +18,60 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     log("triggered");
 
-    return InkWell(
-      onTap: () {
-        if (onClick != null) {
-          onClick!();
-        }
-      },
-      child: Container(
-        foregroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.blueAccent,
-            width: 2,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CachedNetworkImage(
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              imageUrl: "http://127.0.0.1:8000${productItem.imageUrl}",
-              width: 300,
-              height: 250,
-              fit: BoxFit.cover,
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(10.0),
+        topRight: Radius.circular(10.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          if (onClick != null) {
+            onClick!();
+          }
+        },
+        child: Container(
+          foregroundDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.blueAccent,
+              width: 2,
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${productItem.name}",
-                      style: const TextStyle(fontSize: 18)),
-                  Text("Rating: ${productItem.rating}",
-                      style: const TextStyle(fontSize: 15)),
-                  Text(
-                    "${productItem.price}\$",
-                    style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red),
-                  ),
-                ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CachedNetworkImage(
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                imageUrl: "http://127.0.0.1:8000${productItem.imageUrl}",
+                width: 300,
+                height: 250,
+                fit: BoxFit.cover,
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 5, bottom: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${productItem.name}",
+                        style: const TextStyle(fontSize: 18)),
+                    Text("Rating: ${productItem.rating}",
+                        style: const TextStyle(fontSize: 15)),
+                    Text(
+                      "${productItem.price}\$",
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

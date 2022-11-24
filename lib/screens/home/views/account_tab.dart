@@ -91,6 +91,7 @@ class AccountTab extends StatelessWidget {
         wideButton(
           text: "Account Profile",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
+          iconData: Icons.account_circle_outlined,
           onClick: () {},
         ),
         wideButton(
@@ -107,16 +108,19 @@ class AccountTab extends StatelessWidget {
         wideButton(
           text: "Help Center",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
+          iconData: Icons.support_agent,
           onClick: () {},
         ),
         wideButton(
           text: "App Settings",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
+          iconData: Icons.settings,
           onClick: () {},
         ),
         wideButton(
           text: "Logout",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
+          iconData: Icons.logout,
           onClick: () => showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(

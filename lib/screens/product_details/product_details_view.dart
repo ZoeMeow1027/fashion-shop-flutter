@@ -20,40 +20,31 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsView extends State<ProductDetailsView> {
-  final List<int> availableColors = [
-    Colors.blue.value,
-    Colors.red.value,
-    Colors.black.value,
-    Colors.pink.value,
-    Colors.purple.value,
-    Colors.green.value,
-    Colors.lightBlue.value,
-    Colors.lightGreen.value,
-    Colors.yellow.value,
-    Colors.amber.value,
-  ];
+  // final List<int> availableColors = [
+  //   Colors.blue.value,
+  //   Colors.red.value,
+  //   Colors.black.value,
+  //   Colors.pink.value,
+  //   Colors.purple.value,
+  //   Colors.green.value,
+  //   Colors.lightBlue.value,
+  //   Colors.lightGreen.value,
+  //   Colors.yellow.value,
+  //   Colors.amber.value,
+  // ];
 
-  final List<String> previewLink = [
-    'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-    'https://www.transparentpng.com/thumb/clothes-png/RB9gy1-clothes-simple.png',
-    'https://www.freepnglogos.com/uploads/garments-png/plain-powder-blue-women-polo-shirt-cutton-garments-40.png',
-    'http://clipart-library.com/newimages/clothes-clip-art-11.png',
-    'http://clipart-library.com/images/E6TpBqGiE.png',
-    'http://clipart-library.com/img/1781833.png',
-  ];
+  // final List<String> previewLink = [
+  //   'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
+  //   'https://www.transparentpng.com/thumb/clothes-png/RB9gy1-clothes-simple.png',
+  //   'https://www.freepnglogos.com/uploads/garments-png/plain-powder-blue-women-polo-shirt-cutton-garments-40.png',
+  //   'http://clipart-library.com/newimages/clothes-clip-art-11.png',
+  //   'http://clipart-library.com/images/E6TpBqGiE.png',
+  //   'http://clipart-library.com/img/1781833.png',
+  // ];
 
-  final List<String> availableSize = ['S', 'M', 'L', 'XL', 'XXL'];
-  final String productName = "Clothes";
-  final String productPrice = "\$25.00";
-  final double ratingValue = 4.7;
+  final List<int>? availableColors = null;
+  final List<String>? availableSize = null;
   final bool isFavorited = false;
-  final String productDescription =
-      """Download Clothing PNG File which is available for personal use. You can also check out the similar PNG images from below gallery. This entry was posted on Monday, April 2nd, 2018 at 11:39 am.
-
-License: Creative Commons 4.0 BY-NC
-DMCA: Report
-
-Attribution required, copy the following link on the web where you will be using this image.""";
 
   late CurrentState currentState;
 
@@ -61,7 +52,9 @@ Attribution required, copy the following link on the web where you will be using
   void initState() {
     super.initState();
     currentState = CurrentState();
-    currentState.selectedColor = availableColors[0];
+    if (availableColors != null) {
+      currentState.selectedColor = availableColors![0];
+    }
     currentState.selectedCount = 1;
     currentState.selectedSizeIndex = 0;
   }
@@ -152,15 +145,17 @@ Attribution required, copy the following link on the web where you will be using
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BasicInformation(
-            productName: productName,
-            productPrice: productPrice,
-            previewLink: previewLink,
-            ratingValue: ratingValue,
+            productName: "${widget.productItem.name}",
+            productPrice: "${widget.productItem.price}\$",
+            previewLink: [
+              "http://127.0.0.1:8000${widget.productItem.imageUrl!}"
+            ],
+            ratingValue: widget.productItem.rating,
           ),
           OrderOptions(
             availableColors: availableColors,
             availableSize: availableSize,
-            inventoryMax: 15,
+            inventoryMax: widget.productItem.countInStock,
             currentState: currentState,
             onStateChanged: (state) {
               setState(() {
@@ -171,7 +166,7 @@ Attribution required, copy the following link on the web where you will be using
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0),
             child: Text(
-              productDescription,
+              "${widget.productItem.description}",
               style: const TextStyle(fontSize: 16.0),
             ),
           ),
