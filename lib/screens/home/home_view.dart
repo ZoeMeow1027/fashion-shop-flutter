@@ -68,11 +68,27 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: Theme.of(context).navigationBarTheme,
-        child: NavigationBarTheme(
-          data: Theme.of(context).navigationBarTheme,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        ),
+        child: Container(
+          foregroundDecoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+            border: Border.all(
+              color: Color.fromARGB(255, 237, 228, 255),
+              width: 2,
+            ),
+          ),
+          color: Colors.transparent,
           child: NavigationBar(
+            backgroundColor: Color.fromARGB(255, 237, 228, 255),
+            surfaceTintColor: Color.fromARGB(255, 237, 228, 255),
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home),

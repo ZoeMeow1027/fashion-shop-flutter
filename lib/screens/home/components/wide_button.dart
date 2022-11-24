@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 Widget wideButton({
   required String text,
   required Function() onClick,
+  IconData? iconData,
   EdgeInsetsGeometry padding = const EdgeInsets.all(0.0),
 }) {
   return Padding(
@@ -17,13 +18,24 @@ Widget wideButton({
               side:
                   const BorderSide(color: Color.fromARGB(255, 182, 183, 189)))),
       child: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 5),
-          child: Text(text,
-              style: const TextStyle(fontSize: 16.0, color: Colors.black)),
-        ),
-      ),
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 5),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                iconData == null
+                    ? const Center()
+                    : Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Icon(iconData),
+                      ),
+                Text(text,
+                    style: const TextStyle(fontSize: 16.0, color: Colors.black))
+              ],
+            ),
+          )),
     ),
   );
 }
