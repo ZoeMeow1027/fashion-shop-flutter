@@ -1,16 +1,18 @@
-# fashionshop
+# fashion-shop-flutter
 
-A new Flutter project.
+My 6th project-based learning.
 
-## Getting Started
+## Requirements
 
-This project is a starting point for a Flutter application.
+- Flutter (dev in 3.3.8). Pre-activated Android, iOS, Windows.
 
-A few resources to get you started if this is your first Flutter project:
+## How to run this app?
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Currently, this project is still running in localhost, so you need to host server your self. To create a host server, [navigate here](https://github.com/HungHungGNX/PBL6__Ecommerce/).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Download and install Flutter. You can [download here](https://flutter.dev/).
+- Clone this project and type command: `flutter run`.
+
+## What features am I done?
+
+- You can track my progress in Project Issues tab.
