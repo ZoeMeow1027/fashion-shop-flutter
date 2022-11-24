@@ -87,10 +87,10 @@ class LoginView extends StatelessWidget {
                     msg: 'Username must be at least 6 characters!');
                 return;
               }
-              if (state.passwordController.text.length < 6) {
+              if (state.passwordController.text.length < 3) {
                 showSnackbarMessage(
                     context: context,
-                    msg: 'Password must be at least 6 characters!');
+                    msg: 'Password must be at least 3 characters!');
                 return;
               }
               if (state.isEnabledControl) {

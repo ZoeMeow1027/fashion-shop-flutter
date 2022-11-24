@@ -8,13 +8,13 @@ class BasicInformation extends StatelessWidget {
     required this.productName,
     required this.productPrice,
     required this.previewLink,
-    required this.ratingValue,
+    this.ratingValue,
   });
 
   final String productName;
   final String productPrice;
   final List<String> previewLink;
-  final double ratingValue;
+  final double? ratingValue;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,9 @@ class BasicInformation extends StatelessWidget {
             ],
           ),
         ),
-        _ratingBar(ratingValue: ratingValue),
+        ratingValue == null
+            ? const Text("Not rating yet", style: TextStyle(fontSize: 17))
+            : _ratingBar(ratingValue: ratingValue!),
       ],
     );
   }
