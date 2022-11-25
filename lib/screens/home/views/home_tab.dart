@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
-import 'package:fashionshop/screens/home/components/popular_product_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../product_details/product_details_view.dart';
 import '../../product_search/product_search_view.dart';
 import '../components/banner_widget.dart';
-import '../components/product_summary_widget.dart';
+import '../components/popular_product_widget.dart';
 import '../components/view_model.dart';
 
 class HomeTab extends StatefulWidget {
