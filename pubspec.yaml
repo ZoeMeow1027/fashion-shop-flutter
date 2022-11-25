@@ -1,5 +1,5 @@
 name: fashionshop
-description: A new Flutter project.
+description: Project-based Learning 6 project about shopping app about fashion shop.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -73,7 +73,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/icons/
-    - assets/images/
+    - assets/img/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

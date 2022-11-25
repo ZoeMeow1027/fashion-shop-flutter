@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fashionshop/model/product_item.dart';
 import 'package:flutter/material.dart';
 
-class ProductWidget extends StatelessWidget {
-  const ProductWidget({
+class ProductSummaryWidget extends StatelessWidget {
+  const ProductSummaryWidget({
     super.key,
     required this.productItem,
     this.onClick,
@@ -58,7 +58,10 @@ class ProductWidget extends StatelessWidget {
                   children: [
                     Text("${productItem.name}",
                         style: const TextStyle(fontSize: 18)),
-                    Text("Rating: ${productItem.rating}",
+                    Text(
+                        productItem.rating == null
+                            ? "No rating yet"
+                            : "Rating: ${productItem.rating}",
                         style: const TextStyle(fontSize: 15)),
                     Text(
                       "${productItem.price}\$",

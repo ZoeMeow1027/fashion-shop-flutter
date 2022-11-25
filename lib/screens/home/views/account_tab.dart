@@ -96,12 +96,14 @@ class AccountTab extends StatelessWidget {
         ),
         wideButton(
           // TODO: Add more item like In progress, deliveried,...)
-          text: "Devilery Status",
+          text: "My Purchases",
+          iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
         wideButton(
           text: "Vouchers",
+          iconData: Icons.confirmation_number_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
@@ -114,7 +116,7 @@ class AccountTab extends StatelessWidget {
         wideButton(
           text: "App Settings",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.settings,
+          iconData: Icons.settings_outlined,
           onClick: () {},
         ),
         wideButton(

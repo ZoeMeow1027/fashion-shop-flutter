@@ -15,7 +15,9 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> checkLoggedIn() async {
+  Future<void> checkLoggedIn({Function(bool)? onDone}) async {
+    bool isLoggedIn = false;
+
     final prefs = await SharedPreferences.getInstance();
     tokenKey = prefs.getString("tokenKey");
 
@@ -25,6 +27,11 @@ class HomeViewModel extends ChangeNotifier {
       prefs.remove("tokenKey");
     } else {
       userProfile = await UserAPI.getProfile(tokenKey!);
+      isLoggedIn = true;
+    }
+
+    if (onDone != null) {
+      onDone(isLoggedIn);
     }
     notifyListeners();
   }
