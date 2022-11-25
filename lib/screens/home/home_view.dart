@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
           const WishlistTab(),
           AccountTab(
             key: ValueKey<Object>(objKey),
-            userProfile: widget.viewModel.userProfile,
+            viewModel: widget.viewModel,
             loginRequested: () async {
               await Navigator.push(
                 context,
@@ -87,14 +87,14 @@ class _HomeViewState extends State<HomeView> {
               topRight: Radius.circular(10.0),
             ),
             border: Border.all(
-              color: Color.fromARGB(255, 237, 228, 255),
+              color: const Color.fromARGB(255, 237, 228, 255),
               width: 2,
             ),
           ),
           color: Colors.transparent,
           child: NavigationBar(
-            backgroundColor: Color.fromARGB(255, 237, 228, 255),
-            surfaceTintColor: Color.fromARGB(255, 237, 228, 255),
+            backgroundColor: const Color.fromARGB(255, 237, 228, 255),
+            surfaceTintColor: const Color.fromARGB(255, 237, 228, 255),
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home),
