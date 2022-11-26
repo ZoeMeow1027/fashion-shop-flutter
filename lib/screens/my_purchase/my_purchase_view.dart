@@ -1,6 +1,6 @@
-import 'package:fashionshop/screens/account_login/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 
+import '../account_login/components/show_snackbar_msg.dart';
 import 'components/history_item_widget.dart';
 import 'components/view_model.dart';
 
@@ -21,7 +21,6 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _viewModel = ViewModel(tokenKey: widget.token);
     _viewModel.addListener(() {
@@ -39,11 +38,19 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
         title: const Text("Your Purchase"),
       ),
       body: Column(
-        children: [
-          _viewModel.cartHistoryList.length > 0
-              ? HistoryItemWidget(cartItem: _viewModel.cartHistoryList[0])
-              : const Center(),
-        ],
+        children: List.generate(
+          _viewModel.cartHistoryList.length,
+          (index) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: HistoryItemWidget(
+                    cartItem: _viewModel.cartHistoryList[index]),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
