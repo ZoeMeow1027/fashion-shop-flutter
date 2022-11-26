@@ -1,6 +1,7 @@
 import 'package:fashionshop/model/user_profile.dart';
 import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:fashionshop/screens/home/components/wide_button.dart';
+import 'package:fashionshop/screens/my_purchase/my_purchase_view.dart';
 import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +101,15 @@ class AccountTab extends StatelessWidget {
           text: "My Purchases",
           iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
-          onClick: () {},
+          onClick: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    MyPurchaseView(token: viewModel.tokenKey!),
+              ),
+            );
+          },
         ),
         wideButton(
           text: "Vouchers",

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:fashionshop/model/product_item.dart';
 import 'package:http/http.dart' as http;
 
-class ProductAPI {
-  static const String _baseUrl = "http://127.0.0.1:8000";
+import '../config/configurations.dart';
+import '../model/product_item.dart';
 
+class ProductAPI {
   static Future<List<ProductItem>> getProducts() async {
     final List<ProductItem> list = [];
 
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/api/products/'),
+        Uri.parse('${Configurations.baseUrl}/api/products/'),
       );
 
       // If status code isn't successful, throw exception
