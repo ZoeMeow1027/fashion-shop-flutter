@@ -27,7 +27,7 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
       setState(() {});
     });
     _viewModel.getCartHistory(onDone: () {
-      showSnackbarMessage(context: context, msg: "Done!");
+      setState(() {});
     });
   }
 
@@ -37,6 +37,7 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
       appBar: AppBar(
         title: const Text("Your Purchase"),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: List.generate(
           _viewModel.cartHistoryList.length,
@@ -46,7 +47,15 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: HistoryItemWidget(
-                    cartItem: _viewModel.cartHistoryList[index]),
+                  cartItem: _viewModel.cartHistoryList[index],
+                  onClickDeliveryStatus: () {
+                    showSnackbarMessage(
+                      context: context,
+                      msg:
+                          "Clicked ID: ${_viewModel.cartHistoryList[index].id}",
+                    );
+                  },
+                ),
               ),
             );
           },
