@@ -41,18 +41,18 @@ class OrderActionsBar extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-              child: IconButton(
-                onPressed: favoriteBtnClicked,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromWidth(50),
-                ),
-                icon: Icon(!isFavorited
-                    ? Icons.favorite_outline
-                    : Icons.favorite_outlined),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+            //   child: IconButton(
+            //     onPressed: favoriteBtnClicked,
+            //     style: ElevatedButton.styleFrom(
+            //       minimumSize: const Size.fromWidth(50),
+            //     ),
+            //     icon: Icon(!isFavorited
+            //         ? Icons.favorite_outline
+            //         : Icons.favorite_outlined),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 4.0, right: 4.0),
               child: IconButton(
