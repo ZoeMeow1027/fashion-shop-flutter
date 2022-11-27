@@ -4,6 +4,7 @@ import 'package:fashionshop/screens/product_details/components/current_state.dar
 import 'package:fashionshop/screens/product_details/components/basic_information.dart';
 import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'components/order_options.dart';
 
@@ -88,8 +89,11 @@ class _ProductDetailsView extends State<ProductDetailsView> {
           favoriteBtnClicked: () {
             // TODO: Send request to add to wishlist
           },
-          shareBtnClicked: () {
+          shareBtnClicked: () async {
             // TODO: Share this product links
+            await Share.share(
+              "http://127.0.0.1:8000/api/products/${widget.productItem.id}/",
+            );
           },
         ),
       ),
