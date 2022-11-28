@@ -1,16 +1,18 @@
 import 'package:fashionshop/model/user_profile.dart';
+import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:fashionshop/screens/home/components/wide_button.dart';
+import 'package:fashionshop/screens/my_purchase/my_purchase_view.dart';
 import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
 
 class AccountTab extends StatelessWidget {
   const AccountTab({
     super.key,
-    this.userProfile,
+    required this.viewModel,
     this.loginRequested,
     this.logoutRequested,
   });
-  final UserProfile? userProfile;
+  final HomeViewModel viewModel;
   final Function()? loginRequested;
   final Function()? logoutRequested;
 
@@ -34,7 +36,7 @@ class AccountTab extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child: userProfile == null
+        child: viewModel.userProfile == null
             ? _notLoggedIn(
                 context: context,
                 loginRequested: () {
@@ -42,7 +44,7 @@ class AccountTab extends StatelessWidget {
                     loginRequested!();
                   }
                 })
-            : _loggedIn(context: context, userProfile: userProfile),
+            : _loggedIn(context: context, userProfile: viewModel.userProfile),
       ),
     );
   }
@@ -96,12 +98,22 @@ class AccountTab extends StatelessWidget {
         ),
         wideButton(
           // TODO: Add more item like In progress, deliveried,...)
-          text: "Devilery Status",
+          text: "My Purchases",
+          iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
-          onClick: () {},
+          onClick: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    MyPurchaseView(token: viewModel.tokenKey!),
+              ),
+            );
+          },
         ),
         wideButton(
           text: "Vouchers",
+          iconData: Icons.confirmation_number_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {},
         ),
@@ -114,7 +126,7 @@ class AccountTab extends StatelessWidget {
         wideButton(
           text: "App Settings",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.settings,
+          iconData: Icons.settings_outlined,
           onClick: () {},
         ),
         wideButton(

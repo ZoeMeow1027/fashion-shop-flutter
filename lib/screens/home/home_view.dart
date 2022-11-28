@@ -1,4 +1,5 @@
 import 'package:fashionshop/screens/account_login/account_authorization_view.dart';
+import 'package:fashionshop/screens/account_login/components/show_snackbar_msg.dart';
 import 'package:fashionshop/screens/home/views/account_tab.dart';
 import 'package:fashionshop/screens/home/views/home_tab.dart';
 import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
@@ -23,7 +24,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.checkLoggedIn();
+    widget.viewModel.checkLoggedIn(onDone: (isLoggedIn) {
+      if (!isLoggedIn) {
+        showSnackbarMessage(
+            context: context, msg: "Session has expired! Please login again.");
+      }
+    });
     widget.viewModel.getProductList();
   }
 
@@ -44,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
           const WishlistTab(),
           AccountTab(
             key: ValueKey<Object>(objKey),
-            userProfile: widget.viewModel.userProfile,
+            viewModel: widget.viewModel,
             loginRequested: () async {
               await Navigator.push(
                 context,
@@ -81,14 +87,14 @@ class _HomeViewState extends State<HomeView> {
               topRight: Radius.circular(10.0),
             ),
             border: Border.all(
-              color: Color.fromARGB(255, 237, 228, 255),
+              color: const Color.fromARGB(255, 237, 228, 255),
               width: 2,
             ),
           ),
           color: Colors.transparent,
           child: NavigationBar(
-            backgroundColor: Color.fromARGB(255, 237, 228, 255),
-            surfaceTintColor: Color.fromARGB(255, 237, 228, 255),
+            backgroundColor: const Color.fromARGB(255, 237, 228, 255),
+            surfaceTintColor: const Color.fromARGB(255, 237, 228, 255),
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home),
