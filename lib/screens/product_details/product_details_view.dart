@@ -6,6 +6,7 @@ import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../config/configurations.dart';
 import 'components/order_options.dart';
 
 class ProductDetailsView extends StatefulWidget {
@@ -82,17 +83,15 @@ class _ProductDetailsView extends State<ProductDetailsView> {
       bottomNavigationBar: BottomAppBar(
         child: OrderActionsBar(
           context,
-          isFavorited: isFavorited,
-          addToCartBtnClicked: () {
+          onClickAddToCart: () {
             // TODO: Add to cart clicked
           },
-          favoriteBtnClicked: () {
+          onClickFavorite: () {
             // TODO: Send request to add to wishlist
           },
-          shareBtnClicked: () async {
-            // TODO: Share this product links
+          onClickShare: () async {
             await Share.share(
-              "http://127.0.0.1:8000/api/products/${widget.productItem.id}/",
+              "${Configurations.baseUrl}/api/products/${widget.productItem.id}/",
             );
           },
         ),

@@ -1,6 +1,6 @@
+import 'package:fashionshop/screens/my_purchase_detail/my_purchase_detail_view.dart';
 import 'package:flutter/material.dart';
 
-import '../account_login/components/show_snackbar_msg.dart';
 import 'components/history_item_widget.dart';
 import 'components/view_model.dart';
 
@@ -34,9 +34,7 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Your Purchase"),
-      ),
+      appBar: AppBar(title: const Text("Your Purchase")),
       backgroundColor: Colors.white,
       body: Column(
         children: List.generate(
@@ -49,10 +47,13 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
                 child: HistoryItemWidget(
                   cartItem: _viewModel.cartHistoryList[index],
                   onClickDeliveryStatus: () {
-                    showSnackbarMessage(
-                      context: context,
-                      msg:
-                          "Clicked ID: ${_viewModel.cartHistoryList[index].id}",
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPurchaseDetailView(
+                          cartHistoryItem: _viewModel.cartHistoryList[index],
+                        ),
+                      ),
                     );
                   },
                 ),

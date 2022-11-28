@@ -16,11 +16,37 @@ class HistoryItemWidget extends StatelessWidget {
   final Function()? onClickTrackOrder;
   final Function()? onClickDeliveryStatus;
 
+  // Get color from delivery status.
+  Color _colorStatus() {
+    // If not paid
+    if (cartItem.paidAt == null) {
+      return Colors.redAccent;
+    }
+    // If paid but not deliveried
+    if (cartItem.paidAt != null && cartItem.deliveredAt == null) {
+      return Colors.orangeAccent;
+    }
+    // If deliveried
+    if (cartItem.paidAt != null && cartItem.deliveredAt != null) {
+      return Colors.greenAccent;
+    }
+    // Other status will no color.
+    return Colors.transparent;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
+      foregroundDecoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: _colorStatus(),
+            width: 6,
+          ),
+        ),
+      ),
       color: const Color.fromARGB(255, 235, 235, 235),
       child: SingleChildScrollView(
         child: Column(
@@ -79,7 +105,7 @@ class HistoryItemWidget extends StatelessWidget {
         const Spacer(),
         Text(
           !isPaid
-              ? "Pending for payment"
+              ? "Waiting for payment"
               : !isDeliveried
                   ? "Done payment, waiting for delivery"
                   : "Completed",
@@ -115,7 +141,7 @@ class HistoryItemWidget extends StatelessWidget {
   }
 
   Widget _customButton({
-    required Function()? onClick,
+    Function()? onClick,
     required String text,
     Color? backgroundColor,
     Color? textColor,
