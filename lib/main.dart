@@ -32,6 +32,15 @@ class MainApplication extends StatefulWidget {
 
 class _MainApplicationState extends State<MainApplication> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.viewModel.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
