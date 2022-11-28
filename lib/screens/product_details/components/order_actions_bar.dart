@@ -5,15 +5,15 @@ class OrderActionsBar extends StatelessWidget {
     BuildContext context, {
     super.key,
     this.isFavorited = false,
-    required this.addToCartBtnClicked,
-    required this.favoriteBtnClicked,
-    required this.shareBtnClicked,
+    required this.onClickAddToCart,
+    required this.onClickFavorite,
+    required this.onClickShare,
   });
 
   final bool isFavorited;
-  final Function() addToCartBtnClicked;
-  final Function() favoriteBtnClicked;
-  final Function() shareBtnClicked;
+  final Function() onClickAddToCart;
+  final Function() onClickFavorite;
+  final Function() onClickShare;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class OrderActionsBar extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                 child: ElevatedButton(
-                  onPressed: addToCartBtnClicked,
+                  onPressed: onClickAddToCart,
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromWidth(50),
                   ),
@@ -41,22 +41,22 @@ class OrderActionsBar extends StatelessWidget {
                 ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+            //   child: IconButton(
+            //     onPressed: favoriteBtnClicked,
+            //     style: ElevatedButton.styleFrom(
+            //       minimumSize: const Size.fromWidth(50),
+            //     ),
+            //     icon: Icon(!isFavorited
+            //         ? Icons.favorite_outline
+            //         : Icons.favorite_outlined),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 4.0, right: 4.0),
               child: IconButton(
-                onPressed: favoriteBtnClicked,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromWidth(50),
-                ),
-                icon: Icon(!isFavorited
-                    ? Icons.favorite_outline
-                    : Icons.favorite_outlined),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-              child: IconButton(
-                onPressed: shareBtnClicked,
+                onPressed: onClickShare,
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromWidth(50),
                 ),

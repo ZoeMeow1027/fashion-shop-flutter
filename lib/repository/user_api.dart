@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:fashionshop/model/dto/login_dto.dart';
-import 'package:fashionshop/model/dto/register_dto.dart';
-import 'package:fashionshop/model/user_profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserAPI {
-  static const String _baseUrl = "http://127.0.0.1:8000";
+import '../config/configurations.dart';
+import '../model/dto/login_dto.dart';
+import '../model/dto/register_dto.dart';
+import '../model/user_profile.dart';
 
+class UserAPI {
   static Future<bool> isLoggedIn(String token) async {
     final response = await http.get(
-      Uri.parse('$_baseUrl/api/users/profile/'),
+      Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
       // Send authorization headers to the backend.
       headers: {
         HttpHeaders.authorizationHeader: token,
@@ -26,7 +26,7 @@ class UserAPI {
       if (!loginDTO.isValidate()) throw Exception("Missing data for login!");
 
       final response = await http.post(
-        Uri.parse('$_baseUrl/api/users/login/'),
+        Uri.parse('${Configurations.baseUrl}/api/users/login/'),
         // Send authorization headers to the backend.
         body: loginDTO.toJson(),
       );
@@ -55,7 +55,7 @@ class UserAPI {
   static Future<UserProfile?> getProfile(String token) async {
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/api/users/profile/'),
+        Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
         // Send authorization headers to the backend.
         headers: {
           HttpHeaders.authorizationHeader: token,
@@ -76,7 +76,7 @@ class UserAPI {
       if (!registerDTO.isValidate()) throw Exception("Missing data for login!");
 
       final response = await http.post(
-        Uri.parse('$_baseUrl/api/users/register/'),
+        Uri.parse('${Configurations.baseUrl}/api/users/register/'),
         // Send authorization headers to the backend.
         body: registerDTO.toJson(),
       );
