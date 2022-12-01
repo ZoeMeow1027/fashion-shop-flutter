@@ -34,6 +34,10 @@ class AccountTab extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
+          ),
         ],
       ),
       body: Padding(
@@ -71,20 +75,34 @@ class AccountTab extends StatelessWidget {
           iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    MyPurchaseView(token: viewModel.tokenKey!),
-              ),
-            );
+            if (viewModel.tokenKey == null) {
+              if (loginRequested != null) {
+                loginRequested!();
+              }
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      MyPurchaseView(token: viewModel.tokenKey!),
+                ),
+              );
+            }
           },
         ),
         wideButton(
           text: "Vouchers",
           iconData: Icons.confirmation_number_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
-          onClick: () {},
+          onClick: () {
+            if (viewModel.tokenKey == null) {
+              if (loginRequested != null) {
+                loginRequested!();
+              }
+            } else {
+              // TODO: Vouchers
+            }
+          },
         ),
         wideButton(
           text: "Help Center",
@@ -92,42 +110,38 @@ class AccountTab extends StatelessWidget {
           iconData: Icons.support_agent,
           onClick: () {},
         ),
-        wideButton(
-          text: "App Settings",
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.settings_outlined,
-          onClick: () {},
-        ),
-        wideButton(
-          text: "Logout",
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.logout,
-          onClick: () => showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: const Text('Logout'),
-              content: const Text(
-                'Are you sure you want to logout?',
-                style: TextStyle(fontSize: 16),
+        viewModel.userProfile == null
+            ? const Center()
+            : wideButton(
+                text: "Logout",
+                padding: const EdgeInsets.only(top: 7, bottom: 7),
+                iconData: Icons.logout,
+                onClick: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Logout'),
+                    content: const Text(
+                      'Are you sure you want to logout?',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('No'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          if (logoutRequested != null) {
+                            logoutRequested!();
+                          }
+                        },
+                        child: const Text('Yes'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('No'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    if (logoutRequested != null) {
-                      logoutRequested!();
-                    }
-                  },
-                  child: const Text('Yes'),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }

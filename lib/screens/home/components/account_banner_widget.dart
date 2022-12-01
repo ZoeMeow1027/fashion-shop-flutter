@@ -27,10 +27,13 @@ class AccountBannerWidget extends StatelessWidget {
           }
         }
       },
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        color: Colors.amberAccent,
-        child: _body(),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          color: const Color.fromARGB(255, 231, 208, 0),
+          child: _body(),
+        ),
       ),
     );
   }
