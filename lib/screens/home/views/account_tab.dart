@@ -32,6 +32,10 @@ class AccountTab extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
+          ),
         ],
       ),
       body: Padding(
@@ -91,7 +95,7 @@ class AccountTab extends StatelessWidget {
           ),
         ),
         wideButton(
-          text: "Account Profile",
+          text: "Account Settings",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           iconData: Icons.account_circle_outlined,
           onClick: () {},
@@ -121,12 +125,6 @@ class AccountTab extends StatelessWidget {
           text: "Help Center",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           iconData: Icons.support_agent,
-          onClick: () {},
-        ),
-        wideButton(
-          text: "App Settings",
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.settings_outlined,
           onClick: () {},
         ),
         wideButton(
