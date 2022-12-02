@@ -1,3 +1,4 @@
+import 'package:fashionshop/screens/account_auth/account_change_pass_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_profile.dart';
@@ -96,7 +97,19 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                 _customButton(
                   text: "Change Password",
                   textColor: Colors.black,
-                  onClick: () {},
+                  onClick: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AccountChangePassView(
+                          username: (_userProfile == null)
+                              ? "(unknown)"
+                              : _userProfile!.username,
+                          token: widget.token,
+                        ),
+                      ),
+                    );
+                  },
                   padding: const EdgeInsets.only(left: 5, right: 5),
                 ),
               ],
