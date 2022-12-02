@@ -1,5 +1,5 @@
-import 'package:fashionshop/screens/account_login/account_authorization_view.dart';
-import 'package:fashionshop/screens/account_login/components/show_snackbar_msg.dart';
+import 'package:fashionshop/screens/account_auth/account_auth_view.dart';
+import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:fashionshop/screens/home/views/account_tab.dart';
 import 'package:fashionshop/screens/home/views/home_tab.dart';
 import 'package:fashionshop/screens/home/views/wishlist_tab.dart';
