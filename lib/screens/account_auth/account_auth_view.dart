@@ -1,6 +1,6 @@
-import 'package:fashionshop/screens/account_login/components/current_state_account_view.dart';
-import 'package:fashionshop/screens/account_login/view/login_view.dart';
-import 'package:fashionshop/screens/account_login/view/register_view.dart';
+import 'package:fashionshop/screens/account_auth/components/current_state_account_view.dart';
+import 'package:fashionshop/screens/account_auth/view/login_view.dart';
+import 'package:fashionshop/screens/account_auth/view/register_view.dart';
 import 'package:flutter/material.dart';
 
 class AccountAuthorizationView extends StatefulWidget {
