@@ -24,10 +24,26 @@ class ProductListWidget extends StatelessWidget {
       if (count >= itemShownCount) {
         int remaining = productList.length - count;
         if (remaining > 0) {
-          widgetList.add(Center(
-            child: Text(
-              "${productList.length - count} more item${(productList.length - count) > 1 ? "s" : ""}",
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+          widgetList.add(Container(
+            padding: const EdgeInsets.only(top: 7, bottom: 7),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(6),
+                bottomRight: Radius.circular(6),
+              ),
+              shape: BoxShape.rectangle,
+              color: Colors.white,
+              // border: Border.all(
+              //   color: Colors.blue,
+              //   width: 2,
+              // ),
+            ),
+            child: Center(
+              child: Text(
+                "${productList.length - count} more item${(productList.length - count) > 1 ? "s" : ""}",
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+              ),
             ),
           ));
         }

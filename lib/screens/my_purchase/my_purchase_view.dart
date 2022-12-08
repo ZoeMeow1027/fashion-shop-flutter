@@ -36,30 +36,33 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
     return Scaffold(
       appBar: AppBar(title: const Text("Your Purchase")),
       backgroundColor: Colors.white,
-      body: Column(
-        children: List.generate(
-          _viewModel.cartHistoryList.length,
-          (index) {
-            return Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: HistoryItemWidget(
-                  cartItem: _viewModel.cartHistoryList[index],
-                  onClickDeliveryStatus: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyPurchaseDetailView(
-                          cartHistoryItem: _viewModel.cartHistoryList[index],
+      body: SingleChildScrollView(
+        child: Column(
+          children: List.generate(
+            _viewModel.cartHistoryList.length,
+            (index) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: HistoryItemWidget(
+                    cartItem: _viewModel.cartHistoryList[index],
+                    onClickDeliveryStatus: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyPurchaseDetailView(
+                            cartHistoryItem: _viewModel.cartHistoryList[index],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
