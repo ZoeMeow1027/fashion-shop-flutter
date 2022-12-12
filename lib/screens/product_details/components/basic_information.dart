@@ -10,12 +10,14 @@ class BasicInformation extends StatelessWidget {
     required this.productPrice,
     required this.previewLink,
     this.ratingValue,
+    this.ratingCount = 0,
   });
 
   final String productName;
   final String productPrice;
   final List<String> previewLink;
   final double? ratingValue;
+  final int ratingCount;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +48,16 @@ class BasicInformation extends StatelessWidget {
         ),
         ratingValue == null
             ? const Text("Not rating yet", style: TextStyle(fontSize: 17))
-            : _ratingBar(ratingValue: ratingValue!),
+            : _ratingBar(ratingValue: ratingValue!, ratingCount: ratingCount),
       ],
     );
   }
 
-  Widget _ratingBar({required double ratingValue, double fontSize = 17}) {
+  Widget _ratingBar({
+    required double ratingValue,
+    int ratingCount = 0,
+    double fontSize = 17,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: SizedBox(
@@ -78,6 +84,13 @@ class BasicInformation extends StatelessWidget {
                 style: TextStyle(fontSize: fontSize),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(
+                "($ratingCount review${ratingCount == 1 ? "" : "s"})",
+                style: const TextStyle(fontSize: 17),
+              ),
+            )
           ],
         ),
       ),
