@@ -1,5 +1,6 @@
-import 'package:fashionshop/model/user_profile.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/user_profile.dart';
 
 class AccountBannerWidget extends StatelessWidget {
   const AccountBannerWidget({

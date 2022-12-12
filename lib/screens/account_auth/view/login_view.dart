@@ -1,10 +1,11 @@
-import 'package:fashionshop/model/dto/login_dto.dart';
-import 'package:fashionshop/repository/user_api.dart';
-import 'package:fashionshop/screens/account_auth/components/current_state_account_view.dart';
-import 'package:fashionshop/screens/account_auth/components/custom_outlined_text_field.dart';
-import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/dto/login_dto.dart';
+import '../../../repository/user_api.dart';
+import '../components/current_state_account_view.dart';
+import '../components/custom_outlined_text_field.dart';
+import '../components/show_snackbar_msg.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({
@@ -52,17 +53,25 @@ class LoginView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                 child: customOutlinedTextField(
-                    text: 'Username',
-                    enabled: state.isEnabledControl,
-                    controller: state.usernameController),
+                  text: 'Username',
+                  enabled: state.isEnabledControl,
+                  controller: state.usernameController,
+                  onSubmitted: () async {
+                    await _loginClicked(context: context);
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                 child: customOutlinedTextField(
-                    isPassword: true,
-                    text: 'Password',
-                    enabled: state.isEnabledControl,
-                    controller: state.passwordController),
+                  isPassword: true,
+                  text: 'Password',
+                  enabled: state.isEnabledControl,
+                  controller: state.passwordController,
+                  onSubmitted: () async {
+                    await _loginClicked(context: context);
+                  },
+                ),
               ),
               // CheckboxListTile(
               //   title: const Text("Remember me?"),
@@ -81,41 +90,7 @@ class LoginView extends StatelessWidget {
               const EdgeInsets.only(top: 40, bottom: 15, left: 0, right: 0),
           child: ElevatedButton(
             onPressed: () async {
-              if (state.usernameController.text.length < 6) {
-                showSnackbarMessage(
-                    context: context,
-                    msg: 'Username must be at least 6 characters!');
-                return;
-              }
-              if (state.passwordController.text.length < 3) {
-                showSnackbarMessage(
-                    context: context,
-                    msg: 'Password must be at least 3 characters!');
-                return;
-              }
-              if (state.isEnabledControl) {
-                state.isEnabledControl = false;
-                onStateChanged(state);
-                showSnackbarMessage(context: context, msg: 'Logging you in...');
-                if (await UserAPI.login(LoginDTO.from(
-                  username: state.usernameController.text,
-                  password: state.passwordController.text,
-                ))) {
-                  // Show snackbar for successful login (this will be deleted in future)
-                  showSnackbarMessage(
-                      context: context, msg: 'Successfully login!');
-                  // Nav to home view or previous page
-                  Navigator.pop(context);
-                } else {
-                  // Show snackbar for logging failed!
-                  state.isEnabledControl = true;
-                  onStateChanged(state);
-                  showSnackbarMessage(
-                      context: context,
-                      msg:
-                          'Failed while logging you in! Check your username and password, and try again.');
-                }
-              }
+              await _loginClicked(context: context);
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(
@@ -172,5 +147,42 @@ class LoginView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _loginClicked({
+    required BuildContext context,
+  }) async {
+    if (state.usernameController.text.length < 6) {
+      showSnackbarMessage(
+          context: context, msg: 'Username must be at least 6 characters!');
+      return;
+    }
+    if (state.passwordController.text.length < 3) {
+      showSnackbarMessage(
+          context: context, msg: 'Password must be at least 3 characters!');
+      return;
+    }
+    if (state.isEnabledControl) {
+      state.isEnabledControl = false;
+      onStateChanged(state);
+      showSnackbarMessage(context: context, msg: 'Logging you in...');
+      if (await UserAPI.login(LoginDTO.from(
+        username: state.usernameController.text,
+        password: state.passwordController.text,
+      ))) {
+        // Show snack bar for successful login (this will be deleted in future)
+        showSnackbarMessage(context: context, msg: 'Successfully login!');
+        // Nav to home view or previous page
+        Navigator.pop(context);
+      } else {
+        // Show snack bar for logging failed!
+        state.isEnabledControl = true;
+        onStateChanged(state);
+        showSnackbarMessage(
+            context: context,
+            msg:
+                'Failed while logging you in! Check your username and password, and try again.');
+      }
+    }
   }
 }

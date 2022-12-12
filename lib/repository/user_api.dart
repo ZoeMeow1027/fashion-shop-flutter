@@ -11,14 +11,18 @@ import '../model/user_profile.dart';
 
 class UserAPI {
   static Future<bool> isLoggedIn(String token) async {
-    final response = await http.get(
-      Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
-      // Send authorization headers to the backend.
-      headers: {
-        HttpHeaders.authorizationHeader: token,
-      },
-    );
-    return (response.statusCode ~/ 100).round() == 2;
+    try {
+      final response = await http.get(
+        Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
+        // Send authorization headers to the backend.
+        headers: {
+          HttpHeaders.authorizationHeader: token,
+        },
+      );
+      return (response.statusCode ~/ 100).round() == 2;
+    } catch (ex) {
+      return false;
+    }
   }
 
   static Future<bool> login(LoginDTO loginDTO) async {

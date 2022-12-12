@@ -13,6 +13,7 @@ TextField customOutlinedTextField({
   bool enabled = true,
   bool isPassword = false,
   required TextEditingController controller,
+  Function()? onSubmitted,
 }) {
   return TextField(
     controller: controller,
@@ -20,6 +21,12 @@ TextField customOutlinedTextField({
     obscureText: isPassword,
     enableSuggestions: false,
     autocorrect: false,
+    textInputAction: TextInputAction.go,
+    onSubmitted: (p1) {
+      if (onSubmitted != null) {
+        onSubmitted();
+      }
+    },
     decoration: InputDecoration(
       labelText: text,
       enabledBorder: _outlineInputBorder(),

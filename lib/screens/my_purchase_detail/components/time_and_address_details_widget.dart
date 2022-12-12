@@ -1,7 +1,7 @@
-import 'package:fashionshop/model/cart_history_item.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../model/cart_history_item.dart';
 import 'two_lines_widget.dart';
 
 class TimeAndAddressDetailsWidget extends StatelessWidget {

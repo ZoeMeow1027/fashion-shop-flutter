@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fashionshop/model/product_item.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/product_item.dart';
 
 class ProductSummaryWidget extends StatelessWidget {
   const ProductSummaryWidget({
@@ -16,8 +15,6 @@ class ProductSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("triggered");
-
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10.0),

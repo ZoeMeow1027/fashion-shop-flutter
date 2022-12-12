@@ -1,12 +1,10 @@
-import 'package:fashionshop/screens/home/home_view.dart';
-import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WelcomeView extends StatelessWidget {
-  const WelcomeView({super.key, required this.viewModel});
+import '../home/home_view.dart';
 
-  final HomeViewModel viewModel;
+class WelcomeView extends StatelessWidget {
+  const WelcomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +34,7 @@ class WelcomeView extends StatelessWidget {
 
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeView(viewModel: viewModel)),
+                  MaterialPageRoute(builder: (context) => const HomeView()),
                   (Route<dynamic> route) => false,
                 );
               },

@@ -51,6 +51,9 @@ class MyPurchaseDetailView extends StatelessWidget {
               onClick: (productId) {
                 // TODO: Replace here!
                 ProductAPI.getProducts().then((value) {
+                  if (value == null) {
+                    return;
+                  }
                   final product = value.where((p0) => p0.id == productId);
 
                   if (product.isNotEmpty) {
