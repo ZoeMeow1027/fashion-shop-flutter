@@ -1,5 +1,6 @@
-import 'package:fashionshop/screens/account_auth/components/custom_outlined_text_field.dart';
 import 'package:flutter/material.dart';
+
+import 'components/custom_outlined_text_field.dart';
 
 class AccountChangePassView extends StatefulWidget {
   const AccountChangePassView({

@@ -1,6 +1,7 @@
-import 'package:fashionshop/screens/product_details/components/image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'image_preview.dart';
 
 class BasicInformation extends StatelessWidget {
   const BasicInformation({

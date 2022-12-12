@@ -1,20 +1,22 @@
-import 'package:fashionshop/model/user_profile.dart';
-import 'package:fashionshop/screens/account_profile/account_profile_view.dart';
-import 'package:fashionshop/screens/home/components/account_banner_widget.dart';
-import 'package:fashionshop/screens/home/components/view_model.dart';
-import 'package:fashionshop/screens/home/components/wide_button.dart';
-import 'package:fashionshop/screens/my_purchase/my_purchase_view.dart';
-import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/user_profile.dart';
+import '../../account_profile/account_profile_view.dart';
+import '../../my_purchase/my_purchase_view.dart';
+import '../../product_search/product_search_view.dart';
+import '../components/account_banner_widget.dart';
+import '../components/wide_button.dart';
 
 class AccountTab extends StatelessWidget {
   const AccountTab({
     super.key,
-    required this.viewModel,
+    this.tokenKey,
+    this.userProfile,
     this.loginRequested,
     this.logoutRequested,
   });
-  final HomeViewModel viewModel;
+  final String? tokenKey;
+  final UserProfile? userProfile;
   final Function()? loginRequested;
   final Function()? logoutRequested;
 
@@ -42,7 +44,7 @@ class AccountTab extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        child: _loggedIn(context: context, userProfile: viewModel.userProfile),
+        child: _loggedIn(context: context, userProfile: userProfile),
       ),
     );
   }
@@ -62,20 +64,19 @@ class AccountTab extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      AccountProfileView(token: viewModel.tokenKey!),
+                  builder: (context) => AccountProfileView(token: tokenKey!),
                 ),
               );
             },
           ),
         ),
         wideButton(
-          // TODO: Add more item like In progress, deliveried,...)
+          // TODO: Add more item like In progress, delivered,...)
           text: "My Purchases",
           iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {
-            if (viewModel.tokenKey == null) {
+            if (tokenKey == null) {
               if (loginRequested != null) {
                 loginRequested!();
               }
@@ -83,8 +84,7 @@ class AccountTab extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      MyPurchaseView(token: viewModel.tokenKey!),
+                  builder: (context) => MyPurchaseView(token: tokenKey!),
                 ),
               );
             }
@@ -95,7 +95,7 @@ class AccountTab extends StatelessWidget {
           iconData: Icons.confirmation_number_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {
-            if (viewModel.tokenKey == null) {
+            if (tokenKey == null) {
               if (loginRequested != null) {
                 loginRequested!();
               }
@@ -110,7 +110,7 @@ class AccountTab extends StatelessWidget {
           iconData: Icons.support_agent,
           onClick: () {},
         ),
-        viewModel.userProfile == null
+        userProfile == null
             ? const Center()
             : wideButton(
                 text: "Logout",

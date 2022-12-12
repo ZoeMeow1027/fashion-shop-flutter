@@ -13,7 +13,7 @@ import 'package:fashionshop/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MainApplication(
+    await tester.pumpWidget(const MainApplication(
       welcomePassed: false,
     ));
 

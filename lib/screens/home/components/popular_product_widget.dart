@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 
@@ -44,8 +42,6 @@ class PopularProductListWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               builder: (ctx, index) {
-                /// return your widget here.
-                log("triggered home view");
                 return ProductSummaryWidget(
                   productItem: productItemList[index],
                   onClick: () {

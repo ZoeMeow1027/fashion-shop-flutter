@@ -6,10 +6,10 @@ import '../config/configurations.dart';
 import '../model/product_item.dart';
 
 class ProductAPI {
-  static Future<List<ProductItem>> getProducts() async {
-    final List<ProductItem> list = [];
-
+  static Future<List<ProductItem>?> getProducts() async {
     try {
+      final List<ProductItem> list = [];
+
       final response = await http.get(
         Uri.parse('${Configurations.baseUrl}/api/products/'),
       );
@@ -24,10 +24,9 @@ class ProductAPI {
       for (var d in data) {
         list.add(ProductItem.fromJson(d as Map<String, dynamic>));
       }
+      return list;
     } catch (ex) {
-      list.clear();
+      return null;
     }
-
-    return list;
   }
 }

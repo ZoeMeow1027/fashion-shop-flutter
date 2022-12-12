@@ -1,12 +1,12 @@
-import 'package:fashionshop/model/product_item.dart';
-import 'package:fashionshop/screens/product_details/components/order_actions_bar.dart';
-import 'package:fashionshop/screens/product_details/components/current_state.dart';
-import 'package:fashionshop/screens/product_details/components/basic_information.dart';
-import 'package:fashionshop/screens/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config/configurations.dart';
+import '../../model/product_item.dart';
+import '../product_search/product_search_view.dart';
+import 'components/basic_information.dart';
+import 'components/current_state.dart';
+import 'components/order_actions_bar.dart';
 import 'components/order_options.dart';
 
 class ProductDetailsView extends StatefulWidget {
@@ -22,28 +22,6 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsView extends State<ProductDetailsView> {
-  // final List<int> availableColors = [
-  //   Colors.blue.value,
-  //   Colors.red.value,
-  //   Colors.black.value,
-  //   Colors.pink.value,
-  //   Colors.purple.value,
-  //   Colors.green.value,
-  //   Colors.lightBlue.value,
-  //   Colors.lightGreen.value,
-  //   Colors.yellow.value,
-  //   Colors.amber.value,
-  // ];
-
-  // final List<String> previewLink = [
-  //   'https://www.pngall.com/wp-content/uploads/2018/04/Clothing-PNG-File.png',
-  //   'https://www.transparentpng.com/thumb/clothes-png/RB9gy1-clothes-simple.png',
-  //   'https://www.freepnglogos.com/uploads/garments-png/plain-powder-blue-women-polo-shirt-cutton-garments-40.png',
-  //   'http://clipart-library.com/newimages/clothes-clip-art-11.png',
-  //   'http://clipart-library.com/images/E6TpBqGiE.png',
-  //   'http://clipart-library.com/img/1781833.png',
-  // ];
-
   final List<int>? availableColors = null;
   final List<String>? availableSize = null;
   final bool isFavorited = false;
@@ -87,7 +65,7 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             // TODO: Add to cart clicked
           },
           onClickFavorite: () {
-            // TODO: Send request to add to wishlist
+            // TODO: Send request to add to cart
           },
           onClickShare: () async {
             await Share.share(

@@ -4,7 +4,7 @@ My 6th project-based learning.
 
 ## Requirements
 
-- Flutter (dev in 3.3.8). Pre-activated Android, iOS, Windows.
+- Flutter (currently dev in 3.3.8). Pre-activated Android, iOS, Windows.
 
 ## How to run this app?
 

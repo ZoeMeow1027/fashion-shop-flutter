@@ -1,8 +1,9 @@
-import 'package:fashionshop/screens/product_details/components/current_state.dart';
-import 'package:fashionshop/screens/product_details/components/color_selector.dart';
-import 'package:fashionshop/screens/product_details/components/amount_selector.dart';
-import 'package:fashionshop/screens/product_details/components/product_size_selector.dart';
 import 'package:flutter/material.dart';
+
+import 'amount_selector.dart';
+import 'color_selector.dart';
+import 'current_state.dart';
+import 'product_size_selector.dart';
 
 class OrderOptions extends StatelessWidget {
   const OrderOptions({
