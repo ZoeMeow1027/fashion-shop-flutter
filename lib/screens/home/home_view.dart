@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,6 +57,7 @@ class _HomeViewState extends State<HomeView> {
           YourCartTab(key: ValueKey<Object>(_objKey)),
           AccountTab(
             key: ValueKey<Object>(_objKey),
+            tokenKey: _tokenKey,
             userProfile: _userProfile,
             loginRequested: () async {
               await Navigator.push(
@@ -168,12 +171,12 @@ class _HomeViewState extends State<HomeView> {
       await prefs.remove("tokenKey");
     } else {
       _userProfile = await UserAPI.getProfile(_tokenKey!);
+      log("triggered");
       isLoggedIn = true;
     }
 
     if (onDone != null) {
       onDone(isLoggedIn);
     }
-    setState(() {});
   }
 }
