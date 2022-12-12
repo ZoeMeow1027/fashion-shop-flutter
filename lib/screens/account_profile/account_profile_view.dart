@@ -1,8 +1,8 @@
-import 'package:fashionshop/screens/account_auth/account_change_pass_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_profile.dart';
 import '../../repository/user_api.dart';
+import '../account_auth/account_change_pass_view.dart';
 
 class AccountProfileView extends StatefulWidget {
   const AccountProfileView({super.key, required this.token});

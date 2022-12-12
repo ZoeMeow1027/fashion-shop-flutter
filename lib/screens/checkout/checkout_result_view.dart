@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CheckoutView extends StatelessWidget {
-  const CheckoutView({
+class CheckoutResultView extends StatelessWidget {
+  const CheckoutResultView({
     super.key,
     required this.orderId,
     this.orderStatus = -1,

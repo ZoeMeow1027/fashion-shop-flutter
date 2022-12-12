@@ -1,7 +1,8 @@
-import 'package:fashionshop/screens/account_auth/components/current_state_account_view.dart';
-import 'package:fashionshop/screens/account_auth/view/login_view.dart';
-import 'package:fashionshop/screens/account_auth/view/register_view.dart';
 import 'package:flutter/material.dart';
+
+import 'components/current_state_account_view.dart';
+import 'view/login_view.dart';
+import 'view/register_view.dart';
 
 class AccountAuthorizationView extends StatefulWidget {
   const AccountAuthorizationView({super.key});
@@ -16,7 +17,6 @@ class _AccountAuthorizationViewState extends State<AccountAuthorizationView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = PageController();
     _state = CurrentStateAccountView();
@@ -63,7 +63,7 @@ class _AccountAuthorizationViewState extends State<AccountAuthorizationView> {
               },
             )
           ],
-        ), // TODO: view data here!
+        ),
       ),
     );
   }

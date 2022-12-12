@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:fashionshop/screens/home/home_view.dart';
-import 'package:fashionshop/screens/welcome/welcome_view.dart';
-import 'package:fashionshop/screens/home/components/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'screens/home/home_view.dart';
+import 'screens/welcome/welcome_view.dart';
 
 void main() {
   bool welcomePassed;
@@ -19,27 +19,17 @@ void main() {
 }
 
 class MainApplication extends StatefulWidget {
-  MainApplication({
+  const MainApplication({
     super.key,
     required this.welcomePassed,
   });
   final bool welcomePassed;
-  final HomeViewModel viewModel = HomeViewModel();
 
   @override
   State<MainApplication> createState() => _MainApplicationState();
 }
 
 class _MainApplicationState extends State<MainApplication> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    widget.viewModel.addListener(() {
-      setState(() {});
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,9 +40,7 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: widget.welcomePassed
-          ? HomeView(viewModel: widget.viewModel)
-          : WelcomeView(viewModel: widget.viewModel),
+      home: widget.welcomePassed ? const HomeView() : const WelcomeView(),
     );
   }
 }

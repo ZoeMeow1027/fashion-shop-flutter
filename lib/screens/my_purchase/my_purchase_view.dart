@@ -1,6 +1,6 @@
-import 'package:fashionshop/screens/my_purchase_detail/my_purchase_detail_view.dart';
 import 'package:flutter/material.dart';
 
+import '../my_purchase_detail/my_purchase_detail_view.dart';
 import 'components/history_item_widget.dart';
 import 'components/view_model.dart';
 
@@ -34,7 +34,7 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Your Purchase")),
+      appBar: AppBar(title: const Text("Your Purchases")),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

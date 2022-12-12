@@ -1,10 +1,11 @@
-import 'package:fashionshop/model/dto/register_dto.dart';
-import 'package:fashionshop/repository/user_api.dart';
-import 'package:fashionshop/screens/account_auth/components/current_state_account_view.dart';
-import 'package:fashionshop/screens/account_auth/components/custom_outlined_text_field.dart';
-import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/dto/register_dto.dart';
+import '../../../repository/user_api.dart';
+import '../components/current_state_account_view.dart';
+import '../components/custom_outlined_text_field.dart';
+import '../components/show_snackbar_msg.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({
