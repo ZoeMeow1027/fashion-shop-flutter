@@ -129,9 +129,10 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             productName: "${widget.productItem.name}",
             productPrice: "${widget.productItem.price}\$",
             previewLink: [
-              "http://127.0.0.1:8000${widget.productItem.imageUrl!}"
+              "${Configurations.baseUrl}${widget.productItem.imageUrl!}"
             ],
             ratingValue: widget.productItem.rating,
+            ratingCount: widget.productItem.reviewNum,
           ),
           OrderOptions(
             availableColors: availableColors,
