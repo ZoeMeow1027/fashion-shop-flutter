@@ -11,7 +11,7 @@ class ProductListWidget extends StatelessWidget {
   });
 
   final int itemShownCount;
-  final List<OrderHistoryItem> productList;
+  final List<OrderItem> productList;
 
   @override
   Widget build(BuildContext context) {

@@ -72,7 +72,7 @@ class AccountTab extends StatelessWidget {
         ),
         wideButton(
           // TODO: Add more item like In progress, delivered,...)
-          text: "My Purchases",
+          text: "Your Purchases",
           iconData: Icons.assignment_outlined,
           padding: const EdgeInsets.only(top: 7, bottom: 7),
           onClick: () {
@@ -90,20 +90,20 @@ class AccountTab extends StatelessWidget {
             }
           },
         ),
-        wideButton(
-          text: "Vouchers",
-          iconData: Icons.confirmation_number_outlined,
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
-          onClick: () {
-            if (tokenKey == null) {
-              if (loginRequested != null) {
-                loginRequested!();
-              }
-            } else {
-              // TODO: Vouchers
-            }
-          },
-        ),
+        // wideButton(
+        //   text: "Vouchers",
+        //   iconData: Icons.confirmation_number_outlined,
+        //   padding: const EdgeInsets.only(top: 7, bottom: 7),
+        //   onClick: () {
+        //     if (tokenKey == null) {
+        //       if (loginRequested != null) {
+        //         loginRequested!();
+        //       }
+        //     } else {
+        //       // TODO: Vouchers
+        //     }
+        //   },
+        // ),
         wideButton(
           text: "Help Center",
           padding: const EdgeInsets.only(top: 7, bottom: 7),
