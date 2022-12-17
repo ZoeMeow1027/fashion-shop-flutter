@@ -10,4 +10,11 @@ class UserProfile {
     email = json['email'].toString();
     name = json['name'].toString();
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "username": username,
+        "name": name,
+        "email": email,
+      };
 }

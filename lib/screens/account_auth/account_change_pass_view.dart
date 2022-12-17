@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 
+import '../../repository/user_api.dart';
 import 'components/custom_outlined_text_field.dart';
 
 class AccountChangePassView extends StatefulWidget {
@@ -91,18 +95,40 @@ class _AccountChangePassViewState extends State<AccountChangePassView> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 40, bottom: 15, left: 0, right: 0),
+              padding: const EdgeInsets.only(top: 40, bottom: 15),
               child: ElevatedButton(
                 onPressed: () async {
+                  // TODO: Change password here!
+                  if (_newPassController.text != _reEnterPassController.text) {
+                    showSnackbarMessage(
+                        context: context,
+                        msg:
+                            "Your new password and re-enter new password aren't same! Check your information, and try again.");
+                    return;
+                  }
                   setState(() {
                     _isEnabledWidget = false;
                   });
-                  // TODO: Change password here!
+                  showSnackbarMessage(
+                      context: context, msg: "Changing your password...");
+                  await UserAPI.changePassword(
+                    token: widget.token,
+                    oldPassword: _oldPassController.text,
+                    newPassword: _newPassController.text,
+                  ).then((value) {
+                    showSnackbarMessage(
+                        context: context,
+                        msg: "Successfully changed your password!");
+                  }).catchError((error, stackTrace) {
+                    showSnackbarMessage(
+                        context: context, msg: error.toString());
+                  });
+                  setState(() {
+                    _isEnabledWidget = true;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(
-                      50), // fromHeight use double.infinity as width and 40 is the height
+                  minimumSize: const Size.fromHeight(50),
                 ),
                 child: const Text("Change password"),
               ),
