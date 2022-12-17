@@ -1,6 +1,6 @@
 class CartHistoryItem {
   int id = 0;
-  List<OrderHistoryItem> cartList = [];
+  List<OrderItem> cartList = [];
   ShippingAddress? shippingAddress;
   String paymentMethod = "CoD";
   double taxPrice = 0;
@@ -21,27 +21,46 @@ class CartHistoryItem {
     createdAt = DateTime.tryParse(json['createAt'].toString());
     shippingAddress = ShippingAddress.fromJson(json['shippingAddress']);
     for (var orderItem in (json['orderItems'] as List<dynamic>)) {
-      cartList
-          .add(OrderHistoryItem.fromJson(orderItem as Map<String, dynamic>));
+      cartList.add(OrderItem.fromJson(orderItem as Map<String, dynamic>));
     }
   }
 }
 
-class OrderHistoryItem {
+class OrderItem {
   int id = 0;
   String name = "";
-  int quality = 0;
+  int quantity = 0;
   double price = 0;
   String imageUrl = "";
   int productId = 0;
 
-  OrderHistoryItem.fromJson(Map<String, dynamic> json) {
+  OrderItem({
+    this.id = 0,
+    this.name = "",
+    this.quantity = 0,
+    this.price = 0,
+    this.imageUrl = "",
+    this.productId = 0,
+  });
+
+  OrderItem.fromJson(Map<String, dynamic> json) {
     id = int.tryParse(json['_id'].toString()) ?? 0;
     name = json['name'].toString();
-    quality = int.tryParse(json['qty'].toString()) ?? 0;
+    quantity = int.tryParse(json['qty'].toString()) ?? 0;
     price = double.tryParse(json['price'].toString()) ?? 0;
     imageUrl = json['image'].toString();
     productId = int.tryParse(json['product'].toString()) ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "_id": id,
+      "name": name,
+      "qty": quantity,
+      "price": price,
+      "image": imageUrl,
+      "product": productId,
+    };
   }
 }
 

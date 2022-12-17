@@ -11,7 +11,7 @@ class ProductListWidget extends StatelessWidget {
     this.onClick,
   });
 
-  final List<OrderHistoryItem> productList;
+  final List<OrderItem> productList;
   final EdgeInsetsGeometry padding;
   final Function(int)? onClick;
 

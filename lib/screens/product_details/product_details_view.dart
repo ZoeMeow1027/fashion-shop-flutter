@@ -1,8 +1,10 @@
+import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config/configurations.dart';
 import '../../model/product_item.dart';
+import '../../repository/cart_api.dart';
 import '../product_search/product_search_view.dart';
 import 'components/basic_information.dart';
 import 'components/current_state.dart';
@@ -62,11 +64,24 @@ class _ProductDetailsView extends State<ProductDetailsView> {
         child: OrderActionsBar(
           context,
           onClickAddToCart: () {
-            // TODO: Add to cart clicked
+            CartAPI.addToCart(
+              token: "",
+              productId: widget.productItem.id!,
+            ).then((value) {
+              showSnackbarMessage(
+                context: context,
+                msg: "Successfully added this product to your cart.",
+              );
+            });
+            //     .onError((error, stackTrace) {
+            //   showSnackbarMessage(
+            //     context: context,
+            //     msg:
+            //         "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
+            //   );
+            // });
           },
-          onClickFavorite: () {
-            // TODO: Send request to add to cart
-          },
+          onClickFavorite: () {},
           onClickShare: () async {
             await Share.share(
               "${Configurations.baseUrl}/api/products/${widget.productItem.id}/",

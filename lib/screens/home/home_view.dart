@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
         },
         children: [
           HomeTab(key: ValueKey<Object>(_objKey)),
-          YourCartTab(key: ValueKey<Object>(_objKey)),
+          YourCartTab(key: ValueKey<Object>(_objKey), tokenKey: _tokenKey),
           AccountTab(
             key: ValueKey<Object>(_objKey),
             tokenKey: _tokenKey,
