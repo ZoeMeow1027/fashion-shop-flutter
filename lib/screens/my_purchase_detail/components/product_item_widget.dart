@@ -11,7 +11,7 @@ class ProductItemWidget extends StatelessWidget {
     this.onClick,
   });
 
-  final OrderHistoryItem productItem;
+  final OrderItem productItem;
   final Function()? onClick;
 
   @override
@@ -56,7 +56,7 @@ class ProductItemWidget extends StatelessWidget {
                             fontSize: 17, fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "Quantity: ${productItem.quality}",
+                        "Quantity: ${productItem.quantity}",
                         style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w400),
                       ),

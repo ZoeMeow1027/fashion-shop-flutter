@@ -2,20 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
 import '../config/configurations.dart';
 import '../model/cart_history_item.dart';
 
 class OrderAPI {
-  // static Future<bool> isLoggedIn(String token) async {
-  //   final response = await http.get(
-  //     Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
-  //     // Send authorization headers to the backend.
-  //     headers: {
-  //       HttpHeaders.authorizationHeader: token,
-  //     },
-  //   );
-  //   return (response.statusCode ~/ 100).round() == 2;
-  // }
   static Future<List<CartHistoryItem>> getCartHistory(String token) async {
     List<CartHistoryItem> list = [];
 
