@@ -26,13 +26,9 @@ class _HomeTabState extends State<HomeTab>
   }
 
   Future<void> _refreshData() async {
-    setState(() {
-      _productListDone = false;
-    });
+    _productListDone = false;
     await _getProductList();
-    setState(() {
-      _productListDone = true;
-    });
+    _productListDone = true;
   }
 
   @override
@@ -40,7 +36,9 @@ class _HomeTabState extends State<HomeTab>
     super.initState();
     // This will refresh ui state to force reload
     _refreshData().then((value) {
-      setState(() {});
+      try {
+        setState(() {});
+      } catch (ex) {}
     });
   }
 
