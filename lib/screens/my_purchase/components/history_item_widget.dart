@@ -50,6 +50,8 @@ class HistoryItemWidget extends StatelessWidget {
       color: const Color.fromARGB(255, 235, 235, 235),
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _dateAndStatus(
               date: cartItem.createdAt,
@@ -94,7 +96,9 @@ class HistoryItemWidget extends StatelessWidget {
     required bool isPaid,
     required bool isDeliveried,
   }) {
-    return Row(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           date == null
@@ -102,10 +106,9 @@ class HistoryItemWidget extends StatelessWidget {
               : "Date: ${DateFormat("dd/MM/yyyy HH:mm").format(date)}",
           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
         ),
-        const Spacer(),
         Text(
           !isPaid
-              ? "Waiting for payment"
+              ? "Not paid yet"
               : !isDeliveried
                   ? "Done payment, waiting for delivery"
                   : "Completed",
