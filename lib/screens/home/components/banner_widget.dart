@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/custom_cache_network_image.dart';
+
 class BannerWidget extends StatefulWidget {
   const BannerWidget({super.key, required this.imageList});
 
@@ -17,11 +19,8 @@ class _BannerWidgetState extends State<BannerWidget> {
     return CarouselSlider.builder(
       itemCount: widget.imageList.length,
       itemBuilder: ((context, index, realIndex) {
-        return CachedNetworkImage(
-          placeholder: (context, url) => const CircularProgressIndicator(),
+        return CustomCacheNetworkImage(
           imageUrl: widget.imageList[index],
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
         );
       }),
       options: CarouselOptions(

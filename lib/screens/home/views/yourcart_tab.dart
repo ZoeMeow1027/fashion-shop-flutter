@@ -4,6 +4,7 @@ import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.da
 import 'package:flutter/material.dart';
 
 import '../../../repository/cart_api.dart';
+import '../../checkout/checkout_view.dart';
 import '../../product_search/product_search_view.dart';
 import '../components/product_item_widget.dart';
 
@@ -94,8 +95,12 @@ class _YourCartTabState extends State<YourCartTab> {
                     "Your cart is empty! Add a product to cart and come back here when you are ready.");
           } else {
             // TODO: Checkout cart here!
-            showSnackbarMessage(
-                context: context, msg: "Your cart is not empty!");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutView(token: widget.tokenKey!),
+              ),
+            );
           }
         },
         isExtended: true,

@@ -143,7 +143,8 @@ class _ProductDetailsView extends State<ProductDetailsView> {
           BasicInformation(
             productName: "${widget.productItem.name}",
             productPrice: "${widget.productItem.price}\$",
-            previewLink: ["${Urls.urlBase}${widget.productItem.imageUrl!}"],
+            // previewLink: ["${Urls.urlBase}${widget.productItem.imageUrl!}"],
+            previewLink: ["${widget.productItem.imageUrl!}"],
             ratingValue: widget.productItem.rating,
             ratingCount: widget.productItem.reviewNum,
           ),

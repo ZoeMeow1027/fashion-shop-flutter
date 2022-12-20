@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fashionshop/screens/components/custom_cache_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ImagePreview extends StatefulWidget {
@@ -20,10 +21,8 @@ class _ImagePreviewState extends State<ImagePreview> {
         CarouselSlider.builder(
           itemCount: widget.previewLink.length,
           itemBuilder: ((context, index, realIndex) {
-            return Image.network(
-              widget.previewLink[index],
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
+            return CustomCacheNetworkImage(
+              imageUrl: widget.previewLink[index],
             );
           }),
           options: CarouselOptions(
