@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/urls.dart';
 import '../../../model/cart_history_item.dart';
+import '../../components/custom_cache_network_image.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
@@ -27,12 +28,10 @@ class ProductItemWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CachedNetworkImage(
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            imageUrl: "${Urls.urlBase}${productItem.imageUrl}",
+          CustomCacheNetworkImage(
+            imageUrl: "${productItem.imageUrl}",
             height: 90,
             width: 90,
-            fit: BoxFit.cover,
           ),
           Expanded(
             child: Padding(

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fashionshop/config/urls.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/product_item.dart';
+import '../../components/custom_cache_network_image.dart';
 
 class ProductSummaryWidget extends StatelessWidget {
   const ProductSummaryWidget({
@@ -39,13 +41,10 @@ class ProductSummaryWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              CachedNetworkImage(
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                imageUrl: "http://127.0.0.1:8000${productItem.imageUrl}",
+              CustomCacheNetworkImage(
+                imageUrl: "${productItem.imageUrl}",
                 width: 300,
                 height: 250,
-                fit: BoxFit.cover,
               ),
               Padding(
                 padding: const EdgeInsets.only(
