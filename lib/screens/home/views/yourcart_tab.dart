@@ -66,6 +66,36 @@ class _YourCartTabState extends State<YourCartTab> {
                       ),
                       child: ProductItemWidget(
                         productItem: snapshot.data![index],
+                        onClickDelete: () {
+                          return showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Remove this item?'),
+                              content: const Text(
+                                'Are you sure you want to remove this item from your cart?',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    CartAPI.removeFromCart(
+                                      token: "",
+                                      productId:
+                                          snapshot.data![index].productId,
+                                    );
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     );
                   },

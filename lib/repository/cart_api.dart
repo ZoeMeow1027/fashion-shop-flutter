@@ -114,6 +114,25 @@ class CartAPI {
     required String token,
     required int productId,
   }) async {
-    // TODO: Remove a item from local storage
+    // Get cart from local storage
+    final prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString("cart");
+
+    // If null data, return empty array.
+    if (data == null) {
+      return;
+    }
+
+    // Otherwise, try to get from local storage
+    List<OrderItem> list = List.castFrom(json.decode(data))
+        .toList()
+        .map((val) => OrderItem.fromJson(val))
+        .toList();
+
+    if (list.any((element) => element.productId == productId)) {
+      list.removeWhere((element) => element.productId == productId);
+    }
+
+    prefs.setString("cart", jsonEncode(list));
   }
 }
