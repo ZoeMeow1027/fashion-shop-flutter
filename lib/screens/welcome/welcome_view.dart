@@ -12,7 +12,7 @@ class WelcomeView extends StatelessWidget {
       // ignore: prefer_const_constructors
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: AssetImage("assets/images/bg-welcome.jpg"),
+          image: AssetImage("assets/img/bg-welcome.jpg"),
           fit: BoxFit.cover,
         ),
       ),
