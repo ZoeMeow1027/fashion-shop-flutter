@@ -1,5 +1,6 @@
 class Urls {
-  static String urlBase = "http://127.0.0.1:8000";
+  // static String urlBase = "http://127.0.0.1:8000";
+  static String urlBase = "https://tienhung.pythonanywhere.com";
   static String urlMyOrders = "/api/orders/myorders/";
   static String urlGetProducts = "/api/products/";
   static String urlProfile = "/api/users/profile/";
