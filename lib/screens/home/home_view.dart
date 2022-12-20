@@ -121,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ],
             selectedIndex: _currentPage,
-            onDestinationSelected: (index) {
+            onDestinationSelected: (index) async {
               switch (index) {
                 case 1:
                   if (_isLoggedIn) {
@@ -129,12 +129,18 @@ class _HomeViewState extends State<HomeView> {
                       _pageController.jumpToPage(index);
                     });
                   } else {
-                    Navigator.push(
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const AccountAuthorizationView(),
-                      ),
+                          builder: (context) =>
+                              const AccountAuthorizationView()),
                     );
+                    await _checkLoggedIn(onDone: (isLoggedIn) {
+                      setState(() {
+                        _isLoggedIn = isLoggedIn;
+                        _objKey = Object();
+                      });
+                    });
                   }
                   break;
                 default:

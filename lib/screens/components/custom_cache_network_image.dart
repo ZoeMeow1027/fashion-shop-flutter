@@ -37,14 +37,6 @@ class _CustomCacheNetworkImageState extends State<CustomCacheNetworkImage> {
               Icons.error_outline_outlined,
               size: 60,
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 10),
-              child: Text(
-                "Failed to\nload image!",
-                style: TextStyle(fontSize: 17),
-                textAlign: TextAlign.center,
-              ),
-            ),
           ],
         );
       },
