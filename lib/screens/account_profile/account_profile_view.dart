@@ -96,6 +96,13 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                           _updateBtnText = "Save Changes";
                         });
                       } else {
+                        showSnackbarMessage(
+                          context: context,
+                          msg: "Changing your profile...",
+                        );
+                        setState(() {
+                          _isEnabledWidget = false;
+                        });
                         await UserAPI.updateProfile(
                           token: widget.token,
                           profile: UserProfile.fromJson({
@@ -109,9 +116,9 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                             context: context,
                             msg:
                                 "Successfully changed your profile information!",
+                            clearOld: true,
                           );
                           setState(() {
-                            _isEnabledWidget = false;
                             _updateBtnText = "Update Profile";
                           });
                         }).catchError((e, _) {
@@ -119,6 +126,9 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                             context: context,
                             msg: e,
                           );
+                          setState(() {
+                            _isEnabledWidget = true;
+                          });
                         });
                       }
                     },
