@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../config/configurations.dart';
+import '../config/urls.dart';
 import '../model/product_item.dart';
 
 class ProductAPI {
@@ -11,7 +11,7 @@ class ProductAPI {
       final List<ProductItem> list = [];
 
       final response = await http.get(
-        Uri.parse('${Configurations.baseUrl}/api/products/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlGetProducts}'),
       );
 
       // If status code isn't successful, throw exception

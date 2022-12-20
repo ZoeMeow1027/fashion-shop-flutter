@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '../config/configurations.dart';
+import '../config/urls.dart';
 import '../model/cart_history_item.dart';
 
 class OrderAPI {
@@ -12,7 +12,7 @@ class OrderAPI {
 
     try {
       final response = await http.get(
-        Uri.parse('${Configurations.baseUrl}/api/orders/myorders/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlMyOrders}'),
         headers: {HttpHeaders.authorizationHeader: token},
       );
 

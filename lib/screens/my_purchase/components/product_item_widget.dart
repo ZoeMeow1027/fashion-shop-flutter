@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/configurations.dart';
+import '../../../config/urls.dart';
 import '../../../model/cart_history_item.dart';
 
 class ProductItemWidget extends StatelessWidget {
@@ -29,7 +29,7 @@ class ProductItemWidget extends StatelessWidget {
         children: [
           CachedNetworkImage(
             placeholder: (context, url) => const CircularProgressIndicator(),
-            imageUrl: "${Configurations.baseUrl}${productItem.imageUrl}",
+            imageUrl: "${Urls.urlBase}${productItem.imageUrl}",
             height: 90,
             width: 90,
             fit: BoxFit.cover,
