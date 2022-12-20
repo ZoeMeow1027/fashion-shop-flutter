@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../config/configurations.dart';
+import '../config/urls.dart';
 import '../model/dto/login_dto.dart';
 import '../model/dto/register_dto.dart';
 import '../model/user_profile.dart';
@@ -13,7 +13,7 @@ class UserAPI {
   static Future<bool> isLoggedIn(String token) async {
     try {
       final response = await http.get(
-        Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlProfile}'),
         // Send authorization headers to the backend.
         headers: {
           HttpHeaders.authorizationHeader: token,
@@ -31,7 +31,7 @@ class UserAPI {
       if (!loginDTO.isValidate()) throw Exception("Missing data for login!");
 
       final response = await http.post(
-        Uri.parse('${Configurations.baseUrl}/api/users/login/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlLogin}'),
         // Send authorization headers to the backend.
         body: loginDTO.toJson(),
       );
@@ -64,7 +64,7 @@ class UserAPI {
       if (!registerDTO.isValidate()) throw Exception("Missing data for login!");
 
       final response = await http.post(
-        Uri.parse('${Configurations.baseUrl}/api/users/register/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlRegister}'),
         // Send authorization headers to the backend.
         body: registerDTO.toJson(),
       );
@@ -92,7 +92,7 @@ class UserAPI {
   static Future<UserProfile?> getProfile(String token) async {
     try {
       final response = await http.get(
-        Uri.parse('${Configurations.baseUrl}/api/users/profile/'),
+        Uri.parse('${Urls.urlBase}${Urls.urlProfile}'),
         // Send authorization headers to the backend.
         headers: {
           HttpHeaders.authorizationHeader: token,
@@ -118,7 +118,7 @@ class UserAPI {
     });
 
     final response = await http.put(
-      Uri.parse('${Configurations.baseUrl}/api/users/profile/update/'),
+      Uri.parse('${Urls.urlBase}${Urls.urlProfileUpdate}'),
       // Send authorization headers to the backend.
       headers: {
         HttpHeaders.authorizationHeader: token,
@@ -161,7 +161,7 @@ class UserAPI {
     });
 
     final response = await http.put(
-      Uri.parse('${Configurations.baseUrl}/api/users/profile/update/'),
+      Uri.parse('${Urls.urlBase}${Urls.urlProfileUpdate}'),
       // Send authorization headers to the backend.
       headers: {
         HttpHeaders.authorizationHeader: token,

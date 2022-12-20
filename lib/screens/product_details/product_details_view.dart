@@ -2,7 +2,7 @@ import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.da
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../config/configurations.dart';
+import '../../config/urls.dart';
 import '../../model/product_item.dart';
 import '../../repository/cart_api.dart';
 import '../product_search/product_search_view.dart';
@@ -84,7 +84,7 @@ class _ProductDetailsView extends State<ProductDetailsView> {
           onClickFavorite: () {},
           onClickShare: () async {
             await Share.share(
-              "${Configurations.baseUrl}/api/products/${widget.productItem.id}/",
+              "${Urls.urlBase}${Urls.urlGetProducts}${widget.productItem.id}/",
             );
           },
         ),
@@ -143,9 +143,7 @@ class _ProductDetailsView extends State<ProductDetailsView> {
           BasicInformation(
             productName: "${widget.productItem.name}",
             productPrice: "${widget.productItem.price}\$",
-            previewLink: [
-              "${Configurations.baseUrl}${widget.productItem.imageUrl!}"
-            ],
+            previewLink: ["${Urls.urlBase}${widget.productItem.imageUrl!}"],
             ratingValue: widget.productItem.rating,
             ratingCount: widget.productItem.reviewNum,
           ),
