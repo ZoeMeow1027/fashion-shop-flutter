@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/urls.dart';
 import '../../../model/cart_history_item.dart';
 import '../../components/custom_cache_network_image.dart';
 
@@ -9,9 +7,11 @@ class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
     super.key,
     required this.productItem,
+    this.onClickDelete,
   });
 
   final OrderItem productItem;
+  final Function()? onClickDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +59,14 @@ class ProductItemWidget extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              if (onClickDelete != null) {
+                onClickDelete!();
+              }
+            },
           ),
         ],
       ),
