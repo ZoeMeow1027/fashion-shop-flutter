@@ -64,6 +64,11 @@ class _ProductDetailsView extends State<ProductDetailsView> {
         child: OrderActionsBar(
           context,
           onClickAddToCart: () {
+            showSnackbarMessage(
+              context: context,
+              msg: "Adding to your cart...",
+              clearOld: true,
+            );
             CartAPI.addToCart(
               token: "",
               productId: widget.productItem.id!,
@@ -71,15 +76,16 @@ class _ProductDetailsView extends State<ProductDetailsView> {
               showSnackbarMessage(
                 context: context,
                 msg: "Successfully added this product to your cart.",
+                clearOld: true,
+              );
+            }).onError((error, stackTrace) {
+              showSnackbarMessage(
+                context: context,
+                msg:
+                    "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
+                clearOld: true,
               );
             });
-            //     .onError((error, stackTrace) {
-            //   showSnackbarMessage(
-            //     context: context,
-            //     msg:
-            //         "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
-            //   );
-            // });
           },
           onClickFavorite: () {},
           onClickShare: () async {
