@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:fashion_shop_flutter/screens/checkout_payment/checkout_result_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/cart_history_item.dart';
@@ -11,6 +10,7 @@ import '../../repository/user_api.dart';
 import '../account_auth/components/show_snackbar_msg.dart';
 import '../home/home_view.dart';
 import '../my_purchase/my_purchase_view.dart';
+import 'checkout_result_view.dart';
 import 'components/payment_info_widget.dart';
 import 'components/price_showcase_widget.dart';
 import 'components/shipping_address_info_widget.dart';
