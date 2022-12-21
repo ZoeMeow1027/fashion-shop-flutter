@@ -72,6 +72,7 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             CartAPI.addToCart(
               token: "",
               productId: widget.productItem.id!,
+              count: currentState.selectedCount,
             ).then((value) {
               showSnackbarMessage(
                 context: context,
