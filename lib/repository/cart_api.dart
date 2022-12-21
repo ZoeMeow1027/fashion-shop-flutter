@@ -135,4 +135,9 @@ class CartAPI {
 
     prefs.setString("cart", jsonEncode(list));
   }
+
+  static Future<void> clearCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("cart");
+  }
 }

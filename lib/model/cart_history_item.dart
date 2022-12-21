@@ -1,8 +1,9 @@
 class CartHistoryItem {
   int id = 0;
   List<OrderItem> cartList = [];
-  ShippingAddress? shippingAddress;
+  ShippingAddressItem shippingAddress = ShippingAddressItem();
   String paymentMethod = "CoD";
+  double itemPrice = 0;
   double taxPrice = 0;
   double shipPrice = 0;
   double totalPrice = 0;
@@ -19,10 +20,24 @@ class CartHistoryItem {
     paidAt = DateTime.tryParse(json['paidAt'].toString());
     deliveredAt = DateTime.tryParse(json['deliveredAt'].toString());
     createdAt = DateTime.tryParse(json['createAt'].toString());
-    shippingAddress = ShippingAddress.fromJson(json['shippingAddress']);
+    shippingAddress = ShippingAddressItem.fromJson(json['shippingAddress']);
     for (var orderItem in (json['orderItems'] as List<dynamic>)) {
       cartList.add(OrderItem.fromJson(orderItem as Map<String, dynamic>));
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "_id": id,
+      "orderItems":
+          List.generate(cartList.length, (index) => cartList[index].toJson()),
+      "shippingAddress": shippingAddress.toJson(),
+      "paymentMethod": paymentMethod,
+      "itemsPrice": itemPrice,
+      "shippingPrice": shipPrice,
+      "taxPrice": taxPrice,
+      "totalPrice": totalPrice,
+    };
   }
 }
 
@@ -64,20 +79,40 @@ class OrderItem {
   }
 }
 
-class ShippingAddress {
+class ShippingAddressItem {
   int id = 0;
   String address = "";
   String city = "";
-  String postalCode = "";
+  int postalCode = 0;
   String country = "";
   double shippingPrice = 0;
 
-  ShippingAddress.fromJson(Map<String, dynamic> json) {
+  ShippingAddressItem({
+    this.id = 0,
+    this.address = "",
+    this.city = "",
+    this.postalCode = 0,
+    this.country = "",
+    this.shippingPrice = 0,
+  });
+
+  ShippingAddressItem.fromJson(Map<String, dynamic> json) {
     id = int.tryParse(json['_id'].toString()) ?? 0;
     address = json['address'].toString();
     city = json['city'].toString();
-    postalCode = json['postalCode'].toString();
+    postalCode = int.tryParse(json['postalCode'].toString()) ?? 0;
     country = json['country'].toString();
     shippingPrice = double.tryParse(json['shippingPrice'].toString()) ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "_id": id,
+      "address": address,
+      "city": city,
+      "postalCode": postalCode,
+      "country": country,
+      "shippingPrice": shippingPrice,
+    };
   }
 }

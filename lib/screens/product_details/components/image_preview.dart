@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fashionshop/screens/components/custom_cache_network_image.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/custom_cache_network_image.dart';
 
 class ImagePreview extends StatefulWidget {
   const ImagePreview({super.key, required this.previewLink});

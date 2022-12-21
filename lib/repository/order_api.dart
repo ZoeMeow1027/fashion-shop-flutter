@@ -32,4 +32,43 @@ class OrderAPI {
 
     return list;
   }
+
+  static Future<int> addCart(String token, CartHistoryItem cartItem) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${Urls.urlBase}${Urls.urlAddOrder}'),
+        headers: {
+          HttpHeaders.authorizationHeader: token,
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode(cartItem),
+      );
+
+      // If status code isn't successful, throw exception
+      if ((response.statusCode ~/ 100).round() != 2) {
+        throw Exception("Server returned with code ${response.statusCode}.");
+      }
+
+      var data = jsonDecode(utf8.decode(response.bodyBytes));
+      return int.parse(data['_id'].toString());
+    } catch (ex) {
+      return Future.error(ex.toString());
+    }
+  }
+
+  static Future<void> markAsPaid(String token, int orderId) async {
+    try {
+      final response = await http.put(
+        Uri.parse('${Urls.urlBase}/api/orders/$orderId/pay/'),
+        headers: {HttpHeaders.authorizationHeader: token},
+      );
+
+      // If status code isn't successful, throw exception
+      if ((response.statusCode ~/ 100).round() != 2) {
+        throw Exception("Server returned with code ${response.statusCode}.");
+      }
+    } catch (ex) {
+      return Future.error(ex.toString());
+    }
+  }
 }
