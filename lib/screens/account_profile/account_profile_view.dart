@@ -1,10 +1,10 @@
-import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_profile.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_change_pass_view.dart';
 import '../account_auth/components/custom_outlined_text_field.dart';
+import '../account_auth/components/show_snackbar_msg.dart';
 
 class AccountProfileView extends StatefulWidget {
   const AccountProfileView({super.key, required this.token});

@@ -5,15 +5,17 @@ import '../../../model/product_item.dart';
 import '../../product_details/product_details_view.dart';
 import 'product_summary_widget.dart';
 
-class PopularProductListWidget extends StatelessWidget {
-  const PopularProductListWidget({
+class ProductListWidget extends StatelessWidget {
+  const ProductListWidget({
     super.key,
     required this.productItemList,
     this.padding = const EdgeInsets.all(0),
+    this.showPopularLabel = false,
   });
 
   final List<ProductItem> productItemList;
   final EdgeInsetsGeometry padding;
+  final bool showPopularLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +26,18 @@ class PopularProductListWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                "Popular product",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+            showPopularLabel
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text(
+                      "Popular product",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )
+                : const Center(),
             DynamicHeightGridView(
               itemCount: productItemList.length,
               crossAxisCount: 2,

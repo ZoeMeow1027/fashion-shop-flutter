@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/user_profile.dart';
+import '../../repository/cart_api.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_auth_view.dart';
 import '../account_auth/components/show_snackbar_msg.dart';
@@ -32,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
         _isLoggedIn = isLoggedIn;
       });
     }, reLoginRequested: () {
+      CartAPI.clearCart();
       showSnackbarMessage(
           context: context,
           msg:
@@ -167,6 +169,10 @@ class _HomeViewState extends State<HomeView> {
 
     final prefs = await SharedPreferences.getInstance();
     _tokenKey = prefs.getString("tokenKey");
+
+    if (onDone != null) {
+      onDone(true);
+    }
 
     if (_tokenKey == null) {
       await prefs.remove("tokenKey");

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../model/user_profile.dart';
 import '../../account_profile/account_profile_view.dart';
 import '../../my_purchase/my_purchase_view.dart';
-import '../../product_search/product_search_view.dart';
+import 'search_view.dart';
 import '../components/account_banner_widget.dart';
 import '../components/wide_button.dart';
 

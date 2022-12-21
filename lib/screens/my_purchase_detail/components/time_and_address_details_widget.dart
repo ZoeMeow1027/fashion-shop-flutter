@@ -16,7 +16,7 @@ class TimeAndAddressDetailsWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final DateTime? paidAt;
   final DateTime? deliveriedAt;
-  final ShippingAddress? shippingAddress;
+  final ShippingAddressItem? shippingAddress;
 
   @override
   Widget build(BuildContext context) {
