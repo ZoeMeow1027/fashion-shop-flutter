@@ -7,6 +7,7 @@ import 'screens/home/home_view.dart';
 import 'screens/welcome/welcome_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   bool welcomePassed;
   SharedPreferences.getInstance().then(
     (value) => {

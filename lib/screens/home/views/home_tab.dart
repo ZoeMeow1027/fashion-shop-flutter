@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../model/product_item.dart';
 import '../../../repository/product_api.dart';
-import '../../product_search/product_search_view.dart';
+import 'search_view.dart';
 import '../components/banner_widget.dart';
-import '../components/popular_product_widget.dart';
+import '../components/product_list_widget.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -140,9 +140,10 @@ class _HomeTabState extends State<HomeTab>
   Widget _mainUI({
     required List<ProductItem> data,
   }) {
-    return PopularProductListWidget(
+    return ProductListWidget(
       productItemList: data,
       padding: const EdgeInsets.only(left: 10, right: 10),
+      showPopularLabel: true,
     );
   }
 }

@@ -1,11 +1,11 @@
-import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config/urls.dart';
 import '../../model/product_item.dart';
 import '../../repository/cart_api.dart';
-import '../product_search/product_search_view.dart';
+import '../account_auth/components/show_snackbar_msg.dart';
+import '../home/views/search_view.dart';
 import 'components/basic_information.dart';
 import 'components/current_state.dart';
 import 'components/order_actions_bar.dart';

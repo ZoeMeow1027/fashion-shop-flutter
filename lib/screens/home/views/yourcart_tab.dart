@@ -1,11 +1,9 @@
-import 'dart:developer';
-
-import 'package:fashionshop/screens/account_auth/components/show_snackbar_msg.dart';
 import 'package:flutter/material.dart';
 
 import '../../../repository/cart_api.dart';
-import '../../checkout/checkout_view.dart';
-import '../../product_search/product_search_view.dart';
+import '../../account_auth/components/show_snackbar_msg.dart';
+import '../../checkout_payment/checkout_view.dart';
+import 'search_view.dart';
 import '../components/product_item_widget.dart';
 
 class YourCartTab extends StatefulWidget {
@@ -118,13 +116,11 @@ class _YourCartTabState extends State<YourCartTab> {
         elevation: 0.0,
         onPressed: () async {
           if ((await CartAPI.getCart(token: widget.tokenKey!)).isEmpty) {
-            // TODO: Empty cart notice here!
             showSnackbarMessage(
                 context: context,
                 msg:
                     "Your cart is empty! Add a product to cart and come back here when you are ready.");
           } else {
-            // TODO: Checkout cart here!
             Navigator.push(
               context,
               MaterialPageRoute(
