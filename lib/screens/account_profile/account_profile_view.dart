@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../model/user_profile.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_change_pass_view.dart';
-import '../account_auth/components/custom_outlined_text_field.dart';
 import '../account_auth/components/show_snackbar_msg.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
 
 class AccountProfileView extends StatefulWidget {
   const AccountProfileView({super.key, required this.token});
@@ -41,61 +42,53 @@ class _AccountProfileViewState extends State<AccountProfileView> {
     return Scaffold(
       appBar: AppBar(title: const Text("Account Profile")),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.account_circle_outlined,
-                size: 70,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.account_circle_outlined,
+                  size: 70,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 10, bottom: 10),
-              child: customOutlinedTextField(
-                text: 'Username',
+              CustomTextField(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                label: 'Username',
                 enabled: _isEnabledWidget,
                 controller: _cUsername,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 10, bottom: 10),
-              child: customOutlinedTextField(
-                text: 'Name',
+              CustomTextField(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                label: 'Name',
                 enabled: _isEnabledWidget,
                 controller: _cName,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 10, right: 10, top: 10, bottom: 10),
-              child: customOutlinedTextField(
-                text: 'Email',
+              CustomTextField(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                label: 'Email',
                 enabled: _isEnabledWidget,
                 controller: _cEmail,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _customButton(
-                    text: _updateBtnText,
-                    textColor: Colors.black,
-                    onClick: () async {
-                      if (!_isEnabledWidget) {
-                        setState(() {
-                          _isEnabledWidget = true;
-                          _updateBtnText = "Save Changes";
-                        });
-                      } else {
+              CustomButton(
+                label: _updateBtnText,
+                padding: const EdgeInsets.only(top: 50, bottom: 5),
+                fillMaxWidth: true,
+                isFilledColor: true,
+                onClick: () {
+                  if (!_isEnabledWidget) {
+                    setState(() {
+                      _isEnabledWidget = true;
+                      _updateBtnText = "Save Changes";
+                    });
+                  } else {
+                    _navToChangeProfile(
+                      context: context,
+                      onChanging: () {
                         showSnackbarMessage(
                           context: context,
                           msg: "Changing your profile...",
@@ -103,97 +96,114 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                         setState(() {
                           _isEnabledWidget = false;
                         });
-                        await UserAPI.updateProfile(
-                          token: widget.token,
-                          profile: UserProfile.fromJson({
-                            "id": 0,
-                            "username": _cUsername.text,
-                            "name": _cName.text,
-                            "email": _cEmail.text,
-                          }),
-                        ).then((value) {
-                          showSnackbarMessage(
-                            context: context,
-                            msg:
-                                "Successfully changed your profile information!",
-                            clearOld: true,
-                          );
-                          setState(() {
-                            _updateBtnText = "Update Profile";
-                          });
-                        }).catchError((e, _) {
-                          showSnackbarMessage(
-                            context: context,
-                            msg: e,
-                          );
-                          setState(() {
-                            _isEnabledWidget = true;
-                          });
-                        });
-                      }
-                    },
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                  ),
-                  _customButton(
-                    text: "Change Password",
-                    textColor: Colors.black,
-                    onClick: () {
-                      if (_isEnabledWidget) {
+                      },
+                      onSuccessful: () {
+                        showSnackbarMessage(
+                          context: context,
+                          msg: "Successfully changed your profile information!",
+                          clearOld: true,
+                        );
                         setState(() {
-                          _isEnabledWidget = false;
                           _updateBtnText = "Update Profile";
                         });
-                      }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AccountChangePassView(
-                            username: (_userProfile == null)
-                                ? "(unknown)"
-                                : _userProfile!.username,
-                            token: widget.token,
-                          ),
-                        ),
-                      );
-                    },
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                  ),
-                ],
+                      },
+                      onFailed: (data) {
+                        showSnackbarMessage(
+                          context: context,
+                          msg: "Failed while changing your profile: $data",
+                        );
+                        setState(() {
+                          _isEnabledWidget = true;
+                        });
+                      },
+                    );
+                  }
+                },
               ),
-            ),
-          ],
+              _isEnabledWidget
+                  ? CustomButton(
+                      label: "Discard Changes",
+                      padding: const EdgeInsets.only(top: 10, bottom: 5),
+                      fillMaxWidth: true,
+                      isFilledColor: true,
+                      onClick: () {
+                        _resetProfileValue(context: context);
+                      },
+                    )
+                  : const Center(),
+              CustomButton(
+                label: "Change Password",
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
+                fillMaxWidth: true,
+                isFilledColor: true,
+                onClick: () {
+                  _navToChangePass(context: context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _customButton({
-    Function()? onClick,
-    required String text,
-    Color? backgroundColor,
-    Color? textColor,
-    EdgeInsetsGeometry padding = const EdgeInsets.all(0),
-  }) {
-    return Padding(
-      padding: padding,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: backgroundColor,
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(
-              color: backgroundColor ?? Colors.blue,
-              width: 1.5,
-            ),
-          ),
-        ),
-        onPressed: onClick,
-        child: Text(
-          text,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.w400),
+  void _navToChangePass({required BuildContext context}) {
+    if (_isEnabledWidget) {
+      Navigator.of(context).setState(() {
+        _isEnabledWidget = false;
+        _updateBtnText = "Update Profile";
+      });
+    }
+    _resetProfileValue(context: context);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AccountChangePassView(
+          username:
+              (_userProfile == null) ? "(unknown)" : _userProfile!.username,
+          token: widget.token,
         ),
       ),
     );
+  }
+
+  void _resetProfileValue({required BuildContext context}) {
+    setState(() {
+      _isEnabledWidget = false;
+      _updateBtnText = "Update Profile";
+      _cUsername.text =
+          _userProfile == null ? "(unknown)" : _userProfile!.username!;
+      _cName.text = _userProfile == null ? "(unknown)" : _userProfile!.name!;
+      _cEmail.text = _userProfile == null ? "(unknown)" : _userProfile!.email!;
+    });
+  }
+
+  Future<void> _navToChangeProfile({
+    required BuildContext context,
+    Function()? onChanging,
+    Function()? onSuccessful,
+    Function(String)? onFailed,
+  }) async {
+    try {
+      if (onChanging != null) {
+        onChanging();
+      }
+      await UserAPI.updateProfile(
+        token: widget.token,
+        profile: UserProfile.fromJson({
+          "id": 0,
+          "username": _cUsername.text,
+          "name": _cName.text,
+          "email": _cEmail.text,
+        }),
+      );
+      if (onSuccessful != null) {
+        onSuccessful();
+      }
+    } catch (ex) {
+      if (onFailed != null) {
+        onFailed(ex.toString());
+      }
+    }
   }
 }
