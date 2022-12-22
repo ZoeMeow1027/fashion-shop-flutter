@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
     this.centerContent = true,
     this.borderTextColor = Variables.mainColor,
     this.borderWidth = 1.5,
-    this.verticalPadding = 5,
+    this.verticalPadding = 12,
     this.isFilledColor = false,
     this.padding = const EdgeInsets.all(0),
     this.fillMaxWidth = false,

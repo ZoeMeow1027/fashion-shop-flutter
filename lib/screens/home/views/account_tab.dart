@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../model/user_profile.dart';
 import '../../account_profile/account_profile_view.dart';
 import '../../components/custom_button.dart';
+import '../../contact_support/contact_support_view.dart';
 import '../../your_purchase/your_purchase_view.dart';
 import 'search_view.dart';
 import '../components/account_banner_widget.dart';
@@ -75,7 +76,7 @@ class AccountTab extends StatelessWidget {
           label: "Your Purchases",
           centerContent: false,
           icon: Icons.assignment_outlined,
-          verticalPadding: 20,
+          verticalPadding: 26,
           onClick: () {
             if (tokenKey == null) {
               if (loginRequested != null) {
@@ -96,7 +97,7 @@ class AccountTab extends StatelessWidget {
         //   label: "Vouchers",
         //   centerContent: false,
         //   icon: Icons.confirmation_number_outlined,
-        //   verticalPadding: 20,
+        //   verticalPadding: 26,
         //   onClick: () {
         //     if (tokenKey == null) {
         //       if (loginRequested != null) {
@@ -109,12 +110,17 @@ class AccountTab extends StatelessWidget {
         // ),
         CustomButton(
           padding: const EdgeInsets.only(top: 10),
-          label: "Help Center",
+          label: "Contact Support",
           centerContent: false,
           icon: Icons.support_agent,
-          verticalPadding: 20,
+          verticalPadding: 26,
           onClick: () {
-            // TODO: Help Ceter function.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ContactSupportView(),
+              ),
+            );
           },
         ),
         userProfile == null
@@ -123,7 +129,7 @@ class AccountTab extends StatelessWidget {
                 label: "Logout",
                 padding: const EdgeInsets.only(top: 10),
                 centerContent: false,
-                verticalPadding: 20,
+                verticalPadding: 26,
                 icon: Icons.logout,
                 onClick: () => showDialog<String>(
                   context: context,
