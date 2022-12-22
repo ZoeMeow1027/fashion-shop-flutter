@@ -27,7 +27,9 @@ class HeaderWidget extends StatelessWidget {
           bottomRight: Radius.circular(20),
         ),
       ),
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -42,7 +44,7 @@ class HeaderWidget extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   "Delivery ID: $deliveryId",

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../repository/user_api.dart';
-import 'components/custom_outlined_text_field.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
 import 'components/show_snackbar_msg.dart';
 
 class AccountChangePassView extends StatefulWidget {
@@ -30,110 +31,148 @@ class _AccountChangePassViewState extends State<AccountChangePassView> {
       appBar: AppBar(),
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 40),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Change your password",
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    widget.username ?? "(Unknown)",
-                    style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 156, 158, 163)),
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Change your password",
+                      style:
+                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      widget.username ?? "(Unknown)",
+                      style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 156, 158, 163)),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              alignment: Alignment.topCenter,
-              padding: const EdgeInsets.only(top: 40),
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                    child: customOutlinedTextField(
+              Container(
+                alignment: Alignment.topCenter,
+                padding: const EdgeInsets.only(top: 40),
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      text: 'Old password',
+                      label: 'Current Password',
                       enabled: _isEnabledWidget,
                       controller: _oldPassController,
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                    child: customOutlinedTextField(
+                    CustomTextField(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      text: 'New password',
+                      label: 'New password',
                       enabled: _isEnabledWidget,
                       controller: _newPassController,
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                    child: customOutlinedTextField(
+                    CustomTextField(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      text: 'Re-enter new password',
+                      label: 'Re-enter new password',
                       enabled: _isEnabledWidget,
                       controller: _reEnterPassController,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40, bottom: 15),
-              child: ElevatedButton(
-                onPressed: () async {
-                  // TODO: Change password here!
-                  if (_newPassController.text != _reEnterPassController.text) {
-                    showSnackbarMessage(
-                        context: context,
-                        msg:
-                            "Your new password and re-enter new password aren't same! Check your information, and try again.");
-                    return;
-                  }
-                  setState(() {
-                    _isEnabledWidget = false;
-                  });
-                  showSnackbarMessage(
-                      context: context, msg: "Changing your password...");
-                  await UserAPI.changePassword(
+              CustomButton(
+                padding: const EdgeInsets.only(top: 40, bottom: 15),
+                isFilledColor: true,
+                fillMaxWidth: true,
+                label: "Change Password",
+                labelSize: 17,
+                onClick: () {
+                  _changePassword(
+                    context: context,
                     token: widget.token,
                     oldPassword: _oldPassController.text,
                     newPassword: _newPassController.text,
-                  ).then((value) {
-                    showSnackbarMessage(
+                    reEnterPassword: _reEnterPassController.text,
+                    onStart: () {
+                      Navigator.of(context).setState(() {
+                        _isEnabledWidget = false;
+                      });
+                      showSnackbarMessage(
                         context: context,
-                        msg: "Successfully changed your password!");
-                  }).catchError((error, stackTrace) {
-                    showSnackbarMessage(
-                        context: context, msg: error.toString());
-                  });
-                  setState(() {
-                    _isEnabledWidget = true;
-                  });
+                        msg: "Changing your password",
+                        duration: const Duration(minutes: 5),
+                      );
+                    },
+                    onSuccessful: () {
+                      Navigator.of(context).setState(() {
+                        _isEnabledWidget = true;
+                      });
+                      showSnackbarMessage(
+                        context: context,
+                        msg: "Successfully changed your password!",
+                      );
+                      Navigator.pop(context);
+                    },
+                    onFailed: (data) {
+                      Navigator.of(context).setState(() {
+                        _isEnabledWidget = true;
+                      });
+                      showSnackbarMessage(
+                        context: context,
+                        msg: "Failed while changing your password: $data",
+                      );
+                    },
+                  );
                 },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                child: const Text("Change password"),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _changePassword({
+    required BuildContext context,
+    required String token,
+    required String oldPassword,
+    required String newPassword,
+    required String reEnterPassword,
+    Function()? onStart,
+    Function()? onSuccessful,
+    Function(String)? onFailed,
+  }) async {
+    // If new password and re-enter password aren't same, raise exception here.
+    if (newPassword != reEnterPassword) {
+      if (onFailed != null) {
+        onFailed("Your new password and re-enter new password aren't same!");
+      }
+      return;
+    }
+
+    if (onStart != null) {
+      onStart();
+    }
+
+    try {
+      await UserAPI.changePassword(
+        token: widget.token,
+        oldPassword: _oldPassController.text,
+        newPassword: _newPassController.text,
+      );
+      if (onSuccessful != null) {
+        onSuccessful();
+      }
+    } catch (ex) {
+      if (onFailed != null) {
+        onFailed(ex.toString());
+      }
+    }
   }
 }

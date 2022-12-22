@@ -27,7 +27,7 @@ class _AccountAuthorizationViewState extends State<AccountAuthorizationView> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 25, left: 25, right: 25),
+        padding: const EdgeInsets.only(left: 25, right: 25),
         child: PageView(
           controller: _controller,
           physics: const NeverScrollableScrollPhysics(),
