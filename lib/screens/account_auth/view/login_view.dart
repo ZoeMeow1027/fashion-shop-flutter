@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import '../../../model/dto/login_dto.dart';
 import '../../../repository/user_api.dart';
+import '../../components/custom_button.dart';
+import '../../components/custom_text_field.dart';
 import '../components/current_state_account_view.dart';
-import '../components/custom_outlined_text_field.dart';
 import '../components/show_snackbar_msg.dart';
 
 class LoginView extends StatelessWidget {
@@ -21,107 +23,103 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.only(top: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                "Login",
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Sign in to continue!",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 156, 158, 163)),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          alignment: Alignment.topCenter,
-          padding: const EdgeInsets.only(top: 40),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                child: customOutlinedTextField(
-                  text: 'Username',
-                  enabled: state.isEnabledControl,
-                  controller: state.usernameController,
-                  onSubmitted: () async {
-                    await _loginClicked(context: context);
-                  },
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "Login",
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                child: customOutlinedTextField(
-                  isPassword: true,
-                  text: 'Password',
-                  enabled: state.isEnabledControl,
-                  controller: state.passwordController,
-                  onSubmitted: () async {
-                    await _loginClicked(context: context);
-                  },
-                ),
-              ),
-              // CheckboxListTile(
-              //   title: const Text("Remember me?"),
-              //   value: rememberLogin,
-              //   onChanged: (newValue) {
-              //     setState(() {
-              //       rememberLogin = !rememberLogin;
-              //     });
-              //   },
-              // ),
-            ],
-          ),
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(top: 40, bottom: 15, left: 0, right: 0),
-          child: ElevatedButton(
-            onPressed: () async {
-              await _loginClicked(context: context);
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(
-                  50), // fromHeight use double.infinity as width and 40 is the height
-            ),
-            child: const Text("Login"),
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Forgot your password?',
-                  style: const TextStyle(
-                    color: Colors.blue,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      // TODO: Forgot your account?
-                    },
+                Text(
+                  "Sign in to continue!",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 156, 158, 163)),
                 ),
               ],
-              style: const TextStyle(fontSize: 16),
             ),
           ),
-        ),
-        Expanded(
-          child: Container(
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Column(
+              children: [
+                CustomTextField(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+                  label: 'Username',
+                  enabled: state.isEnabledControl,
+                  controller: state.usernameController,
+                  prefixIcon: const Icon(Icons.person),
+                  onSubmitted: (value) async {
+                    await _loginClicked(context: context);
+                  },
+                ),
+                CustomTextField(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+                  label: 'Password',
+                  isPassword: true,
+                  enabled: state.isEnabledControl,
+                  controller: state.passwordController,
+                  prefixIcon: const Icon(Icons.password),
+                  onSubmitted: (value) async {
+                    await _loginClicked(context: context);
+                  },
+                ),
+                // CheckboxListTile(
+                //   title: const Text("Remember me?"),
+                //   value: rememberLogin,
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       rememberLogin = !rememberLogin;
+                //     });
+                //   },
+                // ),
+              ],
+            ),
+          ),
+          CustomButton(
+            padding: const EdgeInsets.only(top: 50, bottom: 15),
+            label: "Login",
+            isFilledColor: true,
+            fillMaxWidth: true,
+            onClick: () async {
+              await _loginClicked(context: context);
+            },
+          ),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(top: 15),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Forgot your password?',
+                    style: const TextStyle(
+                      color: Variables.mainColor,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // TODO: Forgot your account?
+                      },
+                  ),
+                ],
+                style: const TextStyle(fontSize: 17),
+              ),
+            ),
+          ),
+          Container(
             alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.only(top: 20),
             child: RichText(
               text: TextSpan(
                 children: [
@@ -131,7 +129,7 @@ class LoginView extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'Create one!',
-                    style: const TextStyle(color: Colors.blue),
+                    style: const TextStyle(color: Variables.mainColor),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         // Register view here!
@@ -140,12 +138,12 @@ class LoginView extends StatelessWidget {
                       },
                   ),
                 ],
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 17),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
