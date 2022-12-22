@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../model/user_profile.dart';
 import '../../account_profile/account_profile_view.dart';
-import '../../my_purchase/my_purchase_view.dart';
+import '../../components/custom_button.dart';
+import '../../your_purchase/your_purchase_view.dart';
 import 'search_view.dart';
 import '../components/account_banner_widget.dart';
-import '../components/wide_button.dart';
 
 class AccountTab extends StatelessWidget {
   const AccountTab({
@@ -70,11 +70,12 @@ class AccountTab extends StatelessWidget {
             },
           ),
         ),
-        wideButton(
-          // TODO: Add more item like In progress, delivered,...)
-          text: "Your Purchases",
-          iconData: Icons.assignment_outlined,
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
+        CustomButton(
+          padding: const EdgeInsets.only(top: 10),
+          label: "Your Purchases",
+          centerContent: false,
+          icon: Icons.assignment_outlined,
+          verticalPadding: 20,
           onClick: () {
             if (tokenKey == null) {
               if (loginRequested != null) {
@@ -90,10 +91,12 @@ class AccountTab extends StatelessWidget {
             }
           },
         ),
-        // wideButton(
-        //   text: "Vouchers",
-        //   iconData: Icons.confirmation_number_outlined,
-        //   padding: const EdgeInsets.only(top: 7, bottom: 7),
+        // CustomButton(
+        //   padding: const EdgeInsets.only(top: 10),
+        //   label: "Vouchers",
+        //   centerContent: false,
+        //   icon: Icons.confirmation_number_outlined,
+        //   verticalPadding: 20,
         //   onClick: () {
         //     if (tokenKey == null) {
         //       if (loginRequested != null) {
@@ -104,18 +107,24 @@ class AccountTab extends StatelessWidget {
         //     }
         //   },
         // ),
-        wideButton(
-          text: "Help Center",
-          padding: const EdgeInsets.only(top: 7, bottom: 7),
-          iconData: Icons.support_agent,
-          onClick: () {},
+        CustomButton(
+          padding: const EdgeInsets.only(top: 10),
+          label: "Help Center",
+          centerContent: false,
+          icon: Icons.support_agent,
+          verticalPadding: 20,
+          onClick: () {
+            // TODO: Help Ceter function.
+          },
         ),
         userProfile == null
             ? const Center()
-            : wideButton(
-                text: "Logout",
-                padding: const EdgeInsets.only(top: 7, bottom: 7),
-                iconData: Icons.logout,
+            : CustomButton(
+                label: "Logout",
+                padding: const EdgeInsets.only(top: 10),
+                centerContent: false,
+                verticalPadding: 20,
+                icon: Icons.logout,
                 onClick: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(

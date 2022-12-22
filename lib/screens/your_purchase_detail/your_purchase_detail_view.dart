@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/variables.dart';
 import '../../model/cart_history_item.dart';
 import '../../repository/product_api.dart';
 import '../product_details/product_details_view.dart';
@@ -16,7 +17,7 @@ class MyPurchaseDetailView extends StatelessWidget {
   });
 
   final CartHistoryItem cartHistoryItem;
-  final Color _color = const Color.fromARGB(255, 255, 219, 61);
+  final Color _color = Variables.mainColor;
 
   @override
   Widget build(BuildContext context) {

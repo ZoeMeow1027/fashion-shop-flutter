@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/urls.dart';
 import '../../model/product_item.dart';
 import '../../repository/cart_api.dart';
+import '../account_auth/account_auth_view.dart';
 import '../account_auth/components/show_snackbar_msg.dart';
 import '../home/views/search_view.dart';
 import 'components/basic_information.dart';
 import 'components/current_state.dart';
 import 'components/order_actions_bar.dart';
 import 'components/order_options.dart';
+import 'components/review_summary_widget.dart';
+import 'views/review_all_view.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
@@ -63,30 +67,41 @@ class _ProductDetailsView extends State<ProductDetailsView> {
       bottomNavigationBar: BottomAppBar(
         child: OrderActionsBar(
           context,
-          onClickAddToCart: () {
-            showSnackbarMessage(
-              context: context,
-              msg: "Adding to your cart...",
-              clearOld: true,
-            );
-            CartAPI.addToCart(
-              token: "",
-              productId: widget.productItem.id!,
-              count: currentState.selectedCount,
-            ).then((value) {
+          onClickAddToCart: () async {
+            var prefs = await SharedPreferences.getInstance();
+            var tokenKey = prefs.getString("tokenKey");
+            if (tokenKey == null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AccountAuthorizationView(),
+                ),
+              );
+              return;
+            }
+            try {
+              showSnackbarMessage(
+                context: context,
+                msg: "Adding this product to your cart...",
+                clearOld: true,
+              );
+              await CartAPI.addToCart(
+                token: "",
+                productId: widget.productItem.id!,
+                count: currentState.selectedCount,
+              );
               showSnackbarMessage(
                 context: context,
                 msg: "Successfully added this product to your cart.",
                 clearOld: true,
               );
-            }).onError((error, stackTrace) {
+            } catch (ex) {
               showSnackbarMessage(
                 context: context,
                 msg:
                     "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
                 clearOld: true,
               );
-            });
+            }
           },
           onClickFavorite: () {},
           onClickShare: () async {
@@ -170,18 +185,35 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0),
             child: Text(
               "${widget.productItem.description}",
-              style: const TextStyle(fontSize: 16.0),
-            ),
-          ),
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-              child: Text(
-                "Related Products",
-                style: TextStyle(fontSize: 20.0),
+              style: const TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),
+          ReviewSummaryWidget(
+            padding: const EdgeInsets.only(left: 5, right: 5, top: 25),
+            reviewList: widget.productItem.reviewList,
+            showShowAllBtn: true,
+            onClick: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ReviewAllView(
+                    reviewList: widget.productItem.reviewList,
+                  ),
+                ),
+              );
+            },
+          ),
+          // const Center(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
+          //     child: Text(
+          //       "Related Products",
+          //       style: TextStyle(fontSize: 20.0),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../components/custom_button.dart';
+
 class OrderActionsBar extends StatelessWidget {
   const OrderActionsBar(
     BuildContext context, {
@@ -18,29 +20,24 @@ class OrderActionsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 65,
+      height: 70,
       child: Padding(
         padding: const EdgeInsets.only(
             left: 12.0, right: 12.0, top: 10.0, bottom: 12.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                child: ElevatedButton(
-                  onPressed: onClickAddToCart,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromWidth(50),
-                  ),
-                  child: const Text(
-                    "Add to cart",
-                    style: TextStyle(fontSize: 17.0),
-                  ),
-                ),
+              child: CustomButton(
+                padding: const EdgeInsets.only(left: 5, right: 5),
+                label: "Add to cart",
+                labelSize: 17,
+                onClick: onClickAddToCart,
+                isFilledColor: true,
               ),
             ),
+
             // Padding(
             //   padding: const EdgeInsets.only(left: 4.0, right: 4.0),
             //   child: IconButton(

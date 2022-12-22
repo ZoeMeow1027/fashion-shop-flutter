@@ -4,7 +4,7 @@ void showSnackbarMessage({
   required BuildContext context,
   required String msg,
   bool clearOld = true,
-  Duration duration = const Duration(seconds: 15),
+  Duration duration = const Duration(seconds: 7),
 }) {
   if (clearOld) {
     ScaffoldMessenger.of(context).clearSnackBars();

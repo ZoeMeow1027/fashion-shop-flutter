@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'product_review_item.dart';
+
 class ProductItem {
   int? id;
-  dynamic review;
+  List<ProductReviewItem>? reviewList;
   int reviewNum = 0;
   String? name;
   String? imageUrl;
@@ -24,5 +28,9 @@ class ProductItem {
     price = double.tryParse(json["price"].toString());
     countInStock = int.tryParse(json['countInStock'].toString()) ?? 0;
     createdAt = DateTime.tryParse(json['createAt'].toString());
+
+    reviewList = List.generate(json["reviews"].length, (index) {
+      return ProductReviewItem.fromJson(json["reviews"][index]);
+    });
   }
 }

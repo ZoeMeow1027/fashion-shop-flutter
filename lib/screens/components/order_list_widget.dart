@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/cart_history_item.dart';
-import 'your_cart_item_widget.dart';
+import '../../model/cart_history_item.dart';
+import 'order_item_widget.dart';
 
-class YourCartWidget extends StatelessWidget {
-  const YourCartWidget({
+class OrderListWidget extends StatelessWidget {
+  const OrderListWidget({
     super.key,
-    this.productList = const [],
+    required this.productList,
+    this.label,
+    this.maxItemsShow = 0,
   });
 
   final List<OrderItem> productList;
+  final String? label;
+  final int maxItemsShow;
+  // TODO: Max Item show
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class YourCartWidget extends StatelessWidget {
         productList.fold(<Widget>[], (previousValue, element) {
       previousValue.add(Container(
         padding: const EdgeInsets.only(top: 3, bottom: 3),
-        child: YourCartItemWidget(productItem: element),
+        child: OrderItemWidget(productItem: element),
       ));
       return previousValue;
     });
@@ -30,13 +35,16 @@ class YourCartWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Text(
-                  "Your Cart",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-                ),
-              ),
+              label == null
+                  ? const Center()
+                  : Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text(
+                        "$label",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 20),
+                      ),
+                    ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: widgetList,

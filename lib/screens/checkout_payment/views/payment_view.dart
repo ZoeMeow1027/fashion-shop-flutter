@@ -105,7 +105,9 @@ class _PaymentViewState extends State<PaymentView> {
           },
         ),
       ),
-      body: WebViewWidget(controller: _controller),
+      body: widget.paymentMethod == PaymentMethod.CoD
+          ? const Center()
+          : WebViewWidget(controller: _controller),
     );
   }
 

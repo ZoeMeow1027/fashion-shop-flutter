@@ -8,8 +8,11 @@ class CustomButton extends StatelessWidget {
     required this.onClick,
     required this.label,
     this.labelSize = 17,
+    this.icon,
+    this.centerContent = true,
     this.borderTextColor = Variables.mainColor,
     this.borderWidth = 1.5,
+    this.verticalPadding = 5,
     this.isFilledColor = false,
     this.padding = const EdgeInsets.all(0),
     this.fillMaxWidth = false,
@@ -19,10 +22,11 @@ class CustomButton extends StatelessWidget {
   final String label;
   final double? labelSize;
   final Color borderTextColor;
-  final bool isFilledColor;
-  final double borderWidth;
+  final bool isFilledColor, centerContent;
+  final double borderWidth, verticalPadding;
   final EdgeInsetsGeometry padding;
   final bool fillMaxWidth;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +47,31 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: isFilledColor ? Colors.white : borderTextColor,
-              fontSize: labelSize,
-            ),
+          padding:
+              EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 8),
+          child: Row(
+            mainAxisAlignment: centerContent
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              icon == null
+                  ? const Center()
+                  : Icon(
+                      icon,
+                      color: isFilledColor ? Colors.white : Variables.mainColor,
+                    ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: isFilledColor ? Colors.white : borderTextColor,
+                    fontSize: labelSize,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
