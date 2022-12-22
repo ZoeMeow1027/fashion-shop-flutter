@@ -5,12 +5,15 @@ import '../../config/variables.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    this.label,
+    this.labelText,
+    this.hintText,
     this.enabled = true,
     this.controller,
     this.isPassword = false,
     this.onSubmitted,
+    this.onChanged,
     this.prefixIcon,
+    this.borderShow = true,
     this.borderRadius = 5,
     this.borderTextColor = Variables.mainColor,
     this.borderWidth = 1.5,
@@ -18,11 +21,12 @@ class CustomTextField extends StatelessWidget {
     this.shadowEnabled = false,
   });
 
-  final String? label;
+  final String? labelText, hintText;
   final Widget? prefixIcon;
-  final bool enabled, isPassword;
+  final bool enabled, isPassword, borderShow;
   final TextEditingController? controller;
   final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
   final double borderRadius, borderWidth;
   final Color borderTextColor;
   final EdgeInsetsGeometry padding;
@@ -42,32 +46,44 @@ class CustomTextField extends StatelessWidget {
           enableSuggestions: false,
           autocorrect: false,
           textInputAction: TextInputAction.go,
+          onChanged: (value) {
+            if (onChanged != null) {
+              onChanged!(value);
+            }
+          },
           onSubmitted: (value) {
             if (onSubmitted != null) {
               onSubmitted!(value);
             }
           },
           decoration: InputDecoration(
-            labelText: label,
+            labelText: labelText,
             labelStyle: enabled ? TextStyle(color: borderTextColor) : null,
+            hintText: hintText,
             prefixIcon: prefixIcon,
             fillColor: Colors.white,
             filled: true,
-            enabledBorder: _outlineInputBorder(
-              borderRadius: borderRadius,
-              borderColor: borderTextColor,
-              borderWidth: borderWidth,
-            ),
-            focusedBorder: _outlineInputBorder(
-              borderRadius: borderRadius,
-              borderColor: borderTextColor,
-              borderWidth: borderWidth,
-            ),
-            disabledBorder: _outlineInputBorder(
-              borderRadius: borderRadius,
-              borderColor: Colors.grey,
-              borderWidth: borderWidth,
-            ),
+            enabledBorder: !borderShow
+                ? InputBorder.none
+                : _outlineInputBorder(
+                    borderRadius: borderRadius,
+                    borderColor: borderTextColor,
+                    borderWidth: borderWidth,
+                  ),
+            focusedBorder: !borderShow
+                ? InputBorder.none
+                : _outlineInputBorder(
+                    borderRadius: borderRadius,
+                    borderColor: borderTextColor,
+                    borderWidth: borderWidth,
+                  ),
+            disabledBorder: !borderShow
+                ? InputBorder.none
+                : _outlineInputBorder(
+                    borderRadius: borderRadius,
+                    borderColor: Colors.grey,
+                    borderWidth: borderWidth,
+                  ),
           ),
         ),
       ),

@@ -38,28 +38,32 @@ class ProductListWidget extends StatelessWidget {
                     ),
                   )
                 : const Center(),
-            DynamicHeightGridView(
-              itemCount: productItemList.length,
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              builder: (ctx, index) {
-                return ProductSummaryWidget(
-                  productItem: productItemList[index],
-                  onClick: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailsView(
-                          productItem: productItemList[index],
+            MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: DynamicHeightGridView(
+                itemCount: productItemList.length,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                builder: (ctx, index) {
+                  return ProductSummaryWidget(
+                    productItem: productItemList[index],
+                    onClick: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsView(
+                            productItem: productItemList[index],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../config/variables.dart';
+import '../components/custom_button.dart';
+
 class CheckoutResultView extends StatelessWidget {
   const CheckoutResultView({
     super.key,
     required this.orderId,
-    this.orderStatus = -1,
     this.returnHomeClicked,
     this.deliveryStatusClicked,
   });
 
   final String orderId;
-  // -1: Cancelled, 0: Failed, 1: Successful
-  final int orderStatus;
   final Function()? returnHomeClicked;
   final Function()? deliveryStatusClicked;
 
@@ -20,11 +20,7 @@ class CheckoutResultView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: orderStatus == -1
-            ? Colors.white
-            : orderStatus == 0
-                ? Colors.redAccent
-                : Colors.greenAccent,
+        backgroundColor: Variables.mainColor,
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Center(
@@ -32,11 +28,10 @@ class CheckoutResultView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  orderStatus == -1 || orderStatus == 0
-                      ? Icons.do_disturb_alt_rounded
-                      : Icons.check_circle_outline_rounded,
+                const Icon(
+                  Icons.check_circle_outline_rounded,
                   size: 90,
+                  color: Colors.white,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 10),
@@ -44,65 +39,65 @@ class CheckoutResultView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 5, bottom: 15),
                         child: Text(
-                          orderStatus == -1
-                              ? "Order Cancelled"
-                              : orderStatus == 0
-                                  ? "Order Failed"
-                                  : "Order Completed",
-                          style: const TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w700),
+                          "Order Completed",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Text(
-                        "Your order $orderId was ${orderStatus == -1 ? "cancelled" : orderStatus == 0 ? "failed" : "placed successfully"}.",
-                        style: const TextStyle(
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          "Your order with ID $orderId was placed successfully.",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const Text(
+                        "For more details, check Delivery Status under Profile tab or click button below.",
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "${orderStatus == -1 || orderStatus == 0 ? "To buy your previous cart again or for more details" : "For more details"}, check Delivery Status under Profile tab or click button below.",
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
-                Padding(
+                CustomButton(
                   padding: const EdgeInsets.only(
-                      top: 10, bottom: 5, left: 100, right: 100),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (deliveryStatusClicked != null) {
-                        deliveryStatusClicked!();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(45),
-                    ),
-                    child: const Text("Delivery Status"),
-                  ),
+                      top: 35, bottom: 5, left: 100, right: 100),
+                  fillMaxWidth: true,
+                  isFilledColor: false,
+                  label: "Delivery Status",
+                  onClick: () {
+                    if (deliveryStatusClicked != null) {
+                      deliveryStatusClicked!();
+                    }
+                  },
                 ),
-                Padding(
+                CustomButton(
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 5, left: 100, right: 100),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (returnHomeClicked != null) {
-                        returnHomeClicked!();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(45),
-                    ),
-                    child: const Text("Return to home"),
-                  ),
+                  fillMaxWidth: true,
+                  isFilledColor: false,
+                  label: "Return to Home",
+                  onClick: () {
+                    if (returnHomeClicked != null) {
+                      returnHomeClicked!();
+                    }
+                  },
                 ),
               ],
             ),

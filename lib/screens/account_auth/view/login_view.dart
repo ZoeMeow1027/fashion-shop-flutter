@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Username',
+                  labelText: 'Username',
                   enabled: state.isEnabledControl,
                   controller: state.usernameController,
                   prefixIcon: const Icon(Icons.person),
@@ -66,7 +66,7 @@ class LoginView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Password',
+                  labelText: 'Password',
                   isPassword: true,
                   enabled: state.isEnabledControl,
                   controller: state.passwordController,

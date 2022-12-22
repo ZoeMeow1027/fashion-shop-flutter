@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../model/product_item.dart';
 import '../../../repository/product_api.dart';
+import '../../components/custom_text_field.dart';
 import '../components/product_list_widget.dart';
 
 class ProductSearchView extends StatefulWidget {
@@ -41,11 +42,10 @@ class _ProductSearchViewState extends State<ProductSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
+        title: CustomTextField(
+          hintText: "Search a product",
+          borderShow: false,
           controller: _controller,
-          decoration: InputDecoration(
-            hintText: "Search a product",
-          ),
           onChanged: (value) {
             _reloadFilter(value);
             setState(() {

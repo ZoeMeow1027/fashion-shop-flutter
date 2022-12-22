@@ -58,19 +58,19 @@ class _AccountProfileViewState extends State<AccountProfileView> {
               ),
               CustomTextField(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                label: 'Username',
+                labelText: 'Username',
                 enabled: _isEnabledWidget,
                 controller: _cUsername,
               ),
               CustomTextField(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                label: 'Name',
+                labelText: 'Name',
                 enabled: _isEnabledWidget,
                 controller: _cName,
               ),
               CustomTextField(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                label: 'Email',
+                labelText: 'Email',
                 enabled: _isEnabledWidget,
                 controller: _cEmail,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import '../../../model/user_profile.dart';
 
 class AccountBannerWidget extends StatelessWidget {
@@ -32,7 +33,7 @@ class AccountBannerWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         child: Container(
           padding: const EdgeInsets.all(15),
-          color: const Color.fromARGB(255, 231, 208, 0),
+          color: Variables.mainColor,
           child: _body(),
         ),
       ),
@@ -47,9 +48,10 @@ class AccountBannerWidget extends StatelessWidget {
         const Icon(
           Icons.account_circle_outlined,
           size: 70,
+          color: Colors.white,
         ),
         Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,17 +59,26 @@ class AccountBannerWidget extends StatelessWidget {
                 ? [
                     Text(
                       "${userProfile == null ? "" : userProfile!.name}",
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                     const Text(
                       "View profile",
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
                     )
                   ]
                 : [
                     const Text(
                       "Login",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     )
                   ],
           ),

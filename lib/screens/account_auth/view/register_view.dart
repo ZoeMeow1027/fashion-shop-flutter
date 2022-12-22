@@ -56,7 +56,7 @@ class RegisterView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Name',
+                  labelText: 'Name',
                   enabled: state.isEnabledControl,
                   controller: state.usernameController,
                   prefixIcon: const Icon(Icons.person),
@@ -64,7 +64,7 @@ class RegisterView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Email',
+                  labelText: 'Email',
                   enabled: state.isEnabledControl,
                   controller: state.emailController,
                   prefixIcon: const Icon(Icons.email_outlined),
@@ -72,7 +72,7 @@ class RegisterView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Password',
+                  labelText: 'Password',
                   enabled: state.isEnabledControl,
                   controller: state.passwordController,
                   isPassword: true,
@@ -81,7 +81,7 @@ class RegisterView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Re-enter password',
+                  labelText: 'Re-enter password',
                   enabled: state.isEnabledControl,
                   controller: state.reEnterPasswordController,
                   isPassword: true,

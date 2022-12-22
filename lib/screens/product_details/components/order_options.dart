@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import 'amount_selector.dart';
 import 'color_selector.dart';
 import 'current_state.dart';
@@ -26,6 +27,7 @@ class OrderOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(),
       child: Card(
+        color: Variables.mainColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/cart_history_item.dart';
 import '../../repository/order_api.dart';
-import '../my_purchase_detail/my_purchase_detail_view.dart';
+import '../your_purchase_detail/your_purchase_detail_view.dart';
 import 'components/history_item_widget.dart';
 
 class MyPurchaseView extends StatefulWidget {

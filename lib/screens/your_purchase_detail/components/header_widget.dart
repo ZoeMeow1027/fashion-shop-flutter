@@ -49,19 +49,28 @@ class HeaderWidget extends StatelessWidget {
                 Text(
                   "Delivery ID: $deliveryId",
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w400),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
                 ),
                 Text(
                   date == null
                       ? "Unknown date created for this delivery"
                       : "Created at ${DateFormat("dd/MM/yyyy HH:mm").format(date!)}",
                   style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w500),
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
                 Text(
                   status,
                   style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w500),
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
