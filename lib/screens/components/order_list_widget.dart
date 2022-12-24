@@ -9,23 +9,36 @@ class OrderListWidget extends StatelessWidget {
     required this.productList,
     this.label,
     this.maxItemsShow = 0,
+    this.onClickItem,
   });
 
   final List<OrderItem> productList;
   final String? label;
   final int maxItemsShow;
+  final Function(int)? onClickItem;
   // TODO: Max Item show
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgetList =
-        productList.fold(<Widget>[], (previousValue, element) {
-      previousValue.add(Container(
-        padding: const EdgeInsets.only(top: 3, bottom: 3),
-        child: OrderItemWidget(productItem: element),
-      ));
-      return previousValue;
-    });
+    List<Widget> widgetList = productList.fold(
+      <Widget>[],
+      (previousValue, element) {
+        previousValue.add(
+          Container(
+            padding: const EdgeInsets.only(top: 3, bottom: 3),
+            child: InkWell(
+              onTap: () {
+                if (onClickItem != null) {
+                  onClickItem!(element.id);
+                }
+              },
+              child: OrderItemWidget(productItem: element),
+            ),
+          ),
+        );
+        return previousValue;
+      },
+    );
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),

@@ -1,3 +1,4 @@
+import 'package:fashionshop/config/variables.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/product_item.dart';
@@ -48,6 +49,7 @@ class _HomeTabState extends State<HomeTab>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        surfaceTintColor: Variables.mainColor,
         title: null,
         actions: [
           IconButton(

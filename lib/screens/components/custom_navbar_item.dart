@@ -17,38 +17,59 @@ class CustomNavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        shape: BoxShape.rectangle,
-        color: isFilledColor ? Variables.mainColor : Colors.white,
-        border: Border.all(
-          color: isFilledColor ? Colors.white : Variables.mainColor,
-          width: 2,
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          shape: BoxShape.rectangle,
+          color: isFilledColor
+              ? (isActive ? Colors.white : Variables.mainColor)
+              : (isActive ? Variables.mainColor : Colors.white),
+          border: Border.all(
+            color: isFilledColor
+                ? (isActive ? Variables.mainColor : Colors.white)
+                : (isActive ? Colors.white : Variables.mainColor),
+            width: 2,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Wrap(
-          children: [
-            Icon(
-              iconData,
-              color: isFilledColor ? Colors.white : null,
-            ),
-            !isActive
-                ? const Text("")
-                : Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        color: isFilledColor ? Colors.white : null,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Wrap(
+            children: [
+              Icon(
+                iconData,
+                color: isFilledColor
+                    ? (isActive ? Variables.mainColor : Colors.white)
+                    : (isActive ? Colors.white : Variables.mainColor),
+              ),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.fastOutSlowIn,
+                child: !isActive
+                    ? const Text("")
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            color: isFilledColor
+                                ? (isActive
+                                    ? Variables.mainColor
+                                    : Colors.white)
+                                : (isActive
+                                    ? Colors.white
+                                    : Variables.mainColor),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

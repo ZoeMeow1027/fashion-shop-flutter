@@ -23,15 +23,7 @@ class TimeAndAddressDetailsWidget extends StatelessWidget {
     return Container(
       padding: padding,
       alignment: Alignment.topLeft,
-      child: Container(
-        padding: const EdgeInsets.only(top: 7, bottom: 7),
-        decoration: const BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Colors.white,
-          border: Border(
-            top: BorderSide(color: Colors.grey, width: 2),
-          ),
-        ),
+      child: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

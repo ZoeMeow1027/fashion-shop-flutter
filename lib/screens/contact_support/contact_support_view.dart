@@ -15,6 +15,7 @@ class ContactSupportView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
           bottom: const TabBar(
             labelColor: Colors.black,
             labelStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),

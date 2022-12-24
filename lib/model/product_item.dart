@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'product_review_item.dart';
 
 class ProductItem {

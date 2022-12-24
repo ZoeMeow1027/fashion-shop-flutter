@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/variables.dart';
 import '../../model/cart_history_item.dart';
 import '../../repository/order_api.dart';
 import '../your_purchase_detail/your_purchase_detail_view.dart';
@@ -25,8 +26,32 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
     required String tokenKey,
     Function()? onDone,
   }) async {
+    // Clear old history and get a new one
     _cartHistoryList.clear();
     _cartHistoryList.addAll(await OrderAPI.getCartHistory(tokenKey));
+
+    // Compare date creation of two orders. If null, will compare with id.
+    _cartHistoryList.sort((a, b) {
+      if (a.createdAt == null && b.createdAt != null) {
+        return 1;
+      } else if (a.createdAt != null && b.createdAt == null) {
+        return -1;
+      } else if (a.createdAt == null && b.createdAt == null) {
+        return a.id < b.id
+            ? 1
+            : a.id > b.id
+                ? -1
+                : 0;
+      } else {
+        var left = a.createdAt!.timeZoneOffset.inMilliseconds;
+        var right = b.createdAt!.timeZoneOffset.inMilliseconds;
+        return left > right
+            ? -1
+            : left < right
+                ? 1
+                : 0;
+      }
+    });
 
     if (onDone != null) {
       onDone();
@@ -50,7 +75,10 @@ class _MyPurchaseViewState extends State<MyPurchaseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Your Purchases")),
+      appBar: AppBar(
+        title: const Text("Your Purchases"),
+        surfaceTintColor: Variables.mainColor,
+      ),
       backgroundColor: Colors.white,
       body: !_cartHistoryListDone
           ? Container(

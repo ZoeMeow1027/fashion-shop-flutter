@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../config/variables.dart';
 import 'amount_selector.dart';
 import 'color_selector.dart';
-import 'current_state.dart';
 import 'product_size_selector.dart';
 
 class OrderOptions extends StatelessWidget {
@@ -11,16 +10,18 @@ class OrderOptions extends StatelessWidget {
     super.key,
     this.availableColors,
     this.availableSize,
+    required this.selectedColorIndex,
+    required this.selectedSizeIndex,
+    required this.currentCount,
     this.inventoryMax = -1,
-    required this.currentState,
     required this.onStateChanged,
   });
 
   final List<int>? availableColors;
   final List<String>? availableSize;
-  final CurrentState currentState;
-  final Function(CurrentState) onStateChanged;
-  final int inventoryMax;
+  // Size, Color, Count
+  final Function(int, int, int) onStateChanged;
+  final int selectedSizeIndex, selectedColorIndex, currentCount, inventoryMax;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +39,10 @@ class OrderOptions extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 15),
                     child: ProductSizeSelector(
                       sizeList: availableSize!,
-                      selectedIndex: currentState.selectedSizeIndex,
+                      selectedIndex: selectedColorIndex,
                       onClickedSize: (sizeSelected) {
-                        var data = currentState;
-                        data.selectedSizeIndex = sizeSelected;
-                        onStateChanged(data);
+                        onStateChanged(
+                            sizeSelected, selectedColorIndex, currentCount);
                       },
                     ),
                   ),
@@ -52,24 +52,22 @@ class OrderOptions extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 15),
                     child: ColorSelector(
                       availableColors: availableColors!,
-                      selectedColor: currentState.selectedColor,
+                      selectedColor: selectedColorIndex,
                       dotSize: 40,
                       onClick: (color) {
-                        var data = currentState;
-                        data.selectedColor = color;
-                        onStateChanged(data);
+                        onStateChanged(selectedSizeIndex,
+                            availableColors!.elementAt(color), currentCount);
                       },
                     ),
                   ),
             Padding(
               padding: const EdgeInsets.only(top: 15, bottom: 15),
               child: AmountSelector(
-                count: currentState.selectedCount,
+                count: currentCount,
                 countMax: inventoryMax,
                 onChanged: (newCount) {
-                  var data = currentState;
-                  data.selectedCount = newCount;
-                  onStateChanged(data);
+                  onStateChanged(
+                      selectedSizeIndex, selectedColorIndex, newCount);
                 },
               ),
             ),
