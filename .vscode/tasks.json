@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"apk"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "Build APK",
+			"detail": ""
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"appbundle"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "Build AppBundle",
+			"detail": ""
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"build",
+				"windows"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"label": "Build Windows",
+			"detail": ""
+		}
+	]
+}

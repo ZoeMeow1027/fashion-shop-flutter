@@ -8,29 +8,33 @@ import 'screens/welcome/welcome_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  bool welcomePassed;
-  SharedPreferences.getInstance().then(
-    (value) => {
-      welcomePassed = value.getBool("welcomePassed") ?? false,
-      runApp(MainApplication(
-        welcomePassed: welcomePassed,
-      )),
-    },
-  );
+  runApp(const MainApplication());
 }
 
 class MainApplication extends StatefulWidget {
-  const MainApplication({
-    super.key,
-    required this.welcomePassed,
-  });
-  final bool welcomePassed;
+  const MainApplication({super.key});
 
   @override
   State<MainApplication> createState() => _MainApplicationState();
 }
 
 class _MainApplicationState extends State<MainApplication> {
+  bool welcomePassed = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Check if user open app first time (or just cleared app data before)
+    SharedPreferences.getInstance().then(
+      (value) {
+        setState(() {
+          welcomePassed = value.getBool("welcomePassed") ?? false;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,22 +45,10 @@ class _MainApplicationState extends State<MainApplication> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: widget.welcomePassed ? const HomeView() : const WelcomeView(),
+      home: welcomePassed ? const HomeView() : const WelcomeView(),
     );
   }
 }
-
-// CheckoutView(
-//         orderId: 'F348GF843FD22',
-//         orderStatus: 1,
-//         returnHomeClicked: () {
-//           Navigator.pushAndRemoveUntil(
-//             context,
-//             MaterialPageRoute(builder: (context) => const HomeView()),
-//             (Route<dynamic> route) => false,
-//           );
-//         },
-//       )
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices

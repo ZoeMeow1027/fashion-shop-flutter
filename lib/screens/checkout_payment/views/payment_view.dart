@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../config/variables.dart';
 import '../../../model/cart_history_item.dart';
 import '../../../model/payment_method.dart';
 import '../../../repository/paypal_api.dart';
@@ -93,7 +94,9 @@ class _PaymentViewState extends State<PaymentView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
+        surfaceTintColor: Variables.mainColor,
+        backgroundColor: Variables.mainColor,
+        foregroundColor: Colors.white,
         title: Text("Completing Payment - ${widget.paymentMethod}"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

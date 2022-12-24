@@ -7,12 +7,15 @@ class PriceShowcaseWidget extends StatelessWidget {
     required this.priceShip,
     this.taxPercent = 8,
     this.padding = const EdgeInsets.all(0),
+    this.priceTax,
+    this.priceTotalAmount,
   });
 
   final double priceTotalCart;
   final double priceShip;
   final double taxPercent;
   final EdgeInsetsGeometry padding;
+  final double? priceTax, priceTotalAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +30,11 @@ class PriceShowcaseWidget extends StatelessWidget {
           child: Column(
             children: [
               _priceLine(label: "Total cart", price: priceTotalCart),
-              _priceLine(label: "Tax", price: priceTax),
+              _priceLine(label: "Tax", price: this.priceTax ?? priceTax),
               _priceLine(label: "Shipping", price: priceShip),
               _priceLine(
                 label: "Total amount",
-                price: priceTotalAmount,
+                price: this.priceTotalAmount ?? priceTotalAmount,
                 fontSize: 22,
                 padding: const EdgeInsets.only(top: 5, bottom: 3),
               ),
@@ -45,17 +48,17 @@ class PriceShowcaseWidget extends StatelessWidget {
   Widget _priceLine({
     required String label,
     double price = 0,
-    double? fontSize = 20,
+    double? fontSize = 18,
     EdgeInsetsGeometry padding = const EdgeInsets.only(top: 2, bottom: 2),
   }) {
     return Padding(
       padding: padding,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "$label:",
+            label,
             style: TextStyle(
               fontFamily: "Metropolis",
               fontSize: fontSize,
@@ -71,6 +74,7 @@ class PriceShowcaseWidget extends StatelessWidget {
               fontSize: fontSize,
               fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.right,
           ),
         ],
       ),

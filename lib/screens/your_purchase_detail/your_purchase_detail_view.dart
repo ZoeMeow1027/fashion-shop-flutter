@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../config/variables.dart';
 import '../../model/cart_history_item.dart';
 import '../../repository/product_api.dart';
+import '../components/custom_button.dart';
+import '../components/order_list_widget.dart';
+import '../components/price_showcase_widget.dart';
 import '../product_details/product_details_view.dart';
-import 'components/bottom_action_bar.dart';
-import 'components/price_details_widget.dart';
-import 'components/product_list_widget.dart';
 import 'components/header_widget.dart';
 import 'components/time_and_address_details_widget.dart';
 
@@ -37,25 +37,16 @@ class MyPurchaseDetailView extends StatelessWidget {
                       ? "Done payment, waiting for delivery"
                       : "Completed",
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Your cart in this delivery:",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              ),
-            ),
-            ProductListWidget(
+            OrderListWidget(
+              label: "Your cart in this delivery:",
               productList: cartHistoryItem.cartList,
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 0),
-              onClick: (productId) {
-                // TODO: Replace here!
+              onClickItem: (id) {
+                // TODO: Replace for call from id here!
                 ProductAPI.getProducts().then((value) {
                   if (value == null) {
                     return;
                   }
-                  final product = value.where((p0) => p0.id == productId);
+                  final product = value.where((p0) => p0.id == id);
 
                   if (product.isNotEmpty) {
                     Navigator.push(
@@ -69,27 +60,75 @@ class MyPurchaseDetailView extends StatelessWidget {
                 });
               },
             ),
-            PriceDetailsWidget(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              basePrice: cartHistoryItem.cartList
-                  .fold<double>(0, (sum, item) => sum + item.price),
-              taxPrice: cartHistoryItem.taxPrice,
-              shipPrice: cartHistoryItem.shipPrice,
-              totalPrice: cartHistoryItem.totalPrice,
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(color: Colors.grey, width: 1.5),
+                  ),
+                ),
+                child: PriceShowcaseWidget(
+                  padding: const EdgeInsets.only(top: 10),
+                  priceTotalCart: cartHistoryItem.cartList
+                      .fold<double>(0, (sum, item) => sum + item.price),
+                  priceTax: cartHistoryItem.taxPrice,
+                  priceShip: cartHistoryItem.shipPrice,
+                  priceTotalAmount: cartHistoryItem.totalPrice,
+                ),
+              ),
             ),
-            TimeAndAddressDetailsWidget(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              paidAt: cartHistoryItem.paidAt,
-              deliveriedAt: cartHistoryItem.deliveredAt,
-              shippingAddress: cartHistoryItem.shippingAddress,
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(color: Colors.grey, width: 1.5),
+                  ),
+                ),
+                child: TimeAndAddressDetailsWidget(
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  paidAt: cartHistoryItem.paidAt,
+                  deliveriedAt: cartHistoryItem.deliveredAt,
+                  shippingAddress: cartHistoryItem.shippingAddress,
+                ),
+              ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomActionBar(
-        isPaid: cartHistoryItem.paidAt != null,
-        onClickPayment: () {},
-        onClickContact: () {},
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: 65,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                cartHistoryItem.paidAt != null
+                    ? const Text("")
+                    : CustomButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        label: "Re-create payment",
+                        verticalPadding: 0,
+                        fillColor: true,
+                        onClick: () {},
+                      ),
+                CustomButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  label: "Need help?",
+                  fillColor: true,
+                  verticalPadding: 0,
+                  onClick: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

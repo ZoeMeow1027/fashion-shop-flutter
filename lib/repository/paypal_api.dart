@@ -7,14 +7,19 @@ import '../config/variables.dart';
 
 // Source: https://medium.com/flutter-community/paypal-payment-gateway-integration-in-flutter-379fbb3b87f5
 class PayPalAPI {
-  static String domain = Variables.paypalDomain;
-  static String clientId = Variables.clientId;
-  static String secret = Variables.clientSecret;
+  static String? domain = Variables.paypalDomain;
+  static String? clientId = Variables.payPalClientId;
+  static String? secret = Variables.payPalClientSecret;
 
   // for getting the access token from Paypal
   static Future<String?> getAccessToken() async {
+    if (domain == null || clientId == null || secret == null) {
+      return Future.error(
+          "PayPal environemt isn't found. Contact app owner for repair this issue.");
+    }
+
     try {
-      var client = BasicAuthClient(clientId, secret);
+      var client = BasicAuthClient(clientId!, secret!);
       var response = await client.post(
           Uri.parse('$domain/v1/oauth2/token?grant_type=client_credentials'));
 
@@ -31,6 +36,11 @@ class PayPalAPI {
   // for creating the payment request with Paypal
   static Future<Map<String, String>?> createPaypalPayment(
       transactions, accessToken) async {
+    if (domain == null || clientId == null || secret == null) {
+      return Future.error(
+          "PayPal environemt isn't found. Contact app owner for repair this issue.");
+    }
+
     try {
       var response = await http.post(
         Uri.parse("$domain/v1/payments/payment"),
@@ -72,6 +82,11 @@ class PayPalAPI {
 
   // for executing the payment transaction
   static Future<String?> executePayment(url, payerId, accessToken) async {
+    if (domain == null || clientId == null || secret == null) {
+      return Future.error(
+          "PayPal environemt isn't found. Contact app owner for repair this issue.");
+    }
+
     try {
       var response = await http.post(
         Uri.parse(url),

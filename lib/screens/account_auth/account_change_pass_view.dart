@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../repository/user_api.dart';
 import '../components/custom_button.dart';
 import '../components/custom_text_field.dart';
-import 'components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
 
 class AccountChangePassView extends StatefulWidget {
   const AccountChangePassView({

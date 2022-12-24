@@ -1,7 +1,6 @@
 // TODO: API instead of local storage
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,9 +25,7 @@ class CartAPI {
       item = (await ProductAPI.getProducts())?.firstWhere((element) {
         return element.id == productId;
       });
-    } catch (ex) {
-      log("[E] addToCart: ${ex.toString()}");
-    }
+    } catch (ex) {}
     if (item == null) {
       throw Exception("addToCart: \"item\" was empty!");
     }
@@ -45,8 +42,6 @@ class CartAPI {
       price: item.price!,
       imageUrl: item.imageUrl!,
     );
-
-    log("addToCart: OK");
 
     // Add or modify to local storage
     final prefs = await SharedPreferences.getInstance();

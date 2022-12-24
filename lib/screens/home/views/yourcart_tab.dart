@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/variables.dart';
 import '../../../repository/cart_api.dart';
-import '../../account_auth/components/show_snackbar_msg.dart';
+import '../../../utils/show_snackbar_msg.dart';
 import '../../checkout_payment/checkout_view.dart';
 import '../../components/order_item_widget.dart';
 import 'search_view.dart';

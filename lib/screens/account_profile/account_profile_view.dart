@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../config/variables.dart';
 import '../../model/user_profile.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_change_pass_view.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
 import '../components/custom_button.dart';
 import '../components/custom_text_field.dart';
 
@@ -24,7 +25,7 @@ class _AccountProfileViewState extends State<AccountProfileView> {
   bool _isEnabledWidget = false;
   String _updateBtnText = "Update Profile";
 
-  late UserProfile? _userProfile;
+  UserProfile? _userProfile;
 
   @override
   void initState() {
@@ -40,7 +41,10 @@ class _AccountProfileViewState extends State<AccountProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Account Profile")),
+      appBar: AppBar(
+        title: const Text("Account Profile"),
+        surfaceTintColor: Variables.mainColor,
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
@@ -50,7 +54,7 @@ class _AccountProfileViewState extends State<AccountProfileView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.only(top: 25, bottom: 15),
                 child: Icon(
                   Icons.account_circle_outlined,
                   size: 70,
@@ -80,6 +84,9 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                 fillMaxWidth: true,
                 fillColor: true,
                 onClick: () {
+                  if (_userProfile == null) {
+                    return;
+                  }
                   if (!_isEnabledWidget) {
                     setState(() {
                       _isEnabledWidget = true;
@@ -137,6 +144,9 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                 fillMaxWidth: true,
                 fillColor: true,
                 onClick: () {
+                  if (_userProfile == null) {
+                    return;
+                  }
                   _navToChangePass(context: context);
                 },
               ),

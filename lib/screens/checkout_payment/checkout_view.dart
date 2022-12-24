@@ -7,7 +7,7 @@ import '../../model/user_profile.dart';
 import '../../repository/cart_api.dart';
 import '../../repository/order_api.dart';
 import '../../repository/user_api.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
 import '../components/custom_button.dart';
 import '../components/custom_text_field.dart';
 import '../components/order_list_widget.dart';
@@ -15,7 +15,7 @@ import '../home/home_view.dart';
 import '../your_purchase/your_purchase_view.dart';
 import 'checkout_result_view.dart';
 import 'components/payment_info_widget.dart';
-import 'components/price_showcase_widget.dart';
+import '../components/price_showcase_widget.dart';
 import 'components/shipping_address_info_widget.dart';
 import 'views/payment_view.dart';
 
@@ -68,7 +68,10 @@ class _CheckoutViewState extends State<CheckoutView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Checkout")),
+      appBar: AppBar(
+        title: const Text("Checkout"),
+        surfaceTintColor: Variables.mainColor,
+      ),
       body: _mainUI(context),
       backgroundColor: const Color(0xFFF9F9F9),
       bottomNavigationBar: BottomAppBar(

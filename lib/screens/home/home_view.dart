@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +5,7 @@ import '../../model/user_profile.dart';
 import '../../repository/cart_api.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_auth_view.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
 import '../components/custom_navbar.dart';
 import '../components/custom_navbar_item.dart';
 import 'views/account_tab.dart';
@@ -41,7 +39,6 @@ class _HomeViewState extends State<HomeView> {
           msg:
               "Session has expired or you are not connected to internet. Please login again.");
     });
-    // widget.viewModel.getProductList();
   }
 
   @override
@@ -167,7 +164,6 @@ class _HomeViewState extends State<HomeView> {
       await prefs.remove("tokenKey");
     } else {
       _userProfile = await UserAPI.getProfile(_tokenKey!);
-      log("triggered");
       isLoggedIn = true;
     }
 
