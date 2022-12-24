@@ -60,7 +60,7 @@ class WelcomeView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             child: CustomButton(
               label: "Get Started",
-              isFilledColor: true,
+              fillColor: true,
               onClick: () {
                 SharedPreferences.getInstance().then(
                   (value) => {

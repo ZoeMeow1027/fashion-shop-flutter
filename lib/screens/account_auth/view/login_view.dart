@@ -90,7 +90,7 @@ class LoginView extends StatelessWidget {
           CustomButton(
             padding: const EdgeInsets.only(top: 50, bottom: 15),
             label: "Login",
-            isFilledColor: true,
+            fillColor: true,
             fillMaxWidth: true,
             onClick: () async {
               await _loginClicked(context: context);

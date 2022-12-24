@@ -88,7 +88,7 @@ class _AccountChangePassViewState extends State<AccountChangePassView> {
               ),
               CustomButton(
                 padding: const EdgeInsets.only(top: 40, bottom: 15),
-                isFilledColor: true,
+                fillColor: true,
                 fillMaxWidth: true,
                 label: "Change Password",
                 labelSize: 17,

@@ -94,7 +94,7 @@ class RegisterView extends StatelessWidget {
             label: "Create Account",
             padding: const EdgeInsets.only(top: 40, bottom: 15),
             fillMaxWidth: true,
-            isFilledColor: true,
+            fillColor: true,
             onClick: () async {
               await _createAccount(
                 context: context,

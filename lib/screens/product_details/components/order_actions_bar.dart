@@ -34,7 +34,7 @@ class OrderActionsBar extends StatelessWidget {
                 label: "Add to cart",
                 labelSize: 17,
                 onClick: onClickAddToCart,
-                isFilledColor: true,
+                fillColor: true,
               ),
             ),
 
