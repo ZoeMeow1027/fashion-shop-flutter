@@ -78,7 +78,7 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                 label: _updateBtnText,
                 padding: const EdgeInsets.only(top: 50, bottom: 5),
                 fillMaxWidth: true,
-                isFilledColor: true,
+                fillColor: true,
                 onClick: () {
                   if (!_isEnabledWidget) {
                     setState(() {
@@ -125,7 +125,7 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                       label: "Discard Changes",
                       padding: const EdgeInsets.only(top: 10, bottom: 5),
                       fillMaxWidth: true,
-                      isFilledColor: true,
+                      fillColor: true,
                       onClick: () {
                         _resetProfileValue(context: context);
                       },
@@ -135,7 +135,7 @@ class _AccountProfileViewState extends State<AccountProfileView> {
                 label: "Change Password",
                 padding: const EdgeInsets.only(top: 10, bottom: 5),
                 fillMaxWidth: true,
-                isFilledColor: true,
+                fillColor: true,
                 onClick: () {
                   _navToChangePass(context: context);
                 },

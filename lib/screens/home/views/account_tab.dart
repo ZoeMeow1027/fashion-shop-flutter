@@ -75,7 +75,7 @@ class AccountTab extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           label: "Your Purchases",
           centerContent: false,
-          icon: Icons.assignment_outlined,
+          icon: const Icon(Icons.assignment_outlined),
           verticalPadding: 26,
           onClick: () {
             if (tokenKey == null) {
@@ -112,7 +112,7 @@ class AccountTab extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           label: "Contact Support",
           centerContent: false,
-          icon: Icons.support_agent,
+          icon: const Icon(Icons.support_agent),
           verticalPadding: 26,
           onClick: () {
             Navigator.push(
@@ -130,7 +130,7 @@ class AccountTab extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 centerContent: false,
                 verticalPadding: 26,
-                icon: Icons.logout,
+                icon: const Icon(Icons.logout),
                 onClick: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(

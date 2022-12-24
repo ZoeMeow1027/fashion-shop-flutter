@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../config/variables.dart';
+import '../components/custom_button.dart';
+import 'views/contact_us_tab.dart';
+import 'views/faq_tab.dart';
 
 class ContactSupportView extends StatelessWidget {
   const ContactSupportView({super.key});
@@ -27,19 +30,11 @@ class ContactSupportView extends StatelessWidget {
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            _faqUI(context: context),
-            _contactUsUI(context: context),
+            FAQTab(context: context),
+            ContactUsTab(context: context),
           ],
         ),
       ),
     );
-  }
-
-  Widget _faqUI({required BuildContext context}) {
-    return const Icon(Icons.directions_car);
-  }
-
-  Widget _contactUsUI({required BuildContext context}) {
-    return const Icon(Icons.directions_transit);
   }
 }

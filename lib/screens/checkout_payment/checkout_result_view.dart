@@ -79,7 +79,7 @@ class CheckoutResultView extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       top: 35, bottom: 5, left: 100, right: 100),
                   fillMaxWidth: true,
-                  isFilledColor: false,
+                  fillColor: false,
                   label: "Delivery Status",
                   onClick: () {
                     if (deliveryStatusClicked != null) {
@@ -91,7 +91,7 @@ class CheckoutResultView extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 5, left: 100, right: 100),
                   fillMaxWidth: true,
-                  isFilledColor: false,
+                  fillColor: false,
                   label: "Return to Home",
                   onClick: () {
                     if (returnHomeClicked != null) {

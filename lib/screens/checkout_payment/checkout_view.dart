@@ -78,7 +78,7 @@ class _CheckoutViewState extends State<CheckoutView> {
           height: 65,
           child: CustomButton(
             label: "Complete payment and place order",
-            isFilledColor: true,
+            fillColor: true,
             verticalPadding: 0,
             onClick: () {
               Navigator.of(context).push(
@@ -261,7 +261,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               padding: const EdgeInsets.only(top: 20, bottom: 20),
               label: "Done",
               fillMaxWidth: true,
-              isFilledColor: true,
+              fillColor: true,
               onClick: () {
                 if (onChanged != null) {
                   onChanged("PayPal");
@@ -429,7 +429,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             padding: const EdgeInsets.only(top: 20, bottom: 20),
             label: "Done",
             fillMaxWidth: true,
-            isFilledColor: true,
+            fillColor: true,
             onClick: () {
               if (onChanged != null) {
                 onChanged(ShippingAddressItem(
