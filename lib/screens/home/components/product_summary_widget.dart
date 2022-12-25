@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import '../../../model/product_item.dart';
 import '../../components/custom_cache_network_image.dart';
 
@@ -30,7 +31,7 @@ class ProductSummaryWidget extends StatelessWidget {
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: Colors.blueAccent,
+              color: Variables.mainColor,
               width: 2,
             ),
           ),
@@ -60,9 +61,10 @@ class ProductSummaryWidget extends StatelessWidget {
                     Text(
                       "${productItem.price}\$",
                       style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.red),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Variables.mainColor,
+                      ),
                     ),
                   ],
                 ),

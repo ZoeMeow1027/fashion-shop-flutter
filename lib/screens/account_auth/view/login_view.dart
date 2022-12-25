@@ -6,20 +6,26 @@ import '../../../model/dto/login_dto.dart';
 import '../../../repository/user_api.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_text_field.dart';
-import '../components/current_state_account_view.dart';
-import '../components/show_snackbar_msg.dart';
+import '../../../utils/show_snackbar_msg.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({
-    super.key,
-    required this.state,
-    required this.onStateChanged,
-    required this.onRegisterPage,
-  });
+class LoginView extends StatefulWidget {
+  const LoginView({super.key, required this.onRegisterPage});
 
-  final CurrentStateAccountView state;
-  final Function(CurrentStateAccountView) onStateChanged;
   final Function() onRegisterPage;
+
+  @override
+  State<StatefulWidget> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  bool _isEnabledWidget = true;
+  final TextEditingController _cUser = TextEditingController();
+  final TextEditingController _cPass = TextEditingController();
+
+  void _clearTextController() {
+    _cUser.clear();
+    _cPass.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +61,9 @@ class LoginView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Username',
-                  enabled: state.isEnabledControl,
-                  controller: state.usernameController,
+                  labelText: 'Username',
+                  enabled: _isEnabledWidget,
+                  controller: _cUser,
                   prefixIcon: const Icon(Icons.person),
                   onSubmitted: (value) async {
                     await _loginClicked(context: context);
@@ -66,10 +72,10 @@ class LoginView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Password',
+                  labelText: 'Password',
                   isPassword: true,
-                  enabled: state.isEnabledControl,
-                  controller: state.passwordController,
+                  enabled: _isEnabledWidget,
+                  controller: _cPass,
                   prefixIcon: const Icon(Icons.password),
                   onSubmitted: (value) async {
                     await _loginClicked(context: context);
@@ -90,7 +96,7 @@ class LoginView extends StatelessWidget {
           CustomButton(
             padding: const EdgeInsets.only(top: 50, bottom: 15),
             label: "Login",
-            isFilledColor: true,
+            fillColor: true,
             fillMaxWidth: true,
             onClick: () async {
               await _loginClicked(context: context);
@@ -133,8 +139,8 @@ class LoginView extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         // Register view here!
-                        state.clearTextController();
-                        onRegisterPage();
+                        _clearTextController();
+                        widget.onRegisterPage();
                       },
                   ),
                 ],
@@ -150,23 +156,25 @@ class LoginView extends StatelessWidget {
   Future<void> _loginClicked({
     required BuildContext context,
   }) async {
-    if (state.usernameController.text.length < 6) {
+    if (_cUser.text.length < 6) {
       showSnackbarMessage(
           context: context, msg: 'Username must be at least 6 characters!');
       return;
     }
-    if (state.passwordController.text.length < 3) {
+    if (_cPass.text.length < 3) {
       showSnackbarMessage(
           context: context, msg: 'Password must be at least 3 characters!');
       return;
     }
-    if (state.isEnabledControl) {
-      state.isEnabledControl = false;
-      onStateChanged(state);
+    if (_isEnabledWidget) {
+      setState(() {
+        _isEnabledWidget = false;
+      });
+
       showSnackbarMessage(context: context, msg: 'Logging you in...');
       if (await UserAPI.login(LoginDTO.from(
-        username: state.usernameController.text,
-        password: state.passwordController.text,
+        username: _cUser.text,
+        password: _cPass.text,
       ))) {
         // Show snack bar for successful login (this will be deleted in future)
         showSnackbarMessage(context: context, msg: 'Successfully login!');
@@ -174,8 +182,10 @@ class LoginView extends StatelessWidget {
         Navigator.pop(context);
       } else {
         // Show snack bar for logging failed!
-        state.isEnabledControl = true;
-        onStateChanged(state);
+        setState(() {
+          _isEnabledWidget = true;
+        });
+
         showSnackbarMessage(
             context: context,
             msg:

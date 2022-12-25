@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +5,9 @@ import '../../model/user_profile.dart';
 import '../../repository/cart_api.dart';
 import '../../repository/user_api.dart';
 import '../account_auth/account_auth_view.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
+import '../components/custom_navbar.dart';
+import '../components/custom_navbar_item.dart';
 import 'views/account_tab.dart';
 import 'views/home_tab.dart';
 import 'views/yourcart_tab.dart';
@@ -39,7 +39,6 @@ class _HomeViewState extends State<HomeView> {
           msg:
               "Session has expired or you are not connected to internet. Please login again.");
     });
-    // widget.viewModel.getProductList();
   }
 
   @override
@@ -77,6 +76,7 @@ class _HomeViewState extends State<HomeView> {
             logoutRequested: () async {
               var prefs = await SharedPreferences.getInstance();
               await prefs.remove("tokenKey");
+              await CartAPI.clearCart();
               setState(() {
                 _tokenKey = null;
                 _userProfile = null;
@@ -87,73 +87,54 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10.0),
-          topRight: Radius.circular(10.0),
-        ),
-        child: Container(
-          foregroundDecoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10.0),
-              topRight: Radius.circular(10.0),
-            ),
-            border: Border.all(
-              color: const Color.fromARGB(255, 237, 228, 255),
-              width: 2,
-            ),
-          ),
-          color: Colors.transparent,
-          child: NavigationBar(
-            backgroundColor: const Color.fromARGB(255, 237, 228, 255),
-            surfaceTintColor: const Color.fromARGB(255, 237, 228, 255),
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.shopping_cart),
-                label: 'Your Cart',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.account_circle),
-                label: 'Account',
-              ),
-            ],
-            selectedIndex: _currentPage,
-            onDestinationSelected: (index) async {
-              switch (index) {
-                case 1:
-                  if (_isLoggedIn) {
-                    setState(() {
-                      _pageController.jumpToPage(index);
-                    });
-                  } else {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const AccountAuthorizationView()),
-                    );
-                    await _checkLoggedIn(onDone: (isLoggedIn) {
-                      setState(() {
-                        _isLoggedIn = isLoggedIn;
-                        _objKey = Object();
-                      });
-                    });
-                  }
-                  break;
-                default:
+      bottomNavigationBar: CustomNavBar(
+        currentIndex: _currentPage,
+        isFilledColor: true,
+        onChangedIndex: (index) async {
+          switch (index) {
+            case 1:
+              if (_isLoggedIn) {
+                setState(() {
+                  _pageController.jumpToPage(index);
+                });
+              } else {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AccountAuthorizationView()),
+                );
+                await _checkLoggedIn(onDone: (isLoggedIn) {
                   setState(() {
-                    _pageController.jumpToPage(index);
+                    _isLoggedIn = isLoggedIn;
+                    _objKey = Object();
                   });
-                  break;
+                });
               }
-            },
+              break;
+            default:
+              setState(() {
+                _pageController.jumpToPage(index);
+              });
+              break;
+          }
+        },
+        navBarList: const [
+          CustomNavBarItem(
+            label: "Home",
+            iconData: Icons.home,
+            isFilledColor: true,
           ),
-        ),
+          CustomNavBarItem(
+            label: "Your Cart",
+            iconData: Icons.shopping_cart,
+            isFilledColor: true,
+          ),
+          CustomNavBarItem(
+            label: "Account",
+            iconData: Icons.account_circle,
+            isFilledColor: true,
+          ),
+        ],
       ),
     );
   }
@@ -183,7 +164,6 @@ class _HomeViewState extends State<HomeView> {
       await prefs.remove("tokenKey");
     } else {
       _userProfile = await UserAPI.getProfile(_tokenKey!);
-      log("triggered");
       isLoggedIn = true;
     }
 

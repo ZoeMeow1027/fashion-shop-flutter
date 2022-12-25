@@ -7,18 +7,12 @@ class TwoLinesWidget extends StatelessWidget {
     this.value,
     this.textIfValueNull = "",
     this.padding = const EdgeInsets.all(0),
-    this.fontColor,
-    this.fontSize = 18,
-    this.fontWeight = FontWeight.w400,
   });
 
   final String text;
   final String? value;
   final String textIfValueNull;
   final EdgeInsetsGeometry padding;
-  final Color? fontColor;
-  final double fontSize;
-  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +24,20 @@ class TwoLinesWidget extends StatelessWidget {
         children: [
           Text(
             text,
-            style: TextStyle(
-              color: fontColor,
-              fontSize: fontSize,
-              fontWeight: fontWeight,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 155, 155, 155),
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
             ),
           ),
           Expanded(
             child: Text(
               value == null ? textIfValueNull : "$value",
-              style: TextStyle(
-                color: fontColor,
-                fontSize: fontSize,
-                fontWeight: fontWeight,
-              ),
               textAlign: TextAlign.right,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+              ),
             ),
           ),
         ],

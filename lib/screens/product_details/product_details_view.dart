@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/urls.dart';
+import '../../config/variables.dart';
 import '../../model/product_item.dart';
 import '../../repository/cart_api.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../account_auth/account_auth_view.dart';
+import '../../utils/show_snackbar_msg.dart';
 import '../home/views/search_view.dart';
 import 'components/basic_information.dart';
-import 'components/current_state.dart';
 import 'components/order_actions_bar.dart';
 import 'components/order_options.dart';
+import 'components/review_summary_widget.dart';
+import 'views/review_all_view.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
@@ -28,17 +32,20 @@ class _ProductDetailsView extends State<ProductDetailsView> {
   final List<String>? availableSize = null;
   final bool isFavorited = false;
 
-  late CurrentState currentState;
+  int _selectedColorIndex = 0;
+  int _selectedCount = 0;
+  int _selectedSizeIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    currentState = CurrentState();
-    if (availableColors != null) {
-      currentState.selectedColor = availableColors![0];
-    }
-    currentState.selectedCount = 1;
-    currentState.selectedSizeIndex = 0;
+    setState(() {
+      if (availableColors != null) {
+        _selectedColorIndex = availableColors![0];
+      }
+      _selectedCount = 1;
+      _selectedSizeIndex = 0;
+    });
   }
 
   @override
@@ -63,30 +70,8 @@ class _ProductDetailsView extends State<ProductDetailsView> {
       bottomNavigationBar: BottomAppBar(
         child: OrderActionsBar(
           context,
-          onClickAddToCart: () {
-            showSnackbarMessage(
-              context: context,
-              msg: "Adding to your cart...",
-              clearOld: true,
-            );
-            CartAPI.addToCart(
-              token: "",
-              productId: widget.productItem.id!,
-              count: currentState.selectedCount,
-            ).then((value) {
-              showSnackbarMessage(
-                context: context,
-                msg: "Successfully added this product to your cart.",
-                clearOld: true,
-              );
-            }).onError((error, stackTrace) {
-              showSnackbarMessage(
-                context: context,
-                msg:
-                    "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
-                clearOld: true,
-              );
-            });
+          onClickAddToCart: () async {
+            await _addToCart(context: context);
           },
           onClickFavorite: () {},
           onClickShare: () async {
@@ -106,7 +91,8 @@ class _ProductDetailsView extends State<ProductDetailsView> {
     required void Function()? onCartClicked,
   }) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Variables.mainColor,
       elevation: 0,
       leading: IconButton(
         icon: const Icon(
@@ -159,10 +145,16 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             availableColors: availableColors,
             availableSize: availableSize,
             inventoryMax: widget.productItem.countInStock,
-            currentState: currentState,
-            onStateChanged: (state) {
+            selectedSizeIndex: _selectedSizeIndex,
+            selectedColorIndex: _selectedColorIndex,
+            currentCount: _selectedCount,
+            onStateChanged: (size, color, count) {
               setState(() {
-                currentState = state;
+                _selectedSizeIndex != size ? _selectedSizeIndex = size : () {};
+                _selectedColorIndex != color
+                    ? _selectedColorIndex = color
+                    : () {};
+                _selectedCount != count ? _selectedCount = count : () {};
               });
             },
           ),
@@ -170,20 +162,66 @@ class _ProductDetailsView extends State<ProductDetailsView> {
             padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0),
             child: Text(
               "${widget.productItem.description}",
-              style: const TextStyle(fontSize: 16.0),
-            ),
-          ),
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-              child: Text(
-                "Related Products",
-                style: TextStyle(fontSize: 20.0),
+              style: const TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w400,
               ),
             ),
+          ),
+          ReviewSummaryWidget(
+            padding:
+                const EdgeInsets.only(left: 5, right: 5, top: 25, bottom: 15),
+            reviewList: widget.productItem.reviewList,
+            showShowAllBtn: true,
+            onClick: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ReviewAllView(
+                    reviewList: widget.productItem.reviewList,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _addToCart({required BuildContext context}) async {
+    var prefs = await SharedPreferences.getInstance();
+    var tokenKey = prefs.getString("tokenKey");
+    if (tokenKey == null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const AccountAuthorizationView(),
+        ),
+      );
+      return;
+    }
+    try {
+      showSnackbarMessage(
+        context: context,
+        msg: "Adding this product to your cart...",
+        clearOld: true,
+      );
+      await CartAPI.addToCart(
+        token: "",
+        productId: widget.productItem.id!,
+        count: _selectedCount,
+      );
+      showSnackbarMessage(
+        context: context,
+        msg: "Successfully added this product to your cart.",
+        clearOld: true,
+      );
+    } catch (ex) {
+      showSnackbarMessage(
+        context: context,
+        msg:
+            "We ran a issue while adding this product to your cart. Check your internet connection and try again.",
+        clearOld: true,
+      );
+    }
   }
 }

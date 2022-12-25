@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import '../../../repository/cart_api.dart';
-import '../../account_auth/components/show_snackbar_msg.dart';
+import '../../../utils/show_snackbar_msg.dart';
 import '../../checkout_payment/checkout_view.dart';
+import '../../components/order_item_widget.dart';
 import 'search_view.dart';
-import '../components/product_item_widget.dart';
 
 class YourCartTab extends StatefulWidget {
   const YourCartTab({
@@ -57,12 +58,11 @@ class _YourCartTabState extends State<YourCartTab> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(
-                        top: 5,
-                        bottom: 5,
+                        top: 10,
                         left: 10,
                         right: 10,
                       ),
-                      child: ProductItemWidget(
+                      child: OrderItemWidget(
                         productItem: snapshot.data![index],
                         onClickDelete: () {
                           return showDialog<String>(
@@ -114,6 +114,7 @@ class _YourCartTabState extends State<YourCartTab> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0.0,
+        backgroundColor: Variables.mainColor,
         onPressed: () async {
           if ((await CartAPI.getCart(token: widget.tokenKey!)).isEmpty) {
             showSnackbarMessage(

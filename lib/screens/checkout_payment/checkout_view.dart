@@ -1,20 +1,22 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 
+import '../../config/variables.dart';
 import '../../model/cart_history_item.dart';
 import '../../model/payment_method.dart';
 import '../../model/user_profile.dart';
 import '../../repository/cart_api.dart';
 import '../../repository/order_api.dart';
 import '../../repository/user_api.dart';
-import '../account_auth/components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
+import '../components/order_list_widget.dart';
 import '../home/home_view.dart';
-import '../my_purchase/my_purchase_view.dart';
+import '../your_purchase/your_purchase_view.dart';
 import 'checkout_result_view.dart';
 import 'components/payment_info_widget.dart';
-import 'components/price_showcase_widget.dart';
+import '../components/price_showcase_widget.dart';
 import 'components/shipping_address_info_widget.dart';
-import 'components/your_cart_widget.dart';
 import 'views/payment_view.dart';
 
 class CheckoutView extends StatefulWidget {
@@ -66,16 +68,22 @@ class _CheckoutViewState extends State<CheckoutView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Checkout")),
+      appBar: AppBar(
+        title: const Text("Checkout"),
+        surfaceTintColor: Variables.mainColor,
+      ),
       body: _mainUI(context),
       backgroundColor: const Color(0xFFF9F9F9),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ElevatedButton(
-            onPressed: () {
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          height: 65,
+          child: CustomButton(
+            label: "Complete payment and place order",
+            fillColor: true,
+            verticalPadding: 0,
+            onClick: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context1) => PaymentView(
@@ -86,62 +94,12 @@ class _CheckoutViewState extends State<CheckoutView> {
                     shippingCost: _shipPrice,
                     orderList: _orderList,
                     onCompleted: (id) async {
-                      showSnackbarMessage(
+                      await _completePayment(
                         context: context,
-                        msg: "Completing your payment...",
-                        duration: const Duration(minutes: 5),
+                        paymentId: id,
                       );
-                      try {
-                        int id = await OrderAPI.addCart(
-                          widget.token,
-                          CartHistoryItem.fromJson({
-                            "orderItems": List.generate(_orderList.length,
-                                (index) => _orderList[index].toJson()),
-                            "shippingAddress": _shippingAddress.toJson(),
-                            "paymentMethod": _paymentMethod,
-                            "itemsPrice": _totalCart,
-                            "shippingPrice": _shipPrice,
-                            "taxPrice": _taxPrice,
-                            "totalPrice": _totalPrice,
-                          }),
-                        );
-                        await OrderAPI.markAsPaid(widget.token, id);
-                        await CartAPI.clearCart();
-                        ScaffoldMessenger.of(context).clearSnackBars();
-                        await Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => CheckoutResultView(
-                              orderId: id.toString(),
-                              orderStatus: 1,
-                              returnHomeClicked: () {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomeView()),
-                                  (Route<dynamic> route) => false,
-                                );
-                              },
-                              deliveryStatusClicked: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MyPurchaseView(token: widget.token),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          (Route<dynamic> route) => false,
-                        );
-                      } catch (ex) {
-                        showSnackbarMessage(
-                          context: context,
-                          msg:
-                              "You have completed, but something went wrong! Please send this code to contact support for helping completing your payment: $id",
-                        );
-                      }
                     },
                     onFailed: (id) async {
-                      log("Failed $id");
                       showSnackbarMessage(
                         context: context,
                         msg:
@@ -152,10 +110,6 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
               );
             },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(50),
-            ),
-            child: const Text("Submit order"),
           ),
         ),
       ),
@@ -169,8 +123,9 @@ class _CheckoutViewState extends State<CheckoutView> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            YourCartWidget(
+            OrderListWidget(
               productList: _orderList,
+              label: "Your Cart",
             ),
             ShippingAddressInfoWidget(
               name: _profile == null ? "(loading)" : _profile!.name!,
@@ -256,7 +211,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "Edit Shipping Address",
+                    "Choose a payment method",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
                   ),
                 ],
@@ -305,26 +260,79 @@ class _CheckoutViewState extends State<CheckoutView> {
                 }),
               ),
             ),
-            Padding(
+            CustomButton(
               padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (onChanged != null) {
-                    onChanged("PayPal");
-                  }
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(
-                      50), // fromHeight use double.infinity as width and 40 is the height
-                ),
-                child: const Text("Done"),
-              ),
+              label: "Done",
+              fillMaxWidth: true,
+              fillColor: true,
+              onClick: () {
+                if (onChanged != null) {
+                  onChanged("PayPal");
+                }
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _completePayment({
+    required BuildContext context,
+    required String paymentId,
+  }) async {
+    showSnackbarMessage(
+      context: context,
+      msg: "Completing your payment...",
+      duration: const Duration(minutes: 5),
+    );
+
+    try {
+      int id = await OrderAPI.addCart(
+        widget.token,
+        CartHistoryItem.fromJson({
+          "orderItems": List.generate(
+              _orderList.length, (index) => _orderList[index].toJson()),
+          "shippingAddress": _shippingAddress.toJson(),
+          "paymentMethod": _paymentMethod,
+          "itemsPrice": _totalCart,
+          "shippingPrice": _shipPrice,
+          "taxPrice": _taxPrice,
+          "totalPrice": _totalPrice,
+        }),
+      );
+      await OrderAPI.markAsPaid(widget.token, id);
+      await CartAPI.clearCart();
+      ScaffoldMessenger.of(context).clearSnackBars();
+      await Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => CheckoutResultView(
+            orderId: id.toString(),
+            returnHomeClicked: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const HomeView()),
+                (Route<dynamic> route) => false,
+              );
+            },
+            deliveryStatusClicked: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MyPurchaseView(token: widget.token),
+                ),
+              );
+            },
+          ),
+        ),
+        (Route<dynamic> route) => false,
+      );
+    } catch (ex) {
+      showSnackbarMessage(
+        context: context,
+        msg:
+            "You have completed, but something went wrong! Please send this code to contact support for helping completing your payment: $paymentId",
+      );
+    }
   }
 
   Widget _paymentMethodChooser({
@@ -342,6 +350,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             Radio(
               value: radioValue,
               groupValue: true,
+              activeColor: Variables.mainColor,
               onChanged: (value) {
                 if (onClick != null) {
                   onClick();
@@ -355,7 +364,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 label,
                 style: TextStyle(
                   fontFamily: "Metropolis",
-                  fontSize: 18,
+                  fontSize: radioValue ? 20 : 18,
                   fontWeight:
                       radioValue == true ? FontWeight.w500 : FontWeight.w400,
                 ),
@@ -393,78 +402,50 @@ class _CheckoutViewState extends State<CheckoutView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
-                  "Edit Shipping Address",
+                  "Edit shipping address",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
           ),
-          _customTextField(
+          CustomTextField(
             padding: const EdgeInsets.only(top: 5, bottom: 10),
-            label: "Address",
+            labelText: "Address",
             controller: controller[0],
           ),
-          _customTextField(
+          CustomTextField(
             padding: const EdgeInsets.only(top: 5, bottom: 10),
-            label: "City",
+            labelText: "City",
             controller: controller[1],
           ),
-          _customTextField(
+          CustomTextField(
             padding: const EdgeInsets.only(top: 5, bottom: 10),
-            label: "Postal Code",
+            labelText: "Postal Code",
             controller: controller[2],
           ),
-          _customTextField(
+          CustomTextField(
             padding: const EdgeInsets.only(top: 5, bottom: 10),
-            label: "Country Code",
+            labelText: "Country Code",
             controller: controller[3],
           ),
-          Padding(
+          CustomButton(
             padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: ElevatedButton(
-              onPressed: () {
-                if (onChanged != null) {
-                  onChanged(ShippingAddressItem(
-                    address: controller[0].text,
-                    city: controller[1].text,
-                    postalCode: int.tryParse(controller[2].text) ?? 0,
-                    country: controller[3].text,
-                  ));
-                }
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(
-                    50), // fromHeight use double.infinity as width and 40 is the height
-              ),
-              child: const Text("Done"),
-            ),
+            label: "Done",
+            fillMaxWidth: true,
+            fillColor: true,
+            onClick: () {
+              if (onChanged != null) {
+                onChanged(ShippingAddressItem(
+                  address: controller[0].text,
+                  city: controller[1].text,
+                  postalCode: int.tryParse(controller[2].text) ?? 0,
+                  country: controller[3].text,
+                ));
+              }
+              Navigator.pop(context);
+            },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _customTextField({
-    TextEditingController? controller,
-    String? label,
-    EdgeInsetsGeometry padding = const EdgeInsets.all(0),
-  }) {
-    return Padding(
-      padding: padding,
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          enabledBorder: const OutlineInputBorder(
-            borderSide:
-                BorderSide(width: 2, color: Colors.orangeAccent), //<-- SEE HERE
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide:
-                BorderSide(width: 2, color: Colors.orangeAccent), //<-- SEE HERE
-          ),
-        ),
       ),
     );
   }

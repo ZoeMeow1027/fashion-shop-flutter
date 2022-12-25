@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/variables.dart';
 import '../../../model/product_item.dart';
 import '../../../repository/product_api.dart';
+import '../../components/custom_text_field.dart';
 import '../components/product_list_widget.dart';
 
 class ProductSearchView extends StatefulWidget {
@@ -15,6 +17,7 @@ class _ProductSearchViewState extends State<ProductSearchView> {
   final TextEditingController _controller = TextEditingController();
 
   List<ProductItem> _total = [], _filter = [];
+  bool _isLoadDone = false;
   String _query = "";
 
   Future<void> _getProductList() async {
@@ -32,7 +35,9 @@ class _ProductSearchViewState extends State<ProductSearchView> {
     _refreshData().then((value) {
       try {
         _reloadFilter(_query);
-        setState(() {});
+        setState(() {
+          _isLoadDone = true;
+        });
       } catch (ex) {}
     });
   }
@@ -41,11 +46,11 @@ class _ProductSearchViewState extends State<ProductSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
+        surfaceTintColor: Colors.white,
+        title: CustomTextField(
+          hintText: "Search a product",
+          borderShow: false,
           controller: _controller,
-          decoration: InputDecoration(
-            hintText: "Search a product",
-          ),
           onChanged: (value) {
             _reloadFilter(value);
             setState(() {
@@ -54,10 +59,20 @@ class _ProductSearchViewState extends State<ProductSearchView> {
           },
         ),
       ),
-      body: ProductListWidget(
-        productItemList: _filter,
-        padding: const EdgeInsets.only(left: 10, right: 10),
-      ),
+      body: !_isLoadDone
+          ? SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [CircularProgressIndicator()],
+              ),
+            )
+          : ProductListWidget(
+              productItemList: _filter,
+              padding: const EdgeInsets.only(left: 10, right: 10),
+            ),
     );
   }
 

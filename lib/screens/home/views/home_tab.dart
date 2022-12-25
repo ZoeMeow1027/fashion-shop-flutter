@@ -1,9 +1,10 @@
+import 'package:fashionshop/config/variables.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/product_item.dart';
 import '../../../repository/product_api.dart';
+import '../components/banner_static_widget.dart';
 import 'search_view.dart';
-import '../components/banner_widget.dart';
 import '../components/product_list_widget.dart';
 
 class HomeTab extends StatefulWidget {
@@ -47,10 +48,15 @@ class _HomeTabState extends State<HomeTab>
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Variables.mainColor,
         title: null,
         actions: [
           IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -62,6 +68,8 @@ class _HomeTabState extends State<HomeTab>
           ),
         ],
       ),
+      // https://github.com/flutter/flutter/issues/14842
+      extendBodyBehindAppBar: true,
       body: RefreshIndicator(
         onRefresh: () async {
           await _refreshData().then((value) {
@@ -73,39 +81,19 @@ class _HomeTabState extends State<HomeTab>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TODO: Need banner image api here!
-              const BannerWidget(
-                imageList: [
-                  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-                  "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg",
-                  "https://cdn.pixabay.com/photo/2017/01/19/23/46/church-1993645__340.jpg",
-                  "https://jes.edu.vn/wp-content/uploads/2017/10/h%C3%ACnh-%E1%BA%A3nh.jpg",
-                ],
-              ),
+              const BannerStaticWidget(),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: _productList != null
-                    ? _mainUI(data: _productList!)
+                    ? ProductListWidget(
+                        productItemList: _productList!,
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        showPopularLabel: true,
+                      )
                     : _productListDone
                         ? _errorUI()
                         : _loadingUI(),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 10),
-              //   child: FutureBuilder(
-              //     future: refreshData(),
-              //     builder: (context, snapshot) {
-              //       if (_productList != null) {
-              //         return _mainUI(data: _productList!);
-              //       } else if (snapshot.connectionState ==
-              //           ConnectionState.done) {
-              //         return _errorUI();
-              //       } else {
-              //         return _loadingUI();
-              //       }
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -134,16 +122,6 @@ class _HomeTabState extends State<HomeTab>
           ),
         ],
       ),
-    );
-  }
-
-  Widget _mainUI({
-    required List<ProductItem> data,
-  }) {
-    return ProductListWidget(
-      productItemList: data,
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      showPopularLabel: true,
     );
   }
 }

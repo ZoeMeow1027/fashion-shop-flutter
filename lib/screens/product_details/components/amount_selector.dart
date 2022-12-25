@@ -1,3 +1,4 @@
+import 'package:fashionshop/config/variables.dart';
 import 'package:flutter/material.dart';
 
 class AmountSelector extends StatelessWidget {
@@ -18,7 +19,13 @@ class AmountSelector extends StatelessWidget {
       children: <Widget>[
         const Padding(
           padding: EdgeInsets.only(right: 20),
-          child: Text("Count", style: TextStyle(fontSize: 20)),
+          child: Text(
+            "Count",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 15, top: 3),
@@ -29,7 +36,13 @@ class AmountSelector extends StatelessWidget {
             },
           ),
         ),
-        Text("$count", style: const TextStyle(fontSize: 20)),
+        Text(
+          "$count",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 15, top: 3),
           child: _outlinedButton(
@@ -51,7 +64,13 @@ class AmountSelector extends StatelessWidget {
         ? const Text("")
         : Padding(
             padding: const EdgeInsets.only(left: 15),
-            child: Text("Max: $countMax", style: const TextStyle(fontSize: 20)),
+            child: Text(
+              "Max: $countMax",
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
           );
   }
 
@@ -70,11 +89,15 @@ class AmountSelector extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(13),
           ),
+          backgroundColor: Colors.white,
         ),
         onPressed: () {
           onPress();
         },
-        child: Icon(iconData),
+        child: Icon(
+          iconData,
+          color: Variables.mainColor,
+        ),
       ),
     );
   }

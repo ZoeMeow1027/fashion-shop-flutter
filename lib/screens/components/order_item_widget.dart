@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/cart_history_item.dart';
-import '../../components/custom_cache_network_image.dart';
+import '../../config/variables.dart';
+import '../../model/cart_history_item.dart';
+import 'custom_cache_network_image.dart';
 
-class ProductItemWidget extends StatelessWidget {
-  const ProductItemWidget({
+class OrderItemWidget extends StatelessWidget {
+  const OrderItemWidget({
     super.key,
     required this.productItem,
     this.onClickDelete,
@@ -21,10 +22,14 @@ class ProductItemWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(4)),
         shape: BoxShape.rectangle,
         color: Colors.white,
-        border: Border.all(
-          color: Colors.blue,
-          width: 2,
-        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 8,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -35,7 +40,7 @@ class ProductItemWidget extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 17),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +50,7 @@ class ProductItemWidget extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.w500,
-                        color: Colors.redAccent,
+                        color: Variables.mainColor,
                       ),
                     ),
                     Text(
@@ -63,14 +68,16 @@ class ProductItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              if (onClickDelete != null) {
-                onClickDelete!();
-              }
-            },
-          ),
+          onClickDelete == null
+              ? const Center()
+              : IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    if (onClickDelete != null) {
+                      onClickDelete!();
+                    }
+                  },
+                ),
         ],
       ),
     );

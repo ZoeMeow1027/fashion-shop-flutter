@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../repository/user_api.dart';
 import '../components/custom_button.dart';
 import '../components/custom_text_field.dart';
-import 'components/show_snackbar_msg.dart';
+import '../../utils/show_snackbar_msg.dart';
 
 class AccountChangePassView extends StatefulWidget {
   const AccountChangePassView({
@@ -65,21 +65,21 @@ class _AccountChangePassViewState extends State<AccountChangePassView> {
                     CustomTextField(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      label: 'Current Password',
+                      labelText: 'Current Password',
                       enabled: _isEnabledWidget,
                       controller: _oldPassController,
                     ),
                     CustomTextField(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      label: 'New password',
+                      labelText: 'New password',
                       enabled: _isEnabledWidget,
                       controller: _newPassController,
                     ),
                     CustomTextField(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       isPassword: true,
-                      label: 'Re-enter new password',
+                      labelText: 'Re-enter new password',
                       enabled: _isEnabledWidget,
                       controller: _reEnterPassController,
                     ),
@@ -88,7 +88,7 @@ class _AccountChangePassViewState extends State<AccountChangePassView> {
               ),
               CustomButton(
                 padding: const EdgeInsets.only(top: 40, bottom: 15),
-                isFilledColor: true,
+                fillColor: true,
                 fillMaxWidth: true,
                 label: "Change Password",
                 labelSize: 17,

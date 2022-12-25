@@ -6,20 +6,33 @@ import '../../../model/dto/register_dto.dart';
 import '../../../repository/user_api.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_text_field.dart';
-import '../components/current_state_account_view.dart';
-import '../components/show_snackbar_msg.dart';
+import '../../../utils/show_snackbar_msg.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   const RegisterView({
     super.key,
-    required this.state,
-    required this.onStateChanged,
     required this.onLoginPage,
   });
 
-  final CurrentStateAccountView state;
-  final Function(CurrentStateAccountView) onStateChanged;
   final Function() onLoginPage;
+
+  @override
+  State<StatefulWidget> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  bool _isEnabledWidget = true;
+  final TextEditingController _cUserName = TextEditingController(),
+      _cEmail = TextEditingController(),
+      _cPass = TextEditingController(),
+      _cRePass = TextEditingController();
+
+  void _clearTextController() {
+    _cUserName.clear();
+    _cPass.clear();
+    _cEmail.clear();
+    _cRePass.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,34 +69,34 @@ class RegisterView extends StatelessWidget {
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Name',
-                  enabled: state.isEnabledControl,
-                  controller: state.usernameController,
+                  labelText: 'Name',
+                  enabled: _isEnabledWidget,
+                  controller: _cUserName,
                   prefixIcon: const Icon(Icons.person),
                 ),
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Email',
-                  enabled: state.isEnabledControl,
-                  controller: state.emailController,
+                  labelText: 'Email',
+                  enabled: _isEnabledWidget,
+                  controller: _cEmail,
                   prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Password',
-                  enabled: state.isEnabledControl,
-                  controller: state.passwordController,
+                  labelText: 'Password',
+                  enabled: _isEnabledWidget,
+                  controller: _cPass,
                   isPassword: true,
                   prefixIcon: const Icon(Icons.password),
                 ),
                 CustomTextField(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                  label: 'Re-enter password',
-                  enabled: state.isEnabledControl,
-                  controller: state.reEnterPasswordController,
+                  labelText: 'Re-enter password',
+                  enabled: _isEnabledWidget,
+                  controller: _cRePass,
                   isPassword: true,
                   prefixIcon: const Icon(Icons.password),
                 ),
@@ -94,16 +107,18 @@ class RegisterView extends StatelessWidget {
             label: "Create Account",
             padding: const EdgeInsets.only(top: 40, bottom: 15),
             fillMaxWidth: true,
-            isFilledColor: true,
+            fillColor: true,
             onClick: () async {
               await _createAccount(
                 context: context,
-                name: state.usernameController.text,
-                email: state.emailController.text,
-                password: state.passwordController.text,
-                reEnterPassword: state.reEnterPasswordController.text,
+                name: _cUserName.text,
+                email: _cEmail.text,
+                password: _cPass.text,
+                reEnterPassword: _cRePass.text,
                 onRequesting: () {
-                  state.isEnabledControl = false;
+                  setState(() {
+                    _isEnabledWidget = false;
+                  });
                   showSnackbarMessage(
                     context: context,
                     msg: 'Registring you to server, please wait...',
@@ -112,15 +127,21 @@ class RegisterView extends StatelessWidget {
                 },
                 onSuccessful: () {
                   showSnackbarMessage(
-                      context: context, msg: 'Successfully register!');
-                  state.isEnabledControl = false;
+                      context: context,
+                      msg:
+                          'Successfully register! Your account is now ready to use.');
+                  setState(() {
+                    _isEnabledWidget = false;
+                  });
                   Navigator.pop(context);
                 },
                 onFailed: (data) {
+                  setState(() {
+                    _isEnabledWidget = true;
+                  });
                   showSnackbarMessage(
                       context: context,
                       msg: 'Failed while register you ($data)');
-                  state.isEnabledControl = true;
                 },
               );
             },
@@ -141,8 +162,8 @@ class RegisterView extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         // Register view here!
-                        state.clearTextController();
-                        onLoginPage();
+                        _clearTextController();
+                        widget.onLoginPage();
                       },
                   ),
                 ],
