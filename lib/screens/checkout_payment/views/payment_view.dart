@@ -50,7 +50,8 @@ class _PaymentViewState extends State<PaymentView> {
 
       switch (widget.paymentMethod) {
         case PaymentMethod.PayPal:
-          await _controller.setNavigationDelegate(_navDelegatePayPal());
+          await _controller
+              .setNavigationDelegate(_navDelegatePayPal(context: context));
           try {
             accessToken = await PayPalAPI.getAccessToken();
             final transactions = _generateJsonPayPal(
@@ -114,7 +115,7 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
-  NavigationDelegate _navDelegatePayPal() {
+  NavigationDelegate _navDelegatePayPal({required BuildContext context}) {
     return NavigationDelegate(
       onNavigationRequest: (request) {
         if (request.url.contains(returnURL)) {
